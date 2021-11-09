@@ -17,44 +17,70 @@
 %% welche Schlussfolgerungen ergeben sich aus dem Text für die Forschung, was fügt der Text unserem Wissen über das Thema hinzu?
  
 \begin{abstract}
-Ideensammlung:
+Abstract:
 
-1. Grundlagen des Mirror Frameworks:
---> worauf basiert es eigendlich? 
---> Auszug Features | diese erklären.
-	--> Network-Manager
-		--> NetworkManager Callbacks
-	--> Network Idendity / Network Behavior / Network Transform
-		--> Network Behavior Callbacks
-	--> Server und Clientcode in einer Datei
-	--> Dedicated Server vs. Self-Host
-	--> Synchronization
-	--> Remote Actions
-	--> Player Game Objects
-	--> Anticheat
-	--> Transports
+Der Einstieg in die Multiplayer-Spieleeprogrammierung gestaltet sich für angehende Entwickler als schwierig. Ein erstes eigenes Projekt umzusetzen erfordert viel Einarbeitung und es gibt viele Einstiegshürden. Insbesondere der Teil des Matchmakings ist ohne Budget oft schwierig umzusetzen. Es gibt schlichtweg zu wenig Einstiegshilfen in diesem Teil, da jedes Spiel sehr individuelle Anforderungen mit sich bringt.
+
+Das Ziel dieser Arbeit ist, eine Einstiegshilfe für das Matchmaking in Multiplayer-Projekten zu geben. Hierzu wird eine abstrakte Vorlage konstruiert, welche auf viele Multiplayer Use-Cases anwendbar ist. 
+
+Dazu wurden abstrahierte Konzepte erstellt, welche das Matchmaking in Multiplayer Spielen abbilden und auf möglichst viele Spiele anwendbar sein sollen. Diese Konzepte bestehenden aus einzelnen Software-Komponenten, welche selbst noch keine konkrete Implementierungsvorgabe sind, sondern lediglich das Konzept der Komponente abstrakt beschreiben.
+
+Als Proof of Concept wurden die beschriebenen Konzepte anhand einer Implementierung in einem Multiplayer-Spiel in der Unity Engine, mithilfe des Mirror Frameworks implementiert. 
 	
---> Implementierungsbeispiele
+Ideensammlung für Gliederung::
 
-2. Generalisierung der Konzepte, welche Mirror umsetzt.
---> Welche Konzepte nutzt Mirror?
---> Was ist daran nützlich?
---> Wie könnte man die Konzepte von Mirror konkret generalisieren?
+1. Einführung:
 
-3. Matchmaking
+Matchmaking
 --> Moderne Matchmaking-Architekturen/Algorithmen von heute (Beispiele)
-	--> Elo-Zahl basiertes Matchmaking (Rangliste)
-		--> Generell: Parameter-basiertes Matchmaking 
-	--> Server Browser
-	--> Lobbys
-	--> ...
---> Einordnung der generalisierten Konzepte für das Matchmaking
+--> Elo-Zahl basiertes Matchmaking (Rangliste) + Lobby
+--> Generell: Parameter-basiertes Matchmaking 
+--> Server Browser
+--> Lobbys
+--> ...
+--> Implementierungsbeispiele der "realen Welt"
+
+2. Ableitbare Konzepte:
+
+--> Offline/Online Verwaltung durch Network-Manager
+	--> verwaltet u.a. Abbruchbedingungen (Maneull / Automatisch) für Client und Server
+--> Lobby-Manager(Verwaltung der Spieler in Lobby-Szenen) (optional)
+--> Prepare-InGame-Manager (Initialisierung v. Spawn Punkten, Objektspawn v. abh. Objekten)
+--> In-Game-Player-Manager (Verwaltung der Spieler in Spiel-Szenen)
+--> In-Game-Object-Manager (Verwaltung v. Objekt und Spieler-Respawn)
+--> In-Game-Progress-Manager (Verwaltung v. Spielfortschritt, u.a. zuständig für Spielbeendung)
+	--> Dieser ist ebenfalls dafür zuständig, nach Beendigung einer Spiel-Session die Spieler in die "offline-Szene" oder zurück in ihre "Lobby-Szene" zu befördern. Sollte die Implementierung eine Online-Lobby unterstützen, übernimmt im Anschluss wieder der "Pre-Game-Player-Manager"
+
 --> HTTP Server / REST API / Dedicated Server 
 --> Unterscheidung Hosting (Client Host / Dedicated Server Host)
---> Beispiel Implementierung Matchmaking System (Hide n seek)
+--> Einordnung der generalisierten Konzepte für das Matchmaking
 
-4. Erstellung einer Doku für Matchmaking System
---> Doku der Implementierung 
+3. Implementierung 1 :
+
+Genutzte Frameworks / Technologien
+
+Grundlagen des Mirror Frameworks:
+--> worauf basiert es eigendlich? 
+--> Auszug Features | diese erklären.
+--> Network-Manager
+--> NetworkManager Callbacks
+--> Network Idendity / Network Behavior / Network Transform
+--> Network Behavior Callbacks
+--> Server und Clientcode in einer Datei
+--> Dedicated Server vs. Self-Host
+--> Synchronization
+--> Remote Actions
+--> Player Game Objects
+--> Anticheat
+--> Transports
+
+4. Implementierung 2:
+
+	
+--> Beispiel Implementierung Matchmaking System (Hide n seek)
+5. Abschluss:
+
+
 
 
 \end{abstract}
