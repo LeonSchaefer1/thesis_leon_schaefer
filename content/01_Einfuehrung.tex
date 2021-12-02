@@ -2,27 +2,63 @@
 
 \section{Problembeschreibung}
 
-Konzeption und Entwicklung von Online-Multiplayerspielen stellt angehende Entwickler vor große Herausforderungen. Die Einstiegshürden sind groß, der Dschungel an Technologien und Frameworks unübersichtlich. Einheitliche Vorgehensmodelle und Best-Practises gibt es nicht oder beziehen sich stets auf eine spezielle Art von Spieltyp. Das Thema Hosting ist ebenfalls ein komplexer Aspekt eines solchen Projekts, welcher von Anfängern oft nicht sofort durchschaut wird.
+Konzeption und Entwicklung von Online-Multiplayerspielen stellt angehende Entwickler vor große Herausforderungen. Die Einstiegshürden sind groß, der Dschungel an Technologien und Frameworks unübersichtlich. Einheitliche Vorgehensmodelle und Best-Practises gibt es nicht oder beziehen sich stets auf eine spezielle Art von Spieltyp. Das Thema Hosting ist ebenfalls ein komplexer Aspekt eines solchen Projekts, welcher von Anfängern oft nicht sofort durchschaut wird. Durch erste Projekterfahrung gewinnen die Entwickler nach und nach das Know-How, ohne ein erfahrenes Team sind die Chancen auf Misserfolg jedoch hoch. 
+
+\begin{quote}
+	Why Multiplayer is Hard
+	
+	One of the key differences between a multiplayer and single player game is that in a multiplayer experience the game exists independently of the player. This isn’t required in a single player experience, where the game and the player’s ‘view’ of the game are often the same thing. The only bits we care about in a single player game are the bits your player can see right now, the world only exists to serve that player’s needs. \cite{Payne.18.09.2019}
+\end{quote}
+
 
 \section{Motivation}
+Die Spieleindustrie ist im Wandel. Reine Singleplayer-Spiele, also Spiele, die ohne andere menschliche Mitspieler auskommen werden immer seltener entwickelt, da die Erfolgsaussichten um ein vielfaches schlechter erscheinen. Die drei bestplatzierten Titel der meistverkauften PC-und Konsolenspiele 2019 (FIFA 2020, Call of Duty: Modernware und Mario Kart 8 Deluxe) in Deutschland enthalten einen großen Multiplayer-Anteil.\cite{gameVerbandderdeutschenGamesBranchee.V..2020}
 
-Angetrieben wurde diese Arbeit durch den eigenen Wunsch professionell ein Multiplayer-Spielprojekt umzusetzen und den Grundstein für ein einheitliches Vorgehen für zukünftige Projekte zu legen. Von diesem Grundstein sollen möglichst viele weitere Projekte profitieren.
+Deutlicher wird der Trend, wenn die Statistik der meistgespielten Titel auf der Online Spiele-Vertreibsplattform Steam betrachtet wird. Das mit Abstand meistgespielte Spiel 2020 ist das Multiplayer-First-Person-Shooter Spiel "Counter-Strike: Global Offensive" gefolgt von "DOTA 2" auf Platz 2. Beide Spiele sind reine Multiplayer-Titel.\cite{GitHyp.February2021}
+
+Einer internationalen Umfrage zufolge geben 60\% der Befragten an, seit Beginn der Corona Pandemie mehr Multiplayer-Videospiele zu spielen. \cite{SimonKucher&Partners.2020}
+
+Wegen der Marktentwicklung ist es für angehende Entwickler, welche in der Spieleindustrie Fuß fassen möchten ist es auf lange Sicht eine gute Entscheidung, sich im mit dem Bereich Multiplayer-Spieleentwicklung auseinanderzusetzen.
+
+Angetrieben wurde diese Arbeit durch den eigenen Wunsch professionell ein Multiplayer-Spielprojekt umzusetzen und den Grundstein für ein einheitliches Vorgehen für zukünftige Projekte zu legen. Von diesem Grundstein sollen möglichst viele weitere Projekte profitieren. 
 
 \section{Ziele dieser Arbeit}
 
-Die Arbeit soll eine Blaupause liefern, welche andere Entwickler nutzen können, um einen leichteren Einstieg in ein Multiplayer-Projekt zu gewährleisten. Diese Blaupause soll allerdings derart generisch sein, dass sie unabhängig von einem konkreten Implementierungs-Kontext funktioniert. Die beschriebenen Konzepte sollen auf möglichst viele Szenarien anwendbar sein.
+Um einen einfacheren Einsteig in die Multiplayer-Spieleentwicklung zu gewährleisten, beschäftigt sich diese Arbeit mit einigen Grundlagen, die Entwicklern einen Vorteil bei der Gestaltung ihrer Software-Architektur bringen soll.
+
+Die Arbeit soll eine Blaupause liefern, welche andere Entwickler nutzen können, um einen leichteren Einstieg in ein Multiplayer-Projekt zu gewährleisten. Diese Blaupause soll allerdings derart generisch sein, dass sie unabhängig von einem konkreten Implementierungs-Kontext funktioniert. Die beschriebenen Konzepte sollen auf möglichst viele Szenarien anwendbar sein. Der Fokus hier soll auf dem Matchmaking liegen. Der Begriff Matchmaking wird später noch genauer erläutert. [@Dennis, ist "spätere" Erklären von Begriffen in Ordnung?]
 
 Als Proof-of-Concept soll die eigene Implementierung eines Hide-and-Seek Multiplayer-Spiels dienen, welches sich an den abstrahierten Konzepten orientert, bzw. diese implementiert.
+
+Folgende Forschungsfragen soll die Arbeit beantworten:
+
+- Ist es durch abstrakte Konzepte möglich, Entwicklern beim Einstieg in das Themenfeld zu helfen? 
+
+- Welche Einstiegshürden gibt es überhaupt? Wobei würden sich angehende Entwickler mehr Unterstützung wünschen?
 
 \section{Abgrenzung}
 
 Die Arbeit ist jedoch keine Schritt-für-Schritt Anleitung. Implementierungsdetails müssen vom Benutzer selbstständig konzipiert und umgesetzt werden. Es wird außerdem lediglich Rücksicht genommen auf Spielkonzepte, welche in der heutigen Industrie gängig sind. Es ist durchaus denkbar, dass zukünftige Multiplayer / Matchmaking Architekturen nicht mehr mit den hier beschriebenen Konzepten umzusetzen sind.
 
+Es ist außerdem nicht final bewiesen, dass die beschriebenen Methoden tatsächlich einen Mehrwert bei unterschiedlichen Projekten bieten. Die Konzepte wurden lediglich an einem eigenen Projekt getestet und validiert. Sie basieren auf der individuellen Erfahrung des Autors. Um zu testen, ob die Konzepte auch praxistauglich für verschiedene Arten von Projekten sind, muss eine weitergehende Untersuchung stattfinden.
+
+
+
 
 \section{Vorgehensweise}
 
-Aus der bisher gesammelten Praxiserfahrung werden Konzepte abstrahiert, welche einen bestimmten Einsatzzweck erfüllen sollen. Hierbei wurde auf Implementierungsdetails verzichtet und lediglich ein generelles Konzept erarbeitet, an welchem der Entwickler sich während des Implementierungsprozesses orientieren kann.
+Aus der bisher gesammelten Praxiserfahrung werden Konzepte abstrahiert, welche jeweils einen bestimmten Einsatzzweck erfüllen sollen. Hierbei wurde auf Implementierungsdetails verzichtet und lediglich ein generelles Konzept erarbeitet, an welchem der Entwickler sich während des Implementierungsprozesses orientieren kann.
+
+Diese Konzepte behandeln Probleme, welche im Entwicklungsprozess von Multiplayer-Spielen auftreten können. 
+
+Jedes dieser Konzepte wurde in einer Beispielimplementierung umgesetzt, welche im Kapitel "Realisierung" näher vorgestellt wird.
 
 \section{Struktur der Arbeit}
 
-Dies Arbeit besteht aus der Einführung, wo die generelle Problemstellung erläutert, und die Forschungsfragen gestellt wurden. Im Anschluss wird der Hintergrund erklärt, dort sind alle Informationen zu finden, um die späteren Konzepte zu verstehen. Diese werden als nächstes Kapitel behandelt. Anschließend werden die beschriebenen Konzepte in einer Beispielimplementierung umgesetzt, diese bildet das Kapitel "Realisierung". In der Zusammenfassung werden die Ergebnisse der Arbeit beleuchtet und ein Ausblick aufgezeigt.
+Dies Arbeit besteht aus der Einführung, in welcher die generelle Problemstellung erläutert, und die Forschungsfragen gestellt wurden. Ebenfalls wurde die Relevanz des Themengebiets verdeutlicht und eingeordnet.
+
+Im Anschluss wird der Hintergrund erklärt, dort sind alle Informationen zu finden, um die späteren Konzepte zu verstehen. Hier werden ebenfalls Begrifflichkeiten und Grundlagen erläutert [@Dennis, kann ich das so machen?]
+
+Das Kapitel "Konzepte" behandelt nun die erarbeiteten Konzepte, welche in Summe die oben beschriebene Blaupause abbilden. 
+ 
+Anschließend werden die beschriebenen Konzepte in einer Beispielimplementierung umgesetzt, diese bildet das Kapitel "Realisierung". In der Zusammenfassung werden die Ergebnisse der Arbeit beleuchtet und ein Ausblick aufgezeigt.
