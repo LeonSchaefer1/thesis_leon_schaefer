@@ -7,7 +7,10 @@ Konzeption und Entwicklung von Online-Multiplayerspielen stellt angehende Entwic
 \begin{quote}
 	Why Multiplayer is Hard
 	
-	One of the key differences between a multiplayer and single player game is that in a multiplayer experience the game exists independently of the player. This isn’t required in a single player experience, where the game and the player’s ‘view’ of the game are often the same thing. The only bits we care about in a single player game are the bits your player can see right now, the world only exists to serve that player’s needs. \cite{Payne.18.09.2019}
+	One of the key differences between a multiplayer and single player game is that in a multiplayer experience the game exists independently of the player. This isn’t required in a single player experience, where the game and the player’s ‘view’ of the game are often the same thing. The only bits we care about in a single player game are the bits your player can see right now, the world only exists to serve that player’s needs.
+	
+	Some of the ‘hard’ problems are there at development time. For example, sending messages across the internet takes an amount of time, so you need to work out how to asynchronously communicate what is happening back and forth, and deal with any cases where your clients and servers get a bit out of sync with what is happening. Just the logistics of running a server on your development PC, running a local version of any other services you’re using (matchmaking, save data storage, etc) then running multiple clients to test a feature isn’t always easy or fun.
+	 \cite{Payne.18.09.2019}
 \end{quote}
 
 
@@ -26,6 +29,8 @@ Angetrieben wurde diese Arbeit durch den eigenen Wunsch professionell ein Multip
 
 Um einen einfacheren Einsteig in die Multiplayer-Spieleentwicklung zu gewährleisten, beschäftigt sich diese Arbeit mit einigen Grundlagen, die Entwicklern einen Vorteil bei der Gestaltung ihrer Software-Architektur bringen soll.
 
+Ein Entwickler soll außerdem nach dem Studium dieser Arbeit eine konkrete Vorstellung davon besitzen, welche Voraussetzungen ein Framework oder eine Game-Engine erfüllen muss, damit die Konzepte möglichst leicht umzusetzen sind.
+
 Die Arbeit soll eine Blaupause liefern, welche andere Entwickler nutzen können, um einen leichteren Einstieg in ein Multiplayer-Projekt zu gewährleisten. Diese Blaupause soll allerdings derart generisch sein, dass sie unabhängig von einem konkreten Implementierungs-Kontext funktioniert. Die beschriebenen Konzepte sollen auf möglichst viele Szenarien anwendbar sein. Der Fokus hier soll auf dem Matchmaking liegen. Der Begriff Matchmaking wird später noch genauer erläutert. [@Dennis, ist "spätere" Erklären von Begriffen in Ordnung?]
 
 Als Proof-of-Concept soll die eigene Implementierung eines Hide-and-Seek Multiplayer-Spiels dienen, welches sich an den abstrahierten Konzepten orientert, bzw. diese implementiert.
@@ -42,7 +47,7 @@ Die Arbeit ist jedoch keine Schritt-für-Schritt Anleitung. Implementierungsdeta
 
 Es ist außerdem nicht final bewiesen, dass die beschriebenen Methoden tatsächlich einen Mehrwert bei unterschiedlichen Projekten bieten. Die Konzepte wurden lediglich an einem eigenen Projekt getestet und validiert. Sie basieren auf der individuellen Erfahrung des Autors. Um zu testen, ob die Konzepte auch praxistauglich für verschiedene Arten von Projekten sind, muss eine weitergehende Untersuchung stattfinden.
 
-
+Die erarbeiteten Konzepte sind außerdem unabhängig von einer Game-Engine oder einem Framework. Durchaus ist es aber möglich, dass ein bestehendes Framework oder eine Game-Engine Hilfestellung bei der Implementierung der Konzepte bietet. 
 
 
 \section{Vorgehensweise}
