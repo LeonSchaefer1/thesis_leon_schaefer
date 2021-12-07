@@ -5,11 +5,11 @@
 Konzeption und Entwicklung von Online-Multiplayerspielen stellt angehende Entwickler vor große Herausforderungen. Die Einstiegshürden sind groß, der Dschungel an Technologien und Frameworks unübersichtlich. Einheitliche Vorgehensmodelle und Best-Practises gibt es nicht oder beziehen sich stets auf eine spezielle Art von Spieltyp. Das Thema Hosting ist ebenfalls ein komplexer Aspekt eines solchen Projekts, welcher von Anfängern oft nicht sofort durchschaut wird. Durch erste Projekterfahrung gewinnen die Entwickler nach und nach das Know-How, ohne ein erfahrenes Team sind die Chancen auf Misserfolg jedoch hoch. 
 
 \begin{quote}
-	Why Multiplayer is Hard
+	"Why Multiplayer is Hard
 	
 	One of the key differences between a multiplayer and single player game is that in a multiplayer experience the game exists independently of the player. This isn’t required in a single player experience, where the game and the player’s ‘view’ of the game are often the same thing. The only bits we care about in a single player game are the bits your player can see right now, the world only exists to serve that player’s needs.
 	
-	Some of the ‘hard’ problems are there at development time. For example, sending messages across the internet takes an amount of time, so you need to work out how to asynchronously communicate what is happening back and forth, and deal with any cases where your clients and servers get a bit out of sync with what is happening. Just the logistics of running a server on your development PC, running a local version of any other services you’re using (matchmaking, save data storage, etc) then running multiple clients to test a feature isn’t always easy or fun.
+	Some of the ‘hard’ problems are there at development time. For example, sending messages across the internet takes an amount of time, so you need to work out how to asynchronously communicate what is happening back and forth, and deal with any cases where your clients and servers get a bit out of sync with what is happening. Just the logistics of running a server on your development PC, running a local version of any other services you’re using (matchmaking, save data storage, etc) then running multiple clients to test a feature isn’t always easy or fun."
 	 \cite{Payne.18.09.2019}
 \end{quote}
 
@@ -37,9 +37,9 @@ Als Proof-of-Concept soll die eigene Implementierung eines Hide-and-Seek Multipl
 
 Folgende Forschungsfragen soll die Arbeit beantworten:
 
-- Ist es durch abstrakte Konzepte möglich, Entwicklern beim Einstieg in das Themenfeld zu helfen? 
+- Ist es durch die Aufstellung abstrakter Konzepte möglich, Entwicklern beim Einstieg in das Themenfeld zu helfen? 
 
-- Welche Einstiegshürden gibt es überhaupt? Wobei würden sich angehende Entwickler mehr Unterstützung wünschen?
+- Welche Einstiegshürden gibt es? Wobei würden sich angehende Entwickler mehr Unterstützung wünschen? Durch eine Umfrage innerhalb des THM Moduls "Softwaretechnik-Projekt", dessen Mitglieder im Rahmen dieses Moduls ein eigenes Multiplayer-Spiel entwickelt haben, sowie durch die Befragung angehender Junior-Spieleentwickler sollen die Annahmen dieser Arbeit bestätigt werden. [@Dennis, ist das so korrekt formuliert?]
 
 \section{Abgrenzung}
 
@@ -58,7 +58,24 @@ Die Konzepte beinhalten die Teilgebiete:
 
 Varianten des Hostings / Abbildung der Serverstruktur. Gegenüberstellung Clienthosting / Dedicated Server (Remote Hosting)
 
-Matchmaking: Abstraktion durch weitere Software-Schicht, externe Schnittstelle. Eigene Matchmaking API umsetzen.
+Welche technischen Ressourcen werden für ein Multiplayer-Spiel benötigt?
+
+\begin{quote}
+Networking resources
+	
+"Distributed simulations face three resource limitations: network bandwidth, network 
+latency, and host processing power forhandling the network traffic (Singhal, 1996).These resources refer to the technical attributes of the underlying network and they impose physical restrictions, which the system cannot overcome and which must be considered in the design". \cite{Smed.2002} [@Dennis, in diesem Zitat gibt es eine weitere Referenz (Singhal, 1996), wie gehe ich damit um?]
+\end{quote}
+
+Welche Architektur ist für eine Spieleidee der beste Ansatz? 
+
+\begin{quote}
+Distribution concepts
+
+"There is not much we can do about the aforementioned resource limitations. Therefore, the problems of distributed interactive systems should be tackled on a higher level, which means choosing architectures for communication, data, and control. Still, sometimes the architecture alone cannot rid the system of resource limitations, and compensatory techniques are needed to relax the requirements." \cite{Smed.2002}
+\end{quote}
+
+Matchmaking: Abstraktion durch weitere Software-Schicht, externe Schnittstelle. Eigene Matchmaking / Server Runner API umsetzen.
 
 Client-Modul: Kommunikation mit Matchmaking API, Beitritt in Spiel anhand von zugewiesener Server-Instanz.
 
@@ -82,6 +99,8 @@ Dies Arbeit besteht aus der Einführung, in welcher die generelle Problemstellun
 
 Im Anschluss wird der Hintergrund erklärt, dort sind alle Informationen zu finden, um die späteren Konzepte zu verstehen. Hier werden ebenfalls Begrifflichkeiten und Grundlagen erläutert [@Dennis, kann ich das so machen?]
 
-Das Kapitel "Konzepte" behandelt nun die erarbeiteten Konzepte, welche in Summe die oben beschriebene Blaupause abbilden. 
+Das Kapitel "Konzepte" behandelt nun die erarbeiteten Konzepte, welche in Summe die oben beschriebene Blaupause abbilden. Es wird auf jedes einzelne Konzept im Detail eingegangen und genauer erklärt. 
  
-Anschließend werden die beschriebenen Konzepte in einer Beispielimplementierung umgesetzt, diese bildet das Kapitel "Realisierung". In der Zusammenfassung werden die Ergebnisse der Arbeit beleuchtet und ein Ausblick aufgezeigt.
+Anschließend werden die beschriebenen Konzepte in einer Beispielimplementierung umgesetzt, diese bildet das Kapitel "Realisierung". In diesem Kapitel findet sich kommentierter Beispielcode aus dem umgesetzten Projekt um einen besseren Eindruck der gelösten Probleme zu bekommen.
+
+In der Zusammenfassung werden die Ergebnisse der Arbeit beleuchtet und ein Ausblick aufgezeigt.
