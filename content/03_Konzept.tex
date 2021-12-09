@@ -1,1 +1,35 @@
 \chapter{Konzepte}
+\label{sec:konzepte}
+
+Varianten des Hostings / Abbildung der Serverstruktur. Gegenüberstellung Clienthosting / Dedicated Server (Remote Hosting)
+
+Welche technischen Ressourcen werden für ein Multiplayer-Spiel benötigt?
+
+\begin{quote}
+	Networking resources
+	
+	"Distributed simulations face three resource limitations: network bandwidth, network 
+	latency, and host processing power forhandling the network traffic (Singhal, 1996).These resources refer to the technical attributes of the underlying network and they impose physical restrictions, which the system cannot overcome and which must be considered in the design". \cite{Smed.2002} [@Dennis, in diesem Zitat gibt es eine weitere Referenz (Singhal, 1996), wie gehe ich damit um?]
+\end{quote}
+
+Welche Architektur ist für eine Spieleidee der beste Ansatz? 
+
+\begin{quote}
+	Distribution concepts
+	
+	"There is not much we can do about the aforementioned resource limitations. Therefore, the problems of distributed interactive systems should be tackled on a higher level, which means choosing architectures for communication, data, and control. Still, sometimes the architecture alone cannot rid the system of resource limitations, and compensatory techniques are needed to relax the requirements." \cite{Smed.2002}
+\end{quote}
+
+Matchmaking: Abstraktion durch weitere Software-Schicht, externe Schnittstelle. Eigene Matchmaking / Server Runner API umsetzen.
+
+Client-Modul: Kommunikation mit Matchmaking API, Beitritt in Spiel anhand von zugewiesener Server-Instanz.
+
+Server-Modul: Verwaltung der Clients, Verwaltung von Szenen (Offline-Szene, 1-n Online Szenen)
+
+Offline Szene: Modul zur Verwaltung im Offline Modus
+
+Server Modul: Vorbereitung der Spielszene in eigener Logik, "custom-server-ready-state"
+
+Online Szenen: Modul zur Verwaltung der Spieler in vorgeschalteten "Lobby" Spielszenen sowie im laufenden Spiel und dazwischen.
+
+(optional): Verwaltung von Accountinformationen, In-Game-Einkäufen und Freundeslisten

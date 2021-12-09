@@ -1,106 +1,75 @@
 \chapter{Einführung}
+\label{sec:einfuehrung}
 
-\section{Problembeschreibung}
+Die Spieleindustrie ist im Wandel. Reine Singleplayer-Spiele, die ohne andere menschliche Mitspieler auskommen, werden immer seltener entwickelt. Die Erfolgsaussichten erscheinen um ein Vielfaches schlechter. Die drei bestplatzierten Titel der meistverkauften PC-und Konsolenspiele 2019 (FIFA 2020, Call of Duty: Modernware und Mario Kart 8 Deluxe) in Deutschland enthalten einen großen Multiplayer-Anteil.\cite{gameVerbandderdeutschenGamesBranchee.V..2020}
 
-Konzeption und Entwicklung von Online-Multiplayerspielen stellt angehende Entwickler vor große Herausforderungen. Die Einstiegshürden sind groß, der Dschungel an Technologien und Frameworks unübersichtlich. Einheitliche Vorgehensmodelle und Best-Practises gibt es nicht oder beziehen sich stets auf eine spezielle Art von Spieltyp. Das Thema Hosting ist ebenfalls ein komplexer Aspekt eines solchen Projekts, welcher von Anfängern oft nicht sofort durchschaut wird. Durch erste Projekterfahrung gewinnen die Entwickler nach und nach das Know-How, ohne ein erfahrenes Team sind die Chancen auf Misserfolg jedoch hoch. 
-
-\begin{quote}
-	"Why Multiplayer is Hard
-	
-	One of the key differences between a multiplayer and single player game is that in a multiplayer experience the game exists independently of the player. This isn’t required in a single player experience, where the game and the player’s ‘view’ of the game are often the same thing. The only bits we care about in a single player game are the bits your player can see right now, the world only exists to serve that player’s needs.
-	
-	Some of the ‘hard’ problems are there at development time. For example, sending messages across the internet takes an amount of time, so you need to work out how to asynchronously communicate what is happening back and forth, and deal with any cases where your clients and servers get a bit out of sync with what is happening. Just the logistics of running a server on your development PC, running a local version of any other services you’re using (matchmaking, save data storage, etc) then running multiple clients to test a feature isn’t always easy or fun."
-	 \cite{Payne.18.09.2019}
-\end{quote}
-
-
-\section{Motivation}
-Die Spieleindustrie ist im Wandel. Reine Singleplayer-Spiele, also Spiele, die ohne andere menschliche Mitspieler auskommen werden immer seltener entwickelt, da die Erfolgsaussichten um ein vielfaches schlechter erscheinen. Die drei bestplatzierten Titel der meistverkauften PC-und Konsolenspiele 2019 (FIFA 2020, Call of Duty: Modernware und Mario Kart 8 Deluxe) in Deutschland enthalten einen großen Multiplayer-Anteil.\cite{gameVerbandderdeutschenGamesBranchee.V..2020}
-
-Deutlicher wird der Trend, wenn die Statistik der meistgespielten Titel auf der Online Spiele-Vertreibsplattform Steam betrachtet wird. Das mit Abstand meistgespielte Spiel 2020 ist das Multiplayer-First-Person-Shooter Spiel "Counter-Strike: Global Offensive" gefolgt von "DOTA 2" auf Platz 2. Beide Spiele sind reine Multiplayer-Titel.\cite{GitHyp.February2021}
+Deutlicher wird der Trend, wenn die Statistik der meistgespielten Titel auf der Online-Spiele-Vertreibsplattform Steam betrachtet wird. Das mit Abstand meistgespielte Spiel 2020 ist das Multiplayer-First-Person-Shooter Spiel 'Counter-Strike: Global Offensive' gefolgt von 'DOTA 2' auf Platz 2. Beide Spiele sind reine Multiplayer-Titel.\cite{GitHyp.February2021}
 
 Einer internationalen Umfrage zufolge geben 60\% der Befragten an, seit Beginn der Corona Pandemie mehr Multiplayer-Videospiele zu spielen. \cite{SimonKucher&Partners.2020}
 
-Wegen der Marktentwicklung ist es für angehende Entwickler, welche in der Spieleindustrie Fuß fassen möchten ist es auf lange Sicht eine gute Entscheidung, sich im mit dem Bereich Multiplayer-Spieleentwicklung auseinanderzusetzen.
+Wegen der Marktentwicklung ist es für angehende Entwickler, welche in der Spieleindustrie Fuß fassen möchten, auf lange Sicht eine gute Entscheidung, sich mit dem Bereich Multiplayer-Spieleentwicklung auseinanderzusetzen.
 
-Angetrieben wurde diese Arbeit durch den eigenen Wunsch professionell ein Multiplayer-Spielprojekt umzusetzen und den Grundstein für ein einheitliches Vorgehen für zukünftige Projekte zu legen. Von diesem Grundstein sollen möglichst viele weitere Projekte profitieren. 
+\section{Problembeschreibung und Motivation}
+
+Konzeption und Entwicklung von Online-Multiplayer-Spielen stellt angehende Entwickler vor große Herausforderungen. Einer der Hauptunterschiede zwischen einem Multiplayer- und einem Einzelspieler-Spiel ist, dass eine Spielumgebung unabhängig von einem Spieler existiert. Beispielsweise benötigt das Versenden von Nachrichten über das Internet eine gewisse Zeit. Der Entwickler muss also herausfinden, wie man mit asynchroner Kommunikation, Clients und Servern umgeht. Ebenso stoßen Entwickler vor Probleme wie Hosting, Matchmaking und Datenverwaltung.
+\cite{Payne.18.09.2019}
+
+Die Einstiegshürden sind groß, der Dschungel an Technologien und Frameworks unübersichtlich. \cite{MFatihMAR.2021}
+
+Einheitliche Vorgehensmodelle und Best-Practises gibt es nicht oder beziehen sich stets auf eine spezielle Art von Spieltyp. Das Thema Hosting ist ebenfalls ein komplexer Aspekt eines solchen Projekts, welcher von Anfängern oft nicht sofort durchschaut wird. Durch erste Projekterfahrung gewinnen die Entwickler nach und nach das Know-How, ohne ein erfahrenes Team sind die Chancen auf Misserfolg jedoch hoch. \cite{Payne.18.09.2019}
+
+Die Motivation für diese Arbeit war es diese Probleme zu untersuchen und Lösungsmöglichkeiten anhand von praktischen Konzepten zu schaffen. Angehende Entwickler können diese Konzepte in ihrem Praxisprojekt ausprobieren und idealerweise davon profitieren.
 
 \section{Ziele dieser Arbeit}
+Die Arbeit setzt sich folgende Ziele:
 
-Um einen einfacheren Einsteig in die Multiplayer-Spieleentwicklung zu gewährleisten, beschäftigt sich diese Arbeit mit einigen Grundlagen, die Entwicklern einen Vorteil bei der Gestaltung ihrer Software-Architektur bringen soll.
+Um einen einfachen Einsteig in die Multiplayer-Spieleentwicklung zu gewährleisten, beschäftigt sich diese Arbeit mit einigen Grundlagen und bietet Ansätze, die Entwicklern einen Vorteil bei der Gestaltung ihrer Software-Architektur bringen soll.
 
 Ein Entwickler soll außerdem nach dem Studium dieser Arbeit eine konkrete Vorstellung davon besitzen, welche Voraussetzungen ein Framework oder eine Game-Engine erfüllen muss, damit die Konzepte möglichst leicht umzusetzen sind.
 
-Die Arbeit soll eine Blaupause liefern, welche andere Entwickler nutzen können, um einen leichteren Einstieg in ein Multiplayer-Projekt zu gewährleisten. Diese Blaupause soll allerdings derart generisch sein, dass sie unabhängig von einem konkreten Implementierungs-Kontext funktioniert. Die beschriebenen Konzepte sollen auf möglichst viele Szenarien anwendbar sein. Der Fokus hier soll auf dem Matchmaking liegen. Der Begriff Matchmaking wird später noch genauer erläutert. [@Dennis, ist "spätere" Erklären von Begriffen in Ordnung?]
+Die Arbeit soll eine Blaupause liefern, welche andere Entwickler nutzen können, um einen leichteren Einstieg in ein Multiplayer-Projekt zu gewährleisten. Diese Blaupause soll allerdings derart generisch sein, dass sie unabhängig von einem konkreten Implementierungskontext funktioniert. Die beschriebenen Konzepte sollen auf möglichst viele Szenarien anwendbar sein. Der Fokus hier soll auf dem Matchmaking liegen. Auf den Begriff Matchmaking wird zu einem späteren Zeitpunkt genauer eingegangen.
 
-Als Proof-of-Concept soll die eigene Implementierung eines Hide-and-Seek Multiplayer-Spiels dienen, welches sich an den abstrahierten Konzepten orientert, bzw. diese implementiert.
+Durch die Konzepte sollen verschiedene Use cases in der Multiplayer-Spieleprogrammierung abgedeckt werden. Beispiele sind das Aufbauen und Trennen von Client/Server Verbindungen, Matchmaking und Spielerverwaltung.
+
+Als 'Proof-of-Concept' soll ein Prototyp eines Hide-and-Seek Multiplayer-Spiels dienen, welches sich an den abstrahierten Konzepten orientert, bzw. diese implementiert.
 
 Folgende Forschungsfragen soll die Arbeit beantworten:
 
-- Ist es durch die Aufstellung abstrakter Konzepte möglich, Entwicklern beim Einstieg in das Themenfeld zu helfen? 
+\label{f1}F1: Können durch die Untersuchung der beschriebenen Probleme Konzepte abgeleitet werden, die das Potential haben, diese Probleme zu lösen beziehungsweise zu vereinfachen?
 
-- Welche Einstiegshürden gibt es? Wobei würden sich angehende Entwickler mehr Unterstützung wünschen? Durch eine Umfrage innerhalb des THM Moduls "Softwaretechnik-Projekt", dessen Mitglieder im Rahmen dieses Moduls ein eigenes Multiplayer-Spiel entwickelt haben, sowie durch die Befragung angehender Junior-Spieleentwickler sollen die Annahmen dieser Arbeit bestätigt werden. [@Dennis, ist das so korrekt formuliert?]
-
-\section{Abgrenzung}
-
-Die Arbeit ist jedoch keine Schritt-für-Schritt Anleitung. Implementierungsdetails müssen vom Benutzer selbstständig konzipiert und umgesetzt werden. Es wird außerdem lediglich Rücksicht genommen auf Spielkonzepte, welche in der heutigen Industrie gängig sind. Es ist durchaus denkbar, dass zukünftige Multiplayer / Matchmaking Architekturen nicht mehr mit den hier beschriebenen Konzepten umzusetzen sind.
-
-Es ist außerdem nicht final bewiesen, dass die beschriebenen Methoden tatsächlich einen Mehrwert bei unterschiedlichen Projekten bieten. Die Konzepte wurden lediglich an einem eigenen Projekt getestet und validiert. Sie basieren auf der individuellen Erfahrung des Autors. Um zu testen, ob die Konzepte auch praxistauglich für verschiedene Arten von Projekten sind, muss eine weitergehende Untersuchung stattfinden.
-
-Die erarbeiteten Konzepte sind außerdem unabhängig von einer Game-Engine oder einem Framework. Durchaus ist es aber möglich, dass ein bestehendes Framework oder eine Game-Engine Hilfestellung bei der Implementierung der Konzepte bietet. 
+\label{f2}F2: Welche Einstiegshürden gibt es? Wobei würden sich angehende Entwickler mehr Unterstützung wünschen? 
 
 
 \section{Vorgehensweise}
 
-Aus der bisher gesammelten Praxiserfahrung werden Konzepte abstrahiert, welche jeweils einen bestimmten Einsatzzweck erfüllen sollen. Hierbei wurde auf Implementierungsdetails verzichtet und lediglich ein generelles Konzept erarbeitet, an welchem der Entwickler sich während des Implementierungsprozesses orientieren kann.
+\hyperref[f1]{F1} soll wie folgt beantwortet werden:
 
-Die Konzepte beinhalten die Teilgebiete: 
+Zunächst wird die Problemstellung anhand von Literatur und Internetquellen aufgezeigt und erläutert. 
 
-Varianten des Hostings / Abbildung der Serverstruktur. Gegenüberstellung Clienthosting / Dedicated Server (Remote Hosting)
+Aus der bisher gesammelten Praxiserfahrung und gefundenen Literatur werden Konzepte abstrahiert, welche jeweils einen bestimmten Einsatzzweck erfüllen sollen. Hierbei wurde auf Implementierungsdetails verzichtet und lediglich ein generelles Konzept erarbeitet, an welchem der Entwickler sich während des Implementierungsprozesses orientieren kann.
 
-Welche technischen Ressourcen werden für ein Multiplayer-Spiel benötigt?
+Jedes dieser Konzepte wurde in einem Prototyp umgesetzt, welche im Kapitel \hyperref[sec:realisierung]{Realisierung} näher vorgestellt wird.
 
-\begin{quote}
-Networking resources
-	
-"Distributed simulations face three resource limitations: network bandwidth, network 
-latency, and host processing power forhandling the network traffic (Singhal, 1996).These resources refer to the technical attributes of the underlying network and they impose physical restrictions, which the system cannot overcome and which must be considered in the design". \cite{Smed.2002} [@Dennis, in diesem Zitat gibt es eine weitere Referenz (Singhal, 1996), wie gehe ich damit um?]
-\end{quote}
+\hyperref[f2]{F2} soll wie folgt beantwortet werden:
 
-Welche Architektur ist für eine Spieleidee der beste Ansatz? 
+Parallel wird begonnen, eine Umfrage zu erstellen. Dieser beinhaltet konkrete Fragen an Multiplayer-Spieleentwickler. Die Fragen beziehen sich besonders auf mögliche Einstiegsschwierigkeiten bei der Multiplayer-Spieleentwicklung. Es werden angehende Entwickler in der Industrie sowie an der Hochschule befragt. Diese Umfrage wird gegen Ende der Arbeit ausgewertet. 
 
-\begin{quote}
-Distribution concepts
+\section{Abgrenzung}
 
-"There is not much we can do about the aforementioned resource limitations. Therefore, the problems of distributed interactive systems should be tackled on a higher level, which means choosing architectures for communication, data, and control. Still, sometimes the architecture alone cannot rid the system of resource limitations, and compensatory techniques are needed to relax the requirements." \cite{Smed.2002}
-\end{quote}
+Die Arbeit ist jedoch keine Schritt-für-Schritt Anleitung für Multiplayer-Spieleprojekte. Implementierungsdetails müssen von einem Entwickler, welcher diese Arbeit als Hilfsmittel nutzt, selbstständig konzipiert und umgesetzt werden. Es wird außerdem lediglich auf Spielkonzepte Rücksicht genommen(insbesondere Matchmaking), welche in der heutigen Industrie gängig sind\cite{Wikipediacontributors.}.Es ist durchaus denkbar, dass zukünftige Multiplayer/Matchmaking Architekturen nicht mehr mit den hier beschriebenen Konzepten umzusetzen sind.
 
-Matchmaking: Abstraktion durch weitere Software-Schicht, externe Schnittstelle. Eigene Matchmaking / Server Runner API umsetzen.
+Es ist außerdem nicht final bewiesen, dass die beschriebenen Methoden tatsächlich einen Mehrwert bei unterschiedlichen Projekten bieten. Die Konzepte wurden lediglich an einem Prototyp getestet und validiert. Um zu testen, ob die Konzepte auch praxistauglich für verschiedene Arten von Projekten sind, muss eine weitergehende Untersuchung stattfinden.
 
-Client-Modul: Kommunikation mit Matchmaking API, Beitritt in Spiel anhand von zugewiesener Server-Instanz.
-
-Server-Modul: Verwaltung der Clients, Verwaltung von Szenen (Offline-Szene, 1-n Online Szenen)
-
-Offline Szene: Modul zur Verwaltung im Offline Modus
-
-Server Modul: Vorbereitung der Spielszene in eigener Logik, "custom-server-ready-state"
-
-Online Szenen: Modul zur Verwaltung der Spieler in vorgeschalteten "Lobby" Spielszenen sowie im laufenden Spiel und dazwischen.
-
-(optional): Verwaltung von Accountinformationen, In-Game-Einkäufen und Freundeslisten
-
-Diese Konzepte behandeln Probleme, welche im Entwicklungsprozess von Multiplayer-Spielen auftreten können. 
-
-Jedes dieser Konzepte wurde in einer Beispielimplementierung umgesetzt, welche im Kapitel "Realisierung" näher vorgestellt wird.
+Die erarbeiteten Konzepte sind außerdem unabhängig von einer Game-Engine oder einem Framework. Durchaus ist es aber möglich, dass ein bestehendes Framework oder eine Game-Engine Hilfestellung bei der Implementierung der Konzepte bietet. 
 
 \section{Struktur der Arbeit}
 
-Dies Arbeit besteht aus der Einführung, in welcher die generelle Problemstellung erläutert, und die Forschungsfragen gestellt wurden. Ebenfalls wurde die Relevanz des Themengebiets verdeutlicht und eingeordnet.
+Diese Arbeit besteht aus der \hyperref[sec:einfuehrung]{Einführung}, in welcher die generelle Problemstellung erläutert, und die Forschungsfragen gestellt wurden. Ebenfalls wurde die Relevanz des Themengebiets verdeutlicht und eingeordnet.
 
-Im Anschluss wird der Hintergrund erklärt, dort sind alle Informationen zu finden, um die späteren Konzepte zu verstehen. Hier werden ebenfalls Begrifflichkeiten und Grundlagen erläutert [@Dennis, kann ich das so machen?]
+Im Anschluss wird der  \hyperref[sec:hintergrund]{Hintergrund} erklärt, dort sind alle Informationen zu finden, um die späteren Konzepte zu verstehen. Hier werden ebenfalls Begrifflichkeiten und Grundlagen erläutert.
 
-Das Kapitel "Konzepte" behandelt nun die erarbeiteten Konzepte, welche in Summe die oben beschriebene Blaupause abbilden. Es wird auf jedes einzelne Konzept im Detail eingegangen und genauer erklärt. 
+Das Kapitel \hyperref[sec:konzepte]{Konzepte} behandelt nun die erarbeiteten Konzepte, welche in Summe die oben beschriebene Blaupause abbilden. Es wird auf jedes einzelne Konzept im Detail eingegangen und genauer erklärt. 
  
-Anschließend werden die beschriebenen Konzepte in einer Beispielimplementierung umgesetzt, diese bildet das Kapitel "Realisierung". In diesem Kapitel findet sich kommentierter Beispielcode aus dem umgesetzten Projekt um einen besseren Eindruck der gelösten Probleme zu bekommen.
+Anschließend werden die beschriebenen Konzepte in einem Prototyp umgesetzt, dieser wird im Kapitel \hyperref[sec:realisierung]{Realisierung} näher erklärt. In diesem Kapitel befindet sich kommentierter Beispielcode aus dem umgesetzten Prototyp um einen besseren Eindruck der gelösten Probleme zu bekommen.
 
-In der Zusammenfassung werden die Ergebnisse der Arbeit beleuchtet und ein Ausblick aufgezeigt.
+In der \hyperref[sec:zusammenfassung]{Zusammenfassung} werden die Ergebnisse der Arbeit beleuchtet und ein Ausblick aufgezeigt.
