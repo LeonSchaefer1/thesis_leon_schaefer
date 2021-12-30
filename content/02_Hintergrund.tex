@@ -13,10 +13,55 @@ Online-Videospiele sind aus technischer Sicht auch nichts anderes als Anwendunge
 
 Die logische Plattform baut auf der physischen Plattform auf und nutzt ihre Ressourcen. Die logische Plattform eines Online-Multiplayer Spiels kann unterteilt werden in Kommunikation zwischen Clients und Server, Datenspeicherung und Transfer, und Kontrolle des Spielflusses. Auf diese drei Punkte wird in den folgenden Sektionen näher eingegangen.
 
+\cite{Smed.2002c}
+
 
 \section{Verschiedene Arten des Hostings}
 
-Die Kommunikation zwischen Clients kommt auf die Art des Hostings an, hierauf wird in der nächsten Sektion näher eingegangen.
+Die Kommunikation zwischen Clients und Server kann in zwei verschiedenen Varianten vorkommen:
+
+"Client-Host":
+
+\begin{figure}
+	\centering
+	\includegraphics{images/Client_Host.png}
+	\caption[Client-Server Modell]{Das Client-Host Modell einfach veranschaulicht}
+	\label{pic:Client_Host}
+\end{figure}
+
+
+
+
+Bei dieser Variante wird der Serverprozess auf dem selben Gerät ausgeführt, auf dem auch eine Client-Instanz gestartet wurde. Ein Spieler übernimmt also "selbst" das Hosting. Andere Clients haben die Information, welcher Client einen Serverprozess "besitzt" und wie sie sich dorthin verbinden können.
+
+Vorteile: Die Unabhängigkeit von Hardwareressourcen für Entwickler, dieses "Problem" wird schlichtweg an die Spieler ausgelagert. 
+
+Nachteile: Da der Serverprozess nun ebenfalls auf einem Gerät läuft, auf welches Spieler Zugriff haben gibt es ebenfalls mehr Möglichkeiten des Hackings (Spielmanipulation). Die Entwickler haben keinerlei Einfluss auf die Serverprozesse, welche ein Spieler startet.
+
+"Client-Server":
+
+\begin{figure}
+\centering
+\includegraphics{images/Client_Server.png}
+\caption[Client-Server Modell]{Das Client-Server Modell einfach veranschaulicht}
+\label{pic:Client_Server}
+\end{figure}
+
+
+
+Diese Variante trennt Client und Server physikalisch von einander. Serverprozesse werden außerhalb einer Client-Umgebung gestartet und verwaltet. Clients haben einen (oder mehrere) zentrale Zielsysteme, zu welchen sie sich verbinden können.
+
+Vorteile: 
+
+Mehr "Kontrolle" auf Seiten der Entwickler. Hacking ist deutlich erschwert. Die Software-Architektur kann verhindern, dass spielentscheidende Daten nicht in der Hand der Spieler liegen, und somit ein sicheres und faires Spiel gewährleistet werden kann.
+
+
+Nachteile: 
+
+Die Kosten für Hardware und Bandbreite skalieren mit den Spielerzahlen. Diese Tatsache kann sehr schnell hohe Kosten verursachen. \cite{Deng.2018}
+
+Ein Ausfall des zentralen Servers kann dazu führen, dass ein Großteil der Spielerfahrung nicht mehr spielbar ist. 
+
 
 \section{Datenspeicherung und Transfer}
 
