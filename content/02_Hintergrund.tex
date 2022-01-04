@@ -32,11 +32,12 @@ Die Kommunikation zwischen Clients und Server kann in zwei verschiedenen Variant
 
 
 
-Bei dieser Variante wird der Serverprozess auf dem selben Gerät ausgeführt, auf dem auch eine Client-Instanz gestartet wurde. Ein Spieler übernimmt also "selbst" das Hosting. Andere Clients haben die Information, welcher Client einen Serverprozess "besitzt" und wie sie sich dorthin verbinden können.
+Bei dieser Variante wird der Serverprozess auf dem selben Gerät ausgeführt, auf dem auch eine Client-Instanz gestartet wurde. Ein Spieler übernimmt also "selbst" das Hosting. Andere Clients haben die Information, welcher Client einen Serverprozess "besitzt" und wie sie sich dorthin verbinden können. 
 
 Vorteile: Die Unabhängigkeit von Hardwareressourcen für Entwickler, dieses "Problem" wird schlichtweg an die Spieler ausgelagert. 
 
 Nachteile: Da der Serverprozess nun ebenfalls auf einem Gerät läuft, auf welches Spieler Zugriff haben gibt es ebenfalls mehr Möglichkeiten des Hackings (Spielmanipulation). Die Entwickler haben keinerlei Einfluss auf die Serverprozesse, welche ein Spieler startet.
+\cite{Smed.2002}
 
 "Client-Server":
 
@@ -54,7 +55,7 @@ Diese Variante trennt Client und Server physikalisch von einander. Serverprozess
 Vorteile: 
 
 Mehr "Kontrolle" auf Seiten der Entwickler. Hacking ist deutlich erschwert. Die Software-Architektur kann verhindern, dass spielentscheidende Daten nicht in der Hand der Spieler liegen, und somit ein sicheres und faires Spiel gewährleistet werden kann.
-
+\cite{Smed.2002}
 
 Nachteile: 
 
@@ -65,7 +66,24 @@ Ein Ausfall des zentralen Servers kann dazu führen, dass ein Großteil der Spie
 
 \section{Datenspeicherung und Transfer}
 
-Die Datenspeicherung erfolgt je nach Hosting auf unterschiedliche Art und Weise. Entweder
+Um ein bestmögliches Spielerlebnis zu ermöglichen, sollte innerhalb der Entwicklung von Online Multiplayerspielen darauf geachtet werden, dass spielentscheidende Daten schnellstmöglich zwischen den Clients synchronisiert werden. Wie auch bei anderen Echtzeitsystemen \cite{Wikipedia.2021} kommt es also auch bei der Entwicklung von dieser Art von Software darauf an, Daten zu serialisieren \cite{Wikipedia.2019}. 
+
+Daten unterscheiden sich im Kontext der Online Spielentwicklung grundsätzlich nicht großartig von anderer Software. Typischerweise werden Programmiersprachen wie C\# oder C++ genutzt, um Klassen und Datenstrukturen zu erstellen, welche die eigene Spiellogik abbilden. \cite{Glinka.2008}
+
+Das folgende rudimentäre Klassendiagramm zeigt zwei simple Klassen. Eine Spielerklasse, welche Informationen über den Spieler enthält sowie eine Network Manager Klasse, welche alle Spieler verwaltet.
+
+\begin{figure}
+	\centering
+	\includegraphics{images/UML_class_Player_NM.png}
+	\caption[UML Klassen]{UML Klasse Player und Network Manager}
+	\label{pic:UML_class_Player_NM}
+\end{figure}
+
+Das Beispiel hat nicht den Anspruch auf Vollständigkeit, soll jedoch illustrieren, auf welche Art und Weise Daten typischerweise innerhalb eines Multiplayer-Kontextes verwaltet werden.
+
+Der Entwickler entscheidet hierbei selbst, welche Informationen in welchem Kontext vorhanden ist. Konkret muss sich ein Entwickler stets die Frage stellen, ob eine Information im Server-Kontext oder im Client-Kontext verwaltet bzw. verarbeitet werden soll.
+
+Serialisierte Daten werden über ein Netzwerk transportiert. Je Nach Art des Hostings erfolgt ein Umweg über eine Server-Instanz, oder direkt zu einem anderen Client. \cite{Smed.2002c}
 
 \section{Kontrolle des Spielflusses}
 
