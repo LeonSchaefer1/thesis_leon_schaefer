@@ -74,7 +74,7 @@ Das folgende rudimentäre Klassendiagramm zeigt zwei simple Klassen. Eine Spiele
 
 \begin{figure}
 	\centering
-	\includegraphics{images/UML_class_Player_NM.png}
+	\includegraphics[width=150mm]{images/UML_class_Player_NM.png}
 	\caption[UML Klassen]{UML Klasse Player und Network Manager}
 	\label{pic:UML_class_Player_NM}
 \end{figure}
@@ -85,9 +85,32 @@ Der Entwickler entscheidet hierbei selbst, welche Informationen in welchem Konte
 
 Serialisierte Daten werden über ein Netzwerk transportiert. Je Nach Art des Hostings erfolgt ein Umweg über eine Server-Instanz, oder direkt zu einem anderen Client. \cite{Smed.2002c}
 
-\section{Kontrolle des Spielflusses}
+\section{Informationskontrolle und Interest Management}
 
--> Interest Management
+
+"Welche Information soll zu welchem Zeitpunkt in welchem Kontext verfügbar sein?" Diese Frage müssen sich Multiplayer-Spieleentwickler aus verschiedenen Gründen regelmäßig stellen.
+Die Gründe sind:
+
+Security:
+--> Beispiel: Bei einem Online-Poker Spiel wäre es fatal, wenn ein Mitspieler jederzeit über alle Karten seiner Mitspieler Kenntnis hätte. 
+
+Network traffic:
+--> Beispiel: In Mario Kart sammelt ein Spieler ein Item ein. Der Server würfelt für diesen Spieler ein zufälliges Item aus, welches der Spieler im Anschluss verwenden soll. Die Information über das Resultat der Zufallsauswahl sollte an den jeweiligen Spieler gesendet werden, welcher dieses Item erhalten soll. Alle Anderen Spieler muss diese Information nicht interessieren. 
+
+Interest Management:
+
+Interest Management beschreibt ein Konzept, welches deligiert, welche Informationen in welchem Kontext zu welcher Zeit für welche Personen verfügbar sind. Befindet sich der Spieler in einem bestimmten Bereich einer Spielwelt, kann das Interest Management dafür sorgen, dass dieser Spieler für manche Spieler sichtbar, und für manche Spieler nicht sichtbar ist, je nachdem wie nahe sich die Spieler zueinander befinden, oder in welchem Areal der Spielwelt sie sich befinden.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=150mm]{images/interest_management.png}
+	\caption[Interest Management]{Illustration des Konzepts Interest Management. \cite{JeromeRenaux.2017} }
+	\label{pic:interest_management}
+\end{figure}
+
+Dieses Konzept wird besonders oft in MMO-Spielen benutzt, damit ein Server mehrere Tausend Spieler ohne Abstürze verwalten kann. 
+
+\cite{Smed.2002c}
 
 
 \section{Matchmaking}
