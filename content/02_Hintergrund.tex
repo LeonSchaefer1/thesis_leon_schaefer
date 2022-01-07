@@ -115,5 +115,52 @@ Dieses Konzept wird besonders oft in MMO-Spielen benutzt, damit ein Server mehre
 
 \section{Matchmaking}
 
+Matchmaking bei Multiplayer Online Spielen ist ein Dienst, der es Spielern ermöglicht andere Mitspieler oder Gegner zu finden. \cite{.2014}
+
+In dieser Arbeit wird auf einige Varianten solche Matchmaking Dienste näher eingegangen. Die häufigsten Konzepte von Matchmaking Diensten sind:
+
+Playlists:
+Playlists sind automatisch verwaltete Ströme von "Spielsitzungen", denen die Spieler nach Belieben beitreten und Verlassen können. Anhand einer Reihe vordefinierter Regeln wird die Konfiguration der einzelnen Sitzungen festgelegt, ohne dass ein Mensch eingreifen muss.  
+
+Die Spiele bieten in der Regel eine Auswahl an thematischen Wiedergabelisten (z. B. Teams oder Einzelspieler, ausgefallene Regeln usw.), um verschiedenen Geschmäckern oder Stimmungen gerecht zu werden. Da die Wiedergabelisten von Servern verwaltet werden, die vom Entwickler des Spiels kontrolliert werden, können sie im Laufe der Zeit geändert werden.
+
+Wenn ein Spieler eine Wiedergabeliste auswählt, schließt er sich einem Pool von anderen Spielern an, die die gleiche Wahl getroffen haben. Der Playlist-Server verbindet sie dann entweder mit einer bestehenden Sitzung oder erstellt eine neue. 
+
+Parties:
+
+Partys sind Gruppen von Spielern, die von Matchmaking-Systemen als eine Einheit behandelt werden. Eine Gruppe kann von Sitzung zu Sitzung wechseln, ohne dass ihre Spieler voneinander getrennt werden. Das Konzept eignet sich besonders gut für Wiedergabelisten, die automatisch die Logistik der Suche oder Erstellung von Spielsitzungen mit genügend Platz für die gesamte Gruppe übernehmen können. 
+
+Lobbies:
+
+Lobbys sind Menübildschirme, in denen die Spieler die bevorstehende Spielsitzung einsehen, die Ergebnisse der letzten Sitzung prüfen, ihre Einstellungen ändern und miteinander sprechen können.
+
+In vielen Spielen kehren die Spieler am Ende jeder Sitzung in die Lobby zurück. In einigen Spielen werden Spieler, die einer bereits begonnenen Sitzung beitreten, bis zum Beginn der nächsten Sitzung in der Lobby untergebracht. Da Lobbys nur wenige Ressourcen verbrauchen, werden sie manchmal zusätzlich als "Warteschleife" für Spieler verwendet, bis ein geeigneter Gastgeber für die nächste Sitzung gefunden ist.
+
+Lobbys, die von Playlists erstellt werden, haben oft einen Countdown-Timer, bevor die Sitzung beginnt, während Lobbys, die von einem Spieler erstellt werden, im Allgemeinen nach dessen Ermessen übergehen.
+
+Ranking:
+
+Viele Matchmaking-Systeme verfügen über ein Ranglistensystem, mit dem versucht wird, Spieler mit ungefähr gleichen Fähigkeiten zusammenzubringen. Ein Beispiel dafür ist das TrueSkill-System von Xbox Live.
+
+Spiele wie League of Legends verwenden Divisionen und Ränge für ihr Matchmaking-Bewertungssystem. Jeder Spieler tritt in verschiedenen Rängen an: Eisen, Bronze, Silber, Gold, Platin, Diamant, Meister, Großmeister, Herausforderer, und für jeden Sieg gibt es Ligapunkte, für jede Niederlage werden Ligapunkte abgezogen.
+
+Bei Spielen mit Rangliste werden in der Regel nicht gewertete Sitzungen für Spieler angeboten, die nicht wollen, dass ihre Leistung aufgezeichnet und analysiert wird. Diese werden getrennt gehalten, damit sich rangierte und nicht rangierte Spieler nicht vermischen. Videospiele wie League of Legends, Counter-Strike: Global Offensive, Rocket League und Brawlhalla verwenden das Elo-Bewertungssystem in ihren Ranglistenspielen.
+
+Server browsers:
+
+Einige Spiele (vor allem solche mit dedizierten Servern) zeigen den Spielern eine Liste aktiver Sitzungen an und ermöglichen ihnen, manuell eine Sitzung auszuwählen. Dieses System kann in Verbindung mit Ranglisten und Lobbys verwendet werden, wird aber durch die On-Demand-Sitzungserstellung von Wiedergabelisten vereitelt.
+
+Die meisten dieser Server-Browser ermöglichen es den Spielern, die Ergebnisse zu filtern, die sie liefern. Zu den üblichen Filterkriterien gehören Servername, Spielerzahl, Spielmodus und Latenzzeit. 
+
+Contacts lists:
+
+Eine der grundlegendsten und gängigsten Formen des Matchmaking besteht darin, den Spielern eine Liste anderer Spieler zur Verfügung zu stellen, die sie bereits kennengelernt haben und mit denen sie vielleicht wieder spielen möchten. Der Status jedes Spielers (offline, online, spielend) wird angezeigt, es besteht die Möglichkeit, einer laufenden Sitzung beizutreten, und im Allgemeinen ist es möglich, Chat-Nachrichten zu senden.
+
+In vielen Fällen werden die Kontaktlisten von der Plattform verwaltet, auf der ein Spiel läuft (z. B. Xbox Live, PlayStation Network, Steam), um den Spielern den Aufwand zu ersparen, viele separate Listen für viele einzelne Spiele zu verwalten. 
+
+
+
+
+\cite{Wikipedia.2021b}
 
 // WEITERE IDEEN: Consistency and Responsiveness
