@@ -1,18 +1,15 @@
 \chapter{Konzepte}
 \label{sec:konzepte}
 
-Varianten des Hostings / Abbildung der Serverstruktur. Gegenüberstellung Clienthosting / Dedicated Server (Remote Hosting)
+In diesem Kapitel werden Konzepte beschrieben, die möglichst abstrakt gehalten sind. Entwickler eines Online-Multiplayer Spiels sollen anhand von diesen Konzepten eine Hilfestellung bekommen, um einen roten Faden in ihrer Entwicklung verfolgen zu können.
 
-Welche technischen Ressourcen werden für ein Multiplayer-Spiel benötigt?
+Bevor eines dieser Konzepte angewandt werden kann, müssen folgende Voraussetzungen erfüllt sein:
 
-\begin{quote}
-	Networking resources
-	
-	"Distributed simulations face three resource limitations: network bandwidth, network 
-	latency, and host processing power forhandling the network traffic (Singhal, 1996).These resources refer to the technical attributes of the underlying network and they impose physical restrictions, which the system cannot overcome and which must be considered in the design". \cite{Smed.2002} [@Dennis, in diesem Zitat gibt es eine weitere Referenz (Singhal, 1996), wie gehe ich damit um?]
-\end{quote}
+1. Das grundsätzliche Spielkonzept wurde erarbeitet und steht fest.
 
-Welche Architektur ist für eine Spieleidee der beste Ansatz? 
+2. Anhand von dem festgelegten Spielkonzept kann abgeschätzt werden, ob sich für das Spiel eine Client / Server oder eine Client / Host Architektur eignet.
+
+Sollte das Team bzw. der Solo-Entwickler zum Entschluss gekommen sein dass sich ein Client / Server Modell am besten für den spezifischen Use-Case eignet, so müssen vorab Vorkehrungen getroffen werden, um die Hardware-Ressourcen für den späteren Server-Runner sicher zu stellen. Die Grundvoraussetzung ist jedoch ein aus dem Internet erreichbarer PC mit einer festen IP-Adresse.
 
 \begin{quote}
 	Distribution concepts
@@ -20,16 +17,56 @@ Welche Architektur ist für eine Spieleidee der beste Ansatz?
 	"There is not much we can do about the aforementioned resource limitations. Therefore, the problems of distributed interactive systems should be tackled on a higher level, which means choosing architectures for communication, data, and control. Still, sometimes the architecture alone cannot rid the system of resource limitations, and compensatory techniques are needed to relax the requirements." \cite{Smed.2002}
 \end{quote}
 
-Matchmaking: Abstraktion durch weitere Software-Schicht, externe Schnittstelle. Eigene Matchmaking / Server Runner API umsetzen.
 
-Client-Modul: Kommunikation mit Matchmaking API, Beitritt in Spiel anhand von zugewiesener Server-Instanz.
+Nun gilt es einen passenden Technologie-Stack zu finden. Hier gibt es keine Klare Empfehlung, jedoch können die in diesem Kapitel beschriebenen Konzepte als Entscheidungshilfe dienen. Auf dem offenen Markt existieren bereits Frameworks \& Game Engines, die Manche dieser Konzepte bereits implementiert haben und als Libraries für Entwickler bereitstellen.
 
-Server-Modul: Verwaltung der Clients, Verwaltung von Szenen (Offline-Szene, 1-n Online Szenen)
+\cite{MFatihMAR.2021}
 
-Offline Szene: Modul zur Verwaltung im Offline Modus
 
-Server Modul: Vorbereitung der Spielszene in eigener Logik, "custom-server-ready-state"
+\section{API für Matchmaking \& Server Runner}
 
-Online Szenen: Modul zur Verwaltung der Spieler in vorgeschalteten "Lobby" Spielszenen sowie im laufenden Spiel und dazwischen.
+Dieses Konzept ist optional und muss nur dann berücksichtigt werden, falls für das Projekt ein Client / Server Modell angestrebt ist.
 
-(optional): Verwaltung von Accountinformationen, In-Game-Einkäufen und Freundeslisten        
+Bei diesem Konzept muss eine API entworfen werden, welche unabhängig von einem existierenden Client oder Serverprozess arbeitet. Diese API hat 2 grundsätzliche Aufgaben. 
+
+Matchmaking:
+
+Die API muss einen Algorithmus implementieren, welcher mehrere Spieler zu einer Spiel-Session zusammenführt. Mögliche Matchmaking Konzepte sind bereits im Hintergrund-Kapitel beschrieben. Die Matchnaking API verwaltet als eine Liste an aktiven Serverprozessen sowie die Information, wie man sich zu ihnen verbindet. In der Regel wird pro Serverprozess ein Netzwerk-Port an der Server-Maschine reserviert, auf denen sich dann N Spieler verbinden können.
+
+Je nach Spielkonzept können hunderte, tausende Serverprozesse existieren, welche jeweils nur eine vergleichsweise geringe Anzahl (1-20) an Spieler verwalten. Spielkonzepte, welche viele Spieler (200-1000) innerhalb eines einzigen Serverprozesses voraussetzten, erzeugen dagegen zwar quantitativ weniger Serverprozesse, diese neigen aber in der Regel schnell zu Überlastung. Neben der Umsetzung von Interest Management und einer schlanken Architektur für möglichst wenig Network-Traffic kann aber auch die Matchmaking API Abhilfe schaffen, bspw. durch "Umverlegung" von Spielern auf andere oder neue Serverprozesse.
+
+
+Server Runner:
+
+Neben dem Matchmaking ist die API ebenfalls auch zuständig für das Starten und die Überwachung von Serverprozessen. 
+
+--> Belastungstests schreiben
+
+Je nach Use-Case sind weitere Aufgaben denkbar:
+--> Datenbank für Authentifizierung / Komminikation mit Auth-Service Providern
+--> Datenbank für InGame Shop / Kommunikation mit externen Lösungen
+
+\section{Client Connection Manager}
+
+\section{Serverside Client Management}
+
+\section{Prepare-Game-Manager}
+
+\section{Client UI Controllers}
+
+\section{Progress Manager / State Manager}
+
+\section{Spawn Manager}
+
+\section{Entwicklung sonstiger Server Logik}
+
+(Hier vielleicht noch ein paar Konzepte rausarbeiten)
+
+\section{Entwicklung sonstiger Client Logik}
+
+(Hier vielleicht noch ein paar Konzepte rausarbeiten)
+
+\section{Studienkonzept}
+
+Wie können diese Konzepte auf Hand und Fuß überprüft werden?
+
