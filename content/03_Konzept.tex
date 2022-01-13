@@ -25,8 +25,6 @@ Nun gilt es einen passenden Technologie-Stack zu finden. Hier gibt es keine Klar
 
 \section{API für Matchmaking \& Server Runner}
 
-Dieses Konzept ist optional und muss nur dann berücksichtigt werden, falls für das Projekt ein Client / Server Modell angestrebt ist.
-
 Bei diesem Konzept muss eine API entworfen werden, welche unabhängig von einem existierenden Client oder Serverprozess arbeitet. Diese API hat 2 grundsätzliche Aufgaben. 
 
 Matchmaking:
@@ -35,24 +33,53 @@ Die API muss einen Algorithmus implementieren, welcher mehrere Spieler zu einer 
 
 Je nach Spielkonzept können hunderte, tausende Serverprozesse existieren, welche jeweils nur eine vergleichsweise geringe Anzahl (1-20) an Spieler verwalten. Spielkonzepte, welche viele Spieler (200-1000) innerhalb eines einzigen Serverprozesses voraussetzten, erzeugen dagegen zwar quantitativ weniger Serverprozesse, diese neigen aber in der Regel schnell zu Überlastung. Neben der Umsetzung von Interest Management und einer schlanken Architektur für möglichst wenig Network-Traffic kann aber auch die Matchmaking API Abhilfe schaffen, bspw. durch "Umverlegung" von Spielern auf andere oder neue Serverprozesse.
 
-
 Server Runner:
 
-Neben dem Matchmaking ist die API ebenfalls auch zuständig für das Starten und die Überwachung von Serverprozessen. 
+Neben dem Matchmaking ist die API ebenfalls auch zuständig für das Starten und die Überwachung von Serverprozessen.
+Ebenfalls können technische Statusinformationen über aktuell laufende Spiel innerhalb eines Serverprozesses von der API verwaltet werden (Bspw. ob es möglich ist einem Server beizutreten, oder wieviele Spieler bereits auf einem Serverprozess spielen)
 
---> Belastungstests schreiben
+\begin{figure}
+	\centering
+	\includegraphics[width=150mm]{images/API_Konzept_Diagramm.png}
+	\caption[API Konzept Diagramm]{Veranschaulichung des API Konzepts}
+	\label{pic:API_Konzept_Diagramm}
+\end{figure}
 
-Je nach Use-Case sind weitere Aufgaben denkbar:
---> Datenbank für Authentifizierung / Komminikation mit Auth-Service Providern
+
+Je nach Use-Case kann das Aufgabenfeld der API um weitere Punkte erweitert werden, hier ein paar Beispiele:
+--> Datenbank für Authentifizierung bzw. Kommunikation mit externen SSO-Service Providern \cite{Wikipedia.2021c} 
 --> Datenbank für InGame Shop / Kommunikation mit externen Lösungen
 
+
+\section{Client UI Controller}
+
+// TODO Add Content
+
 \section{Client Connection Manager}
+
+Das Konzept Client Connection Manager beschreibt eine Softwarekomponente, welche folgende Aufgaben umsetzen muss:
+
+- Implementierung von clientseitigen Methoden zum Informationsaustausch mit Matchmaking API.
+Z.B. stellt die Matchmaking API dem Client über HTTP-Kommunikation Informationen bereit, mit denen sich der Client auf einen speziellen Server verbinden kann (IP + Port).
+
+// TODO: Genauer erklären, was ist IP und PORT
+
+- Verarbeitung der von Matchmaking API bereitgestellten Informationen. 
+
+Z.B. könnte die Matchmaking API einem Client die Information bereit stellen, dass aus einem bestimmten Grund dem angeforderten Serverbeitritt verweigert wird. Diese Information muss der Client Connection Manager "Zwischenspeichern" und verwalten.
+
+- Aufruf von Methoden eines Client UI Controllers.
+
+Z.B. Die soeben erlangte Information über den verweigerten Serverbeitritt muss nun dem Nutzer dargestellt werden, hierfür ruft der Client Connection Manager Funktionen auf, welche ein Client UI Controller implementiert hat.)
+
+Handler-Funktionen und Callbacks für clientseitige Konsequenzen bei Netzwerkabbruch, manuellem Verlassen einer Server-Session oder sonstigen Abbruchgründen, welche dazu führen, dass eine Online-Spielsession verlassen wird.
+
+--> INSERT ILLUSTRATION <--
 
 \section{Serverside Client Management}
 
 \section{Prepare-Game-Manager}
 
-\section{Client UI Controllers}
 
 \section{Progress Manager / State Manager}
 
