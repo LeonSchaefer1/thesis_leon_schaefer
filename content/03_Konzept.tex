@@ -40,7 +40,7 @@ Ebenfalls können technische Statusinformationen über aktuell laufende Spiel in
 
 \begin{figure}
 	\centering
-	\includegraphics[width=150mm]{images/API_Konzept_Diagramm.png}
+	\includegraphics[width=150mm]{images/API_Konzept_Diagramm.jpg}
 	\caption[API Konzept Diagramm]{Veranschaulichung des API Konzepts}
 	\label{pic:API_Konzept_Diagramm}
 \end{figure}
@@ -51,18 +51,27 @@ Je nach Use-Case kann das Aufgabenfeld der API um weitere Punkte erweitert werde
 --> Datenbank für InGame Shop / Kommunikation mit externen Lösungen
 
 
-\section{Client UI Controller}
+\section{Client UI \& Visual Controller}
 
-// TODO Add Content
+Das Konzepts des Client UI \& Visual Controllers beschreibt die Art und Weise, wie die Benutzeroberfläche und visuelle Ebene eines Spielers durch Antworten des Servers oder einzelner Spieleraktivitäten manipuliert wird.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=150mm]{images/Client_UI_und_Visual_Konzept.jpg}
+	\caption[Client UI \& Visual Controller Diagramm]{Veranschaulichung des Client UI \& Visual Controller Konzepts}
+	\label{pic:Client_UI_und_Visual_Konzept}
+\end{figure}
+
+Konkret sorgt ein Server-Ereignis, der Input eines Spielers (beispielsweise durch klicken eines Buttons oder einsammeln eines Gegenstands) oder eine andere Bedingung dafür, dass Funktionen innerhalb des Client UI \& Visual Controllers aufgerufen werden. Innerhalb dieser Funktionen werden Komponenten der Benutzeroberfläche wie z.b. Anzeigetexte, Bilder etc. oder Objekte innerhalb der Spielwelt selbst manipuliert.
+
+Wichtig ist, dass Funktionen des Client UI \& Visual Controller erst nach server- oder clientseitigen Überprüfungen ausgeführt werden. Der Controller selbst sollte nur überprüfen, ob die Komponente, welche er manipulieren will überhaupt existiert. Spielrelevante Logik, beispielsweise ob ein Spieler berechtigt ist, bestimmte Aktionen durchzuführen, ist nicht Teil des Client UI \& Visual Controllers.
 
 \section{Client Connection Manager}
 
 Das Konzept Client Connection Manager beschreibt eine Softwarekomponente, welche folgende Aufgaben umsetzen muss:
 
 - Implementierung von clientseitigen Methoden zum Informationsaustausch mit Matchmaking API.
-Z.B. stellt die Matchmaking API dem Client über HTTP-Kommunikation Informationen bereit, mit denen sich der Client auf einen speziellen Server verbinden kann (IP + Port).
-
-// TODO: Genauer erklären, was ist IP und PORT
+Z.B. stellt die Matchmaking API dem Client über HTTP-Kommunikation Informationen bereit, mit denen sich der Client auf einen speziellen Server verbinden kann (IP + Port). \cite{Wikipedia.2021d} \cite{Wikipedia.2021e}
 
 - Verarbeitung der von Matchmaking API bereitgestellten Informationen. 
 
@@ -72,18 +81,34 @@ Z.B. könnte die Matchmaking API einem Client die Information bereit stellen, da
 
 Z.B. Die soeben erlangte Information über den verweigerten Serverbeitritt muss nun dem Nutzer dargestellt werden, hierfür ruft der Client Connection Manager Funktionen auf, welche ein Client UI Controller implementiert hat.)
 
-Handler-Funktionen und Callbacks für clientseitige Konsequenzen bei Netzwerkabbruch, manuellem Verlassen einer Server-Session oder sonstigen Abbruchgründen, welche dazu führen, dass eine Online-Spielsession verlassen wird.
+- Ausführen von Handler-Funktionen und Auslösen von Callbacks für clientseitige Konsequenzen bei Netzwerkabbruch, manuellem Verlassen einer Server-Session oder sonstigen Abbruchgründen, welche dazu führen, dass eine Online-Spielsession verlassen wird.
 
---> INSERT ILLUSTRATION <--
+Z.B. Wird die notwendige Verbindung zum Internet während des Spiels unterbrochen. Der Client Connection Manager löst Callbacks aus, welche im Client UI \& Visual Controller implementiert sind. Diese Sorgen dafür, dass der Spieler zurück ins Hauptmenü geleitet wird, in dem eine Fehlermeldung dargestellt wird, welche erklärt warum das Spiel abgebrochen ist.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=150mm]{images/Client_Connection_Manager.jpg}
+	\caption[Client Connection Manager Diagramm]{Veranschaulichung des Client Connection Manager Konzepts}
+	\label{pic:Client_Connection_Manager}
+\end{figure}
+
+
 
 \section{Serverside Client Management}
 
+// TODO Add Content
+
 \section{Prepare-Game-Manager}
 
+// TODO Add Content
 
 \section{Progress Manager / State Manager}
 
+// TODO Add Content
+
 \section{Spawn Manager}
+
+// TODO Add Content
 
 \section{Entwicklung sonstiger Server Logik}
 
@@ -94,6 +119,8 @@ Handler-Funktionen und Callbacks für clientseitige Konsequenzen bei Netzwerkabb
 (Hier vielleicht noch ein paar Konzepte rausarbeiten)
 
 \section{Studienkonzept}
+
+// TODO Add Content
 
 Wie können diese Konzepte auf Hand und Fuß überprüft werden?
 
