@@ -94,13 +94,39 @@ Z.B. Wird die notwendige Verbindung zum Internet während des Spiels unterbroche
 
 
 
-\section{Serverside Client Management}
+\section{Serverside Client Manager}
 
-// TODO Add Content
+Das Konzept des serverseitigen Client Manager beinhaltet die Verwaltung aller verbundener Clients innerhalb eines aktiven Serverprozesses. Insbesondere speichert der serverseitige Client Manager 2 Arten von Information über jeden Client:
+
+Einerseits werden Netzwerk-bezogene Informationen über einen Client gespeichert, im einfachsten Fall ist dies lediglich die IP Adresse des Hosts sowie der Port, auf welchem der Client seinen Kommunikationskanal geöffnet hat. Bei Spielkonzepten, welche eine weitergehende Authentifizierung des Spielers voraussetzen, können hier auch Benutzernamen, Benutzertags, Email-Adressen o.ä. gespeichert und weiterverarbeitet werden.
+
+Zum Anderen speichert und verwaltet der serverseitige Client Manager auch spielspezifische Informationen wie Bspw. den aktuellen Anzeigenamen, konfigurierte Individualisierung des Spielcharakters, Spielerrollen oder andere Eigenschaften, über die der Server während einer Spiel-Session Kenntnis haben sollte.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=150mm]{images/serversided_client_manager.jpg}
+	\caption[Serversided Client Manager]{Veranschaulichung des serverseitigen Client Manager Konzepts}
+	\label{pic:serversided_client_manager}
+\end{figure}
 
 \section{Prepare-Game-Manager}
 
-// TODO Add Content
+Der Prepare-Game-Manager ist Teil des Serverprozesses und beinhaltet alle Funktionen, welche nötig sind, um eine Spielszene vorzubereiten, bevor die Spieler ihr beitreten dürfen. Die Funktionen sollten konkret umsetzen:
+
+- Spawning \cite{Wikipedia.2020} von NPCs \cite{Wikipedia.2021f} oder Spielgegenständen, die in Abhängigkeit zur Anzahl der beitretenden Spieler, einer Spielkonfiguration oder sonstigen Parametern stehen.
+
+- Anpassung der Eigenschaften von bereits gespawnten NPCs oder Spielgegenständen, die in Abhängigkeit zur Anzahl der beitretenden Spieler, einer Spielkonfiguration oder sonstigen Parametern stehen.
+
+- Initialisierung der Spawnpunkte für Spieler
+
+- Abarbeitung sonstiger serverseitigen Abläufe, welche Voraussetzung für den Start des Spiels sind
+
+\begin{figure}
+	\centering
+	\includegraphics[width=150mm]{images/prepare_game_manager.jpg}
+	\caption[Prepare-Game-Manager]{Veranschaulichung des Prepare Game Manager Konzepts}
+	\label{pic:prepare_game_manager}
+\end{figure}
 
 \section{Progress Manager / State Manager}
 
