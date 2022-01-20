@@ -145,9 +145,18 @@ Außerdem ist der Progress Manager / Game-State Manager dafür verantwortlich, a
 	\label{pic:Progress_State_Manager}
 \end{figure}
 
-\section{Spawn Manager}
+\section{Runtime Spawn Manager}
 
-// TODO Add Content
+Der Runtime Spawn Manager verwaltet die zur Laufzeit zu erzeugenden Spieler und Nicht-Spieler Objekte. Konkret werden Funktionen des Runtime Spawn Managers ausgeführt, wenn ein spezifisches Event innerhalb einer Spiel-Session ausgelöst wird oder ein Spieler bzw. Nicht-Spieler-Character stirbt, und diese erneut an anderer Position spawnen sollen ("Re-Spawning"). Die Logik, wo genau ein Spieler oder Nicht-Spieler Objekt seine neue Einstiegsposition erhält, regelt ebenfalls der Runtime Spawn-Manager.
+
+Ein Beispiel: In einem Online Multiplayer Ego-Shooter \cite{Wikipedia.2021g} stirbt ein Spieler durch Schüsse anderer Spieler. Der Runtime Spawn Manager sorgt dafür, dass anhand von bestimmten, zur Laufzeit ausgerechneten Bedingungen eine neue Spawn-Position für den gestorbenen Spieler gefunden wird. 
+
+\begin{figure}
+	\centering
+	\includegraphics[width=150mm]{images/Runtime_Spawn_Manager.jpg}
+	\caption[Runtime Spawn Manager]{Veranschaulichung des Runtime Spawn Manager Konzepts}
+	\label{pic:Runtime_Spawn_Manager}
+\end{figure}
 
 \section{Entwicklung sonstiger Server Logik}
 
@@ -159,7 +168,21 @@ Außerdem ist der Progress Manager / Game-State Manager dafür verantwortlich, a
 
 \section{Studienkonzept}
 
-// TODO Add Content
+Wie bereits im Teil der Einführung erwähnt, hat diese Arbeit nicht den Anspruch zu beweisen, dass die Konzepte tatsächlich einen Mehrwert für eine Vielzahl an Projekten bieten. Um dies beweisen zu können, wäre eine weitere Feldstudie nötig. Im Rahmen dieser Arbeit wurde ein Studienkonzept erarbeitet, welches zukünftig für andere Arbeiten genutzt werden kann:
 
-Wie können diese Konzepte auf Hand und Fuß überprüft werden?
+Teil dieses Studienkonzepts müssen sein:
+
+Repräsentative Umfragen
+	--> Befragung von mehreren Hundert Personen
+	--> aus unterschiedlichen Online-Genres (MMORPG, First Person Shooter, Mobile-Games, etc.)
+	--> aus unterschiedlichen Ländern
+
+
+
+
+
+
+
+
+
 
