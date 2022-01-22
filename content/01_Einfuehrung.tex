@@ -11,33 +11,33 @@ Wegen der Marktentwicklung ist es für angehende Entwickler, welche in der Spiel
 
 \section{Problembeschreibung und Motivation}
 
-Konzeption und Entwicklung von Online-Multiplayer-Spielen stellt angehende Entwickler vor große Herausforderungen. Einer der Hauptunterschiede zwischen einem Multiplayer- und einem Einzelspieler-Spiel ist, dass eine Spielumgebung unabhängig von einem Spieler existiert. Beispielsweise benötigt das Versenden von Nachrichten über das Internet eine gewisse Zeit. Der Entwickler muss also herausfinden, wie man mit asynchroner Kommunikation, Clients und Servern umgeht. Ebenso stoßen Entwickler vor Probleme wie Hosting, Matchmaking und Datenverwaltung.
+Konzeption und Entwicklung von Online-Multiplayer-Spielen stellt angehende Entwickler vor große Herausforderungen. Einer der Hauptunterschiede zwischen einem Multiplayer- und einem Einzelspieler-Spiel ist, dass eine Spielumgebung unabhängig von einem Spieler existiert. Außerdem benötigt das Versenden von Nachrichten über das Internet eine gewisse Zeit. Der Entwickler muss also herausfinden, wie man mit asynchroner Kommunikation, Clients und Servern umgeht. Ebenso stoßen Entwickler vor Probleme wie Hosting, Matchmaking und Datenverwaltung.
 \cite{Payne.18.09.2019}
 
 Die Einstiegshürden sind groß, der Dschungel an Technologien und Frameworks unübersichtlich. \cite{MFatihMAR.2021}
 
-Einheitliche Vorgehensmodelle und Best-Practises gibt es nicht oder beziehen sich stets auf eine spezielle Art von Spieltyp. Das Thema Hosting ist ebenfalls ein komplexer Aspekt eines solchen Projekts, welcher von Anfängern oft nicht sofort durchschaut wird. Durch erste Projekterfahrung gewinnen die Entwickler nach und nach das Know-How, ohne ein erfahrenes Team sind die Chancen auf Misserfolg jedoch hoch. \cite{Payne.18.09.2019}
+Einheitliche Vorgehensmodelle und Best-Practises gibt es nicht oder beziehen sich stets auf eine spezielle Art von Spieltyp. Das Thema Hosting ist ebenfalls ein komplexer Aspekt eines solchen Projekts, welcher von Anfängern oft nicht sofort durchschaut wird. Durch erste Projekterfahrung gewinnen die Entwickler nach und nach das Know-How. Ohne ein erfahrenes Team sind die Chancen auf Misserfolg jedoch hoch. \cite{Payne.18.09.2019}
 
-Die Motivation für diese Arbeit war es diese Probleme zu untersuchen und Lösungsmöglichkeiten anhand von praktischen Konzepten zu schaffen. Angehende Entwickler können diese Konzepte in ihrem Praxisprojekt ausprobieren und idealerweise davon profitieren.
+Die Motivation für diese Arbeit war es, diese Probleme zu untersuchen und Lösungsmöglichkeiten anhand von praktischen Konzepten zu schaffen. Angehende Entwickler können diese Konzepte in ihrem Praxisprojekt ausprobieren und idealerweise davon profitieren.
 
 \section{Ziele dieser Arbeit}
 Die Arbeit setzt sich folgende Ziele:
 
-Um einen einfachen Einsteig in die Multiplayer-Spieleentwicklung zu gewährleisten, beschäftigt sich diese Arbeit mit einigen Grundlagen und bietet Ansätze, die Entwicklern einen Vorteil bei der Gestaltung ihrer Software-Architektur bringen soll.
+Um einen einfachen Einsteig in die Multiplayer-Spieleentwicklung zu gewährleisten, beschäftigt sich diese Arbeit mit einigen Grundlagen und bietet Ansätze, die Entwicklern einen Vorteil bei der anfängtlichen Gestaltung ihrer Software-Architektur bringen soll.
 
 Ein Entwickler soll außerdem nach dem Studium dieser Arbeit eine konkrete Vorstellung davon besitzen, welche Voraussetzungen ein Framework oder eine Game-Engine erfüllen muss, damit die Konzepte möglichst leicht umzusetzen sind.
 
-Die Arbeit soll eine Blaupause liefern, welche andere Entwickler nutzen können, um einen leichteren Einstieg in ein Multiplayer-Projekt zu gewährleisten. Diese Blaupause soll allerdings derart generisch sein, dass sie unabhängig von einem konkreten Implementierungskontext funktioniert. Die beschriebenen Konzepte sollen auf möglichst viele Szenarien anwendbar sein. Der Fokus hier soll auf dem Matchmaking liegen. Auf den Begriff Matchmaking wird zu einem späteren Zeitpunkt genauer eingegangen.
+Die Arbeit soll eine Blaupause liefern, welche andere Entwickler nutzen können, um einen leichteren Einstieg in ein Multiplayer-Projekt zu gewährleisten. Diese Blaupause soll allerdings derart generisch sein, dass sie unabhängig von einem konkreten Implementierungskontext funktioniert. Die beschriebenen Konzepte sollen auf möglichst viele Szenarien anwendbar sein.
 
-Durch die Konzepte sollen verschiedene Use cases in der Multiplayer-Spieleprogrammierung abgedeckt werden. Beispiele sind das Aufbauen und Trennen von Client/Server Verbindungen, Matchmaking und Spielerverwaltung.
+Durch die Konzepte sollen verschiedene Use cases in der Multiplayer-Spieleprogrammierung abgedeckt werden. Beispiele sind das Aufbauen und Trennen von Client/Server Verbindungen, Matchmaking \cite{Wikipedia.2021b} und Spielerverwaltung.
 
 Als 'Proof-of-Concept' soll ein Prototyp eines Hide-and-Seek Multiplayer-Spiels dienen, welches sich an den abstrahierten Konzepten orientert, bzw. diese implementiert.
 
 Folgende Forschungsfragen soll die Arbeit beantworten:
 
-\label{f1}F1: Können durch die Untersuchung der beschriebenen Probleme Konzepte abgeleitet werden, die das Potential haben, diese Probleme zu lösen beziehungsweise zu vereinfachen?
+\label{f1} \textsf{\Large F1:} Können durch die Untersuchung der beschriebenen Probleme Konzepte abgeleitet werden, die das Potential haben, diese Probleme zu lösen beziehungsweise zu vereinfachen?
 
-\label{f2}F2: Welche Einstiegshürden gibt es? Wobei würden sich angehende Entwickler mehr Unterstützung wünschen? 
+\label{f2} \textsf{\Large F2:} Wie könnte ein Studienkonzept aussehen, welches die beschriebenen Konzepte auf Massentauglichkeit in der Praxis untersucht?
 
 
 \section{Vorgehensweise}
@@ -52,15 +52,15 @@ Jedes dieser Konzepte wurde in einem Prototyp umgesetzt, welche im Kapitel \hype
 
 \hyperref[f2]{F2} soll wie folgt beantwortet werden:
 
-Parallel wird begonnen, eine Umfrage zu erstellen. Dieser beinhaltet konkrete Fragen an Multiplayer-Spieleentwickler. Die Fragen beziehen sich besonders auf mögliche Einstiegsschwierigkeiten bei der Multiplayer-Spieleentwicklung. Es werden angehende Entwickler in der Industrie sowie an der Hochschule befragt. Diese Umfrage wird gegen Ende der Arbeit ausgewertet. 
+Es wird ein Studienkonzept erarbeitet, welches beschreibt, wie durch wissenschaftliche Methoden und Forschung untersucht werden kann, ob die Konzepte einen tatsächlichen Mehrwert für angehende Entwickler bietet. Das Studienkonzept findet sich im Kapitel \hyperref[sec:konzepte]{Konzepte} in der Sektion \hyperref[sec:studienkonzept]{Studienkonzept}.
 
 \section{Abgrenzung}
 
-Die Arbeit ist jedoch keine Schritt-für-Schritt Anleitung für Multiplayer-Spieleprojekte. Implementierungsdetails müssen von einem Entwickler, welcher diese Arbeit als Hilfsmittel nutzt, selbstständig konzipiert und umgesetzt werden. Es wird außerdem lediglich auf Spielkonzepte Rücksicht genommen(insbesondere Matchmaking), welche in der heutigen Industrie gängig sind\cite{Wikipedia.2021b}. Es ist durchaus denkbar, dass zukünftige Multiplayer/Matchmaking Architekturen nicht mehr mit den hier beschriebenen Konzepten umzusetzen sind.
+Die Arbeit ist jedoch keine Schritt-für-Schritt Anleitung für Multiplayer-Spieleprojekte. Implementierungsdetails müssen von einem Entwickler, welcher diese Arbeit als Hilfsmittel nutzt, selbstständig konzipiert und umgesetzt werden. Es wird außerdem lediglich auf Spielkonzepte Rücksicht genommen(insbesondere Matchmaking), welche in der heutigen Industrie gängig sind\cite{Wikipedia.2021b}. Es ist durchaus denkbar, dass zukünftige Multiplayer/Matchmaking Architekturen nicht mehr mit den hier beschriebenen Konzepten umzusetbar sind.
 
-Es ist außerdem nicht final bewiesen, dass die beschriebenen Methoden tatsächlich einen Mehrwert bei unterschiedlichen Projekten bieten. Die Konzepte wurden lediglich an einem Prototyp getestet und validiert. Um zu testen, ob die Konzepte auch praxistauglich für verschiedene Arten von Projekten sind, muss eine weitergehende Untersuchung stattfinden.
+Es ist außerdem nicht final bewiesen, dass die beschriebenen Methoden tatsächlich einen Mehrwert bei unterschiedlichen Projekten bieten. Die Konzepte wurden lediglich an einem Prototyp getestet und validiert. Um zu testen, ob die Konzepte auch praxistauglich für verschiedene Arten von Projekten sind, muss eine weitergehende Untersuchung erfolgen. Diese kann anhand des in dieser Arbeit beschriebenen \hyperref[sec:studienkonzept]{Studienkonzept} stattfinden. 
 
-Die erarbeiteten Konzepte sind außerdem unabhängig von einer Game-Engine oder einem Framework. Durchaus ist es aber möglich, dass ein bestehendes Framework oder eine Game-Engine Hilfestellung bei der Implementierung der Konzepte bietet. 
+Die erarbeiteten Konzepte sind außerdem unabhängig von einer Game-Engine oder einem Framework. Durchaus ist es aber möglich, dass ein bestehendes Framework oder eine Game-Engine Hilfestellung bei der Implementierung der Konzepte bietet, oder diese bereits als Feature bereitstellt.
 
 \section{Struktur der Arbeit}
 

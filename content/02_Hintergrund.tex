@@ -3,15 +3,17 @@
 \chapter{Hintergrund}
 \label{sec:hintergrund}
 
+In diesem Kapitel wird das Hintergrundwissen erläutert, welches nötig ist um die Konzepte und Realisierung genauer zu verstehen. Unter anderem Wird auf die Grundlagen des Networkings, die verschiedenen Arten des Hosting, Datenspeicherung und Transfer, Informationskontrolle sowie Interest Management, Matchmaking und Synchronisation eingegangen.
+
 \section{Grundlagen des Networkings in Online-Videospielen}
 
 Die Grundlagen des Networkings in Videospielen lassen sich in zwei große Bereiche kategorisieren. Die physische und die logische Plattform. 
 
-Die physische Plattform setzt sich aus den physikalischen Komponenten zusammen, die zusammen eine Infrastruktur bilden. Hierzu zählt Hardware, welche in Rechenzentren eingesetzt wird, das lokale Endgerät wie z.B. ein Smartphone oder ein Personal Computer. Ebenfalls zählen Kabelleitungen und drahtlose Übertragungswege dazu. 
+Die physische Plattform setzt sich aus den physikalischen Komponenten zusammen, die vereint eine Infrastruktur bilden. Hierzu zählt Hardware, welche in Rechenzentren eingesetzt wird, das lokale Endgerät wie z.B. ein Smartphone oder Personal Computer. Ebenfalls zählen Kabelleitungen und drahtlose Übertragungswege dazu. 
 
-Online-Videospiele sind aus technischer Sicht auch nichts anderes als Anwendungen die miteinander kommunizieren. Die physischen Restriktionen wie Bandweite und Latenz können also ebenfalls auf den Kontext der Multiplayer-Spiele angewendet werden. Die Menge der Informationen, welche über ein Netzwerk versendet werden kann je nach Spieltyp sehr hoch skalieren, weshalb sich die Entwickler eines Multiplayer-Spiels intensiv mit der logischen Plattform beschäftigen müssen.
+Online-Videospiele sind aus technischer Sicht auch nichts anderes als Anwendungen, welche miteinander kommunizieren. Die physischen Restriktionen wie Bandweite und Latenz können also ebenfalls auf den Kontext der Multiplayer-Spiele angewendet werden. Die Menge an Informationen, welche über ein Netzwerk versendet werden kann je nach Spieltyp sehr hoch skalieren, weshalb sich die Entwickler eines Multiplayer-Spiels intensiv mit der logischen Plattform beschäftigen müssen.
 
-Die logische Plattform baut auf der physischen Plattform auf und nutzt ihre Ressourcen. Die logische Plattform eines Online-Multiplayer Spiels kann unterteilt werden in Kommunikation zwischen Clients und Server, Datenspeicherung und Transfer, und Kontrolle des Spielflusses. Auf diese drei Punkte wird in den folgenden Sektionen näher eingegangen.
+Die logische Plattform baut auf der physischen Plattform auf und nutzt ihre Ressourcen. Sie kann unterteilt werden in Kommunikation zwischen Clients und Server, Datenspeicherung und Transfer sowie Kontrolle des Spielflusses. Auf diese drei Punkte wird in den folgenden Sektionen näher eingegangen.
 
 \cite{Smed.2002c}
 
@@ -20,7 +22,7 @@ Die logische Plattform baut auf der physischen Plattform auf und nutzt ihre Ress
 
 Die Kommunikation zwischen Clients und Server kann in zwei verschiedenen Varianten vorkommen:
 
-"Client-Host":
+\textsf{\Large Client Host:}
 
 \begin{figure}
 	\centering
@@ -36,10 +38,10 @@ Bei dieser Variante wird der Serverprozess auf dem selben Gerät ausgeführt, au
 
 Vorteile: Die Unabhängigkeit von Hardwareressourcen für Entwickler, dieses "Problem" wird schlichtweg an die Spieler ausgelagert. 
 
-Nachteile: Da der Serverprozess nun ebenfalls auf einem Gerät läuft, auf welches Spieler Zugriff haben gibt es ebenfalls mehr Möglichkeiten des Hackings (Spielmanipulation). Die Entwickler haben keinerlei Einfluss auf die Serverprozesse, welche ein Spieler startet.
+Nachteile: Da der Serverprozess nun ebenfalls auf einem Gerät läuft, auf welches Spieler Zugriff haben gibt es ebenfalls mehr Möglichkeiten des Hackings (Spielmanipulation) \cite{Wikipedia.2021h}. Die Entwickler haben keinerlei Einfluss auf die Serverprozesse, welche ein Spieler startet.
 \cite{Smed.2002}
 
-"Client-Server":
+\textsf{\Large Client Server:}
 
 \begin{figure}
 \centering
@@ -54,7 +56,7 @@ Diese Variante trennt Client und Server physikalisch von einander. Serverprozess
 
 Vorteile: 
 
-Mehr "Kontrolle" auf Seiten der Entwickler. Hacking ist deutlich erschwert. Die Software-Architektur kann verhindern, dass spielentscheidende Daten nicht in der Hand der Spieler liegen, und somit ein sicheres und faires Spiel gewährleistet werden kann.
+Mehr Kontrolle auf Seiten der Entwickler. Hacking ist deutlich erschwert. Die Software-Architektur kann verhindern, dass spielentscheidende Daten nicht in der Hand der Spieler liegen, und somit ein sicheres und faires Spiel gewährleistet werden kann.
 \cite{Smed.2002}
 
 Nachteile: 
@@ -92,10 +94,10 @@ Serialisierte Daten werden über ein Netzwerk transportiert. Je Nach Art des Hos
 Die Gründe sind:
 
 Security:
---> Beispiel: Bei einem Online-Poker Spiel wäre es fatal, wenn ein Mitspieler jederzeit über alle Karten seiner Mitspieler Kenntnis hätte. 
+Beispiel: Bei einem Online-Poker Spiel wäre es fatal, wenn ein Mitspieler jederzeit über alle Karten seiner Mitspieler Kenntnis hätte. 
 
 Network traffic:
---> Beispiel: In Mario Kart sammelt ein Spieler ein Item ein. Der Server würfelt für diesen Spieler ein zufälliges Item aus, welches der Spieler im Anschluss verwenden soll. Die Information über das Resultat der Zufallsauswahl sollte an den jeweiligen Spieler gesendet werden, welcher dieses Item erhalten soll. Alle Anderen Spieler muss diese Information nicht interessieren. 
+Beispiel: In Mario Kart sammelt ein Spieler ein Item ein. Der Server würfelt für diesen Spieler ein zufälliges Item aus, welches der Spieler im Anschluss verwenden soll. Die Information über das Resultat der Zufallsauswahl sollte an den jeweiligen Spieler gesendet werden, welcher dieses Item erhalten soll. Alle Anderen Spieler muss diese Information nicht interessieren. 
 
 Interest Management:
 
@@ -108,7 +110,7 @@ Interest Management beschreibt ein Konzept, welches deligiert, welche Informatio
 	\label{pic:interest_management}
 \end{figure}
 
-Dieses Konzept wird besonders oft in MMO-Spielen benutzt, damit ein Server mehrere Tausend Spieler ohne Abstürze verwalten kann. 
+Dieses Konzept wird besonders oft in MMO-Spielen \cite{Wikipedia.2021i} benutzt, damit ein Server mehrere Tausend Spieler ohne Abstürze verwalten kann. 
 
 \cite{Smed.2002c}
 
@@ -120,6 +122,7 @@ Matchmaking bei Multiplayer Online Spielen ist ein Dienst, der es Spielern ermö
 In dieser Arbeit wird auf einige Varianten solche Matchmaking Dienste näher eingegangen. Die häufigsten Konzepte von Matchmaking Diensten sind:
 
 Playlists:
+
 Playlists sind automatisch verwaltete Ströme von "Spielsitzungen", denen die Spieler nach Belieben beitreten und Verlassen können. Anhand einer Reihe vordefinierter Regeln wird die Konfiguration der einzelnen Sitzungen festgelegt, ohne dass ein Mensch eingreifen muss.  
 
 Die Spiele bieten in der Regel eine Auswahl an thematischen Wiedergabelisten (z. B. Teams oder Einzelspieler, ausgefallene Regeln usw.), um verschiedenen Geschmäckern oder Stimmungen gerecht zu werden. Da die Wiedergabelisten von Servern verwaltet werden, die vom Entwickler des Spiels kontrolliert werden, können sie im Laufe der Zeit geändert werden.
@@ -158,9 +161,8 @@ Eine der grundlegendsten und gängigsten Formen des Matchmaking besteht darin, d
 
 In vielen Fällen werden die Kontaktlisten von der Plattform verwaltet, auf der ein Spiel läuft (z. B. Xbox Live, PlayStation Network, Steam), um den Spielern den Aufwand zu ersparen, viele separate Listen für viele einzelne Spiele zu verwalten. 
 
-
-
-
 \cite{Wikipedia.2021b}
 
-// WEITERE IDEEN: Consistency and Responsiveness
+\section{Synchronisation}
+
+// TODO Add Content

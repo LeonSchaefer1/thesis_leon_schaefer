@@ -1,7 +1,7 @@
 \chapter{Konzepte}
 \label{sec:konzepte}
 
-In diesem Kapitel werden Konzepte beschrieben, die möglichst abstrakt gehalten sind. Entwickler eines Online-Multiplayer Spiels sollen anhand von diesen Konzepten eine Hilfestellung bekommen, um einen roten Faden in ihrer Entwicklung verfolgen zu können.
+In diesem Kapitel werden Konzepte beschrieben, die möglichst abstrakt gehalten sind. Entwickler (Besonders Anfänger) eines Online-Multiplayer Spiels sollen anhand von diesen Konzepten eine Hilfestellung bekommen, um einen roten Faden in ihrer Entwicklung verfolgen zu können. Insbesondere wenn der Entwickler noch wenig oder keine Erfahrung mit der Entwicklung von Online-Mulitplayerspielen gesammelt hat, sollen diese Konzepte bei der Erstellung einer soliden Grund-Architektur dienlich sein.
 
 Bevor eines dieser Konzepte angewandt werden kann, müssen folgende Voraussetzungen erfüllt sein:
 
@@ -9,19 +9,21 @@ Bevor eines dieser Konzepte angewandt werden kann, müssen folgende Voraussetzun
 
 2. Anhand von dem festgelegten Spielkonzept kann abgeschätzt werden, ob sich für das Spiel eine Client / Server oder eine Client / Host Architektur eignet.
 
-Sollte das Team bzw. der Solo-Entwickler zum Entschluss gekommen sein dass sich ein Client / Server Modell am besten für den spezifischen Use-Case eignet, so müssen vorab Vorkehrungen getroffen werden, um die Hardware-Ressourcen für den späteren Server-Runner sicher zu stellen. Die Grundvoraussetzung ist jedoch ein aus dem Internet erreichbarer PC mit einer festen IP-Adresse.
+Sollte das Team bzw. der Solo-Entwickler zum Entschluss gekommen sein dass sich ein Client / Server Modell am besten für den spezifischen Use-Case eignet, so müssen Vorkehrungen getroffen werden, um die Hardware-Ressourcen für den späteren Server-Runner bzw. die Matchmaking API sicher zu stellen. Die Grundvoraussetzung ist jedoch ein aus dem Internet erreichbarer PC mit einer festen IP-Adresse. 
 
-\begin{quote}
-	Distribution concepts
-	
-	"There is not much we can do about the aforementioned resource limitations. Therefore, the problems of distributed interactive systems should be tackled on a higher level, which means choosing architectures for communication, data, and control. Still, sometimes the architecture alone cannot rid the system of resource limitations, and compensatory techniques are needed to relax the requirements." \cite{Smed.2002}
-\end{quote}
+Alternativ kann auch zunächst lokal innerhalb eines LAN \cite{Wikipedia.2022} entwickelt werden. Hierbei ist jedoch wichtig, dass eventuell auftretende Seiteneffekte, die durch Latenz \cite{Wikipedia.2022b} oder Bandbreite \cite{Wikipedia.2019b} verursacht werden, nicht unter Realbedingungen getestet werden können. 
 
+Es empfiehlt sich deshalb bereits innerhalb der ersten Entwicklungsiterationen auszutesten, wie Prototypen für Serverprozesse auf unterschiedliche Standorte der Serverhardware reagieren. 
 
 Nun gilt es einen passenden Technologie-Stack zu finden. Hier gibt es keine Klare Empfehlung, jedoch können die in diesem Kapitel beschriebenen Konzepte als Entscheidungshilfe dienen. Auf dem offenen Markt existieren bereits Frameworks \& Game Engines, die Manche dieser Konzepte bereits implementiert haben und als Libraries für Entwickler bereitstellen.
 
 \cite{MFatihMAR.2021}
 
+\section{Vorwort zu den aufgestellten Konzepten}
+
+Wie bereits in der Einführung erläutert, sind die folgenden Konzepte keine konkrete Entwicklungsanleitung. Viel mehr sind sie im Kontext einer bereits erarbeiteten Spielidee eine Hilfestellung zur Erarbeitung einer individuellen technischen Architektur.
+
+Konkret muss beachtet werden, dass einige der Konzepte nicht als einzelne Programm-Klassen verstanden werden müssen, sondern als Hilfestellung für Ableitungen zu konkreten Klassen oder Skripten genutzt werden können. Es ist auch gut denkbar, dass einige Implementierungen deutliche Vorteile genießen, wenn bestimmte Konzepte jeweils für getrennte Spiel-Szenen \cite{Wikipedia.2012} umgesetzt werden.
 
 \section{API für Matchmaking \& Server Runner}
 
@@ -47,8 +49,8 @@ Ebenfalls können technische Statusinformationen über aktuell laufende Spiel in
 
 
 Je nach Use-Case kann das Aufgabenfeld der API um weitere Punkte erweitert werden, hier ein paar Beispiele:
---> Datenbank für Authentifizierung bzw. Kommunikation mit externen SSO-Service Providern \cite{Wikipedia.2021c} 
---> Datenbank für InGame Shop / Kommunikation mit externen Lösungen
+- Datenbank für Authentifizierung bzw. Kommunikation mit externen SSO-Service Providern \cite{Wikipedia.2021c} 
+- Datenbank für InGame Shop / Kommunikation mit externen Lösungen
 
 
 \section{Client UI \& Visual Controller}
@@ -158,6 +160,10 @@ Ein Beispiel: In einem Online Multiplayer Ego-Shooter \cite{Wikipedia.2021g} sti
 	\label{pic:Runtime_Spawn_Manager}
 \end{figure}
 
+\section{Interest Manager}
+
+// TODO Add Content
+
 \section{Entwicklung sonstiger Server Logik}
 
 (Hier vielleicht noch ein paar Konzepte rausarbeiten)
@@ -166,7 +172,9 @@ Ein Beispiel: In einem Online Multiplayer Ego-Shooter \cite{Wikipedia.2021g} sti
 
 (Hier vielleicht noch ein paar Konzepte rausarbeiten)
 
+
 \section{Studienkonzept}
+\label{sec:studienkonzept}
 
 Wie bereits im Teil der Einführung erwähnt, hat diese Arbeit nicht den Anspruch zu beweisen, dass die Konzepte tatsächlich einen Mehrwert für eine Vielzahl an Projekten bieten. Um dies beweisen zu können, wäre eine weitere Feldstudie nötig. Im Rahmen dieser Arbeit wurde ein Studienkonzept erarbeitet, welches zukünftig für andere Arbeiten genutzt werden kann:
 
@@ -176,6 +184,18 @@ Repräsentative Umfragen
 	--> Befragung von mehreren Hundert Personen
 	--> aus unterschiedlichen Online-Genres (MMORPG, First Person Shooter, Mobile-Games, etc.)
 	--> aus unterschiedlichen Ländern
+	
+Welche Fragestellungen müssen untersucht werden?
+	--> Welche Probleme haben angehende Entwickler für Online-Multiplayer Spiele?
+	--> Lassen sich diese Probleme auf die in dieser Arbeit beschriebenen Konzepte übersetzen?
+	--> Bringen die hier beschriebenen Konzepte einen Vorteil in der Praxis?)
+
+Herangehensweise: (TODO: Jeden Punkt genauer beschreiben)
+	--> Passende Fragestellungen in Umfrage umwandeln
+	--> Umfrage veröffentlichen
+	--> Parallel Versuch starten: 2 Gruppen von Anfänger Entwicklern eine Aufgabe geben (Multiplayer-Spiel bauen), eine bekommt die Konzepte, die andere nicht
+	--> Ergebnisse der Umfrage auswerten, passen die Ergebnisse zu der hier beschriebenen Problemstellung?
+	--> Auswertung des Versuchs: Hat die Gruppe, welche sich an die Konzepte gehalten hat einen messbaren Vorteil gehabt? (Geschwindigkeit, Code Quality, Wartbarkeit)
 
 
 
