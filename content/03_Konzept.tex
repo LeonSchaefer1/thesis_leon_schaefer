@@ -162,15 +162,39 @@ Ein Beispiel: In einem Online Multiplayer Ego-Shooter \cite{Wikipedia.2021g} sti
 
 \section{Interest Manager}
 
-// TODO Add Content
+Wie bereits in der Sektion über \hyperref[interest_management]{Interest Management} erklärt, ist es je nach Spielkonzept notwendig, dass der Spieler stets nur über den für ihn relevanten Teil der Spielwelt Kenntnis hat. Aus diesem Grund sollten sich angehende Spieler-Entwickler fragen, ob sie eine solche Software-Komponente in die Architektur ihres Projekts integrieren möchten.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=150mm]{images/Interest_Manager.jpg}
+	\caption[Interest Manager]{Veranschaulichung des Interest Manager Konzepts}
+	\label{pic:Interest_Manager}
+\end{figure}
+
+Mögliche Faktoren, die der Interest Manager benutzen kann, um den Spielern die Objekte anzeigen zu lassen, die sie sehen dürfen sind:
+
+- Distanz zwischen Spieler und anderen Objekten
+
+- Teams bzw. Gruppen. Die registrierten (Spieler)-Objekte innerhalb eines Teams/ einer Gruppe sind für Spieler, welche ebenfalls innerhalb des Teams/Gruppe registriert sind sichtbar.
+
+- Spatial Hashing / Grid Checker: Die Spielwelt und ihre Objekte werden in quadratische Zellen eingeteilt. Je nachdem in welcher Zelle sich ein Spieler befindet, werden nur diejenigen Objekte der Spielwelt mit dem Spieler snychronisiert, welche sich innerhalb der 8 "Nachbarzellen" befinden:
+
+\begin{figure}
+	\centering
+	\includegraphics[width=150mm]{images/interest_management.png}
+	\caption[Interest Management]{Illustration des Konzepts Interest Management. \cite{JeromeRenaux.2017} }
+	\label{pic:interest_management}
+\end{figure}
+
+Sollte keine der hier beschriebenen Beispiele auf das gewünschte Spielkonzept passen, so ist es notwendig, eine komplett eigene Logik für das Interest Management zu implementieren. 
 
 \section{Entwicklung sonstiger Server Logik}
 
-(Hier vielleicht noch ein paar Konzepte rausarbeiten)
+(Hier noch ein paar Konzepte herausarbeiten)
 
 \section{Entwicklung sonstiger Client Logik}
 
-(Hier vielleicht noch ein paar Konzepte rausarbeiten)
+(Hier noch ein paar Konzepte herausarbeiten)
 
 
 \section{Studienkonzept}
@@ -188,14 +212,59 @@ Repräsentative Umfragen
 Welche Fragestellungen müssen untersucht werden?
 	--> Welche Probleme haben angehende Entwickler für Online-Multiplayer Spiele?
 	--> Lassen sich diese Probleme auf die in dieser Arbeit beschriebenen Konzepte übersetzen?
-	--> Bringen die hier beschriebenen Konzepte einen Vorteil in der Praxis?)
+	--> Bringen die hier beschriebenen Konzepte einen Vorteil in der Praxis?
 
 Herangehensweise: (TODO: Jeden Punkt genauer beschreiben)
-	--> Passende Fragestellungen in Umfrage umwandeln
+
+	--> Passende Frage/Problemstellungen in Umfrage umwandeln
+	
+Zunächst müssen Frage - und Problemstellungen, welche als Annahme getroffen wurden, in Fragen umgewandelt werden. Diese Frage - und Problemstellungen beziehen sich auf konkrete Themen der Multiplayer-Spielenentwicklung.
+	
+Fragen an junge, angehende Online-Spieleentwickler, welche ein eigenes Projekt umgesetzt haben bzw. welches sich aktuell in Umsetzung befindet:
+
+Problemstellung/Annahme: Es gibt inzwischen viele Frameworks und Engines zur Entwicklung von Online-Multiplayerspielen \cite{MFatihMAR.2021}. Die Entscheidung eine passende Technologie auszuwählen ist mühsam.
+
+Abgeleitete Frage: Wie leicht kamen sie zurecht bei der Auswahl eines Frameworks und/oder eine Game-Engine für ihr erstes Online-Multiplayer Projekt?
+
+Auswahlmöglichkeiten: Auswahl fiel mir sehr leicht, Auswahl fiel mir leicht, Auswahl fiel mir schwer, Auswahl fiel mir sehr schwer
+
+...weitere Fragen...
+
 	--> Umfrage veröffentlichen
+	
+Die Umfrage soll per Email an ausgewählte Personen an Hochschulen und Unternehmen verschickt werden. Außerdem kann die Umfrage in einschlägige Entwicker-Foren gepostet werden. Beispiele hierfür sind: forum.unity.com , forums.unrealengine.com, www.gamedev.net/forums/forum/8-networking-and-multiplayer.
+
+Die Umfrage kann anonymm, oder mit Personenbezug für eine bessere Auswertung der Ergebnisse erfolgen. Ebenso wäre es denkbar getrennte Umfragen für eine Gruppe an ausgewählten Einzelpersonen sowie die öffentliche Entwickler-Community im Internet zu erstellen.
+	
 	--> Parallel Versuch starten: 2 Gruppen von Anfänger Entwicklern eine Aufgabe geben (Multiplayer-Spiel bauen), eine bekommt die Konzepte, die andere nicht
+	
+Mithilfe eines Experiments (oder mehrerer Experimente) soll gezeigt werden, dass Einstiegs-Entwickler in der Multiplayer-Spieleprogrammierung einen klaren Vorteil haben, wenn sie das technische Design eines Neuprojekts nach diesen Konzepten ausrichten.
+
+Hierfür werden 2 Gruppen aus jeweils maximal 3 Personen bestimmt, welche beide ein identisches, rudimentäres Online-Spiel entwickeln sollen. Die eine Gruppe bekommt die Konzepte als Orientierung zur Verfügung, die andere nicht.
+
+Die Anforderungen an die Probanden sind:
+--> Sollten die Probanden aus Studenten bestehen, so müssen alle Probanden im gleichen Semester sein.
+--> Die Probanden müssen gleich viel (am besten keine, oder wenig) Erfahrung im Bereich der Multiplayer-Spieleentwicklung haben.
+
+Die Anforderungen an das Experiment sind:
+--> Es muss die Zeit gemessen werden, wie viel Stunden jede Gruppe zur Fertigstellung des vorgegebenen Projekts benötigt werden.
+--> Alle Probanden müssen Zugang zu ähnlicher Hardware besitzen.
+--> Die Gruppen teilen die Aufgaben unter sich auf, und suchen sich selbstständig Frameworks und Engines für das Projekt aus.
+--> Im Anschluss müssen beide Gruppen die oben erarbeitete Umfrage ausfüllen.
+
+
 	--> Ergebnisse der Umfrage auswerten, passen die Ergebnisse zu der hier beschriebenen Problemstellung?
-	--> Auswertung des Versuchs: Hat die Gruppe, welche sich an die Konzepte gehalten hat einen messbaren Vorteil gehabt? (Geschwindigkeit, Code Quality, Wartbarkeit)
+
+Die Ergebnisse der Umfrage an ausgewählte Personen und an die Entwickler Community werden ausgewertet. Kann man einen Trend erkennen? Können die Problemstellungen / Thesen validiert werden? 
+(Konkret: Sind die Annahmen dieser Arbeit korrekt? Haben Anfänger-Entwickler tatsächliche Schwierigkeiten mit den Punkten X, Y, Z ..?)
+
+	--> Auswertung des Experiments / der Experimente: Hat die Gruppe, welche sich an die Konzepte gehalten hat einen messbaren Vorteil gehabt? (Geschwindigkeit, Anfangsschwierigkeiten)
+	
+Die Daten aus dem Experiment (Zeitmessung, Umfrageergebnisse) sollen nun wie folgt ausgewertet werden:
+
+--> Ist die Gruppe, welche das Projekt mit den Konzepten umgesetzt hat, schneller zum Ziel gekommen, als die Gruppe ohne Hilfestellung der Konzepte?
+
+--> Hatte die Gruppe, welche das Projekt mit den Konzepten umgesetzt hat, weniger Start-Schwierigkeiten bei der Umsetzung des Projekts, als die Gruppe ohne Hilfestellung der Konzepte?
 
 
 

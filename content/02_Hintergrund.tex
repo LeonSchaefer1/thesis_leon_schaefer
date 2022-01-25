@@ -89,6 +89,7 @@ Serialisierte Daten werden über ein Netzwerk transportiert. Je Nach Art des Hos
 
 \section{Informationskontrolle und Interest Management}
 
+\textsf{\Large Informationskontrolle:}
 
 "Welche Information soll zu welchem Zeitpunkt in welchem Kontext verfügbar sein?" Diese Frage müssen sich Multiplayer-Spieleentwickler aus verschiedenen Gründen regelmäßig stellen.
 Die Gründe sind:
@@ -97,20 +98,14 @@ Security:
 Beispiel: Bei einem Online-Poker Spiel wäre es fatal, wenn ein Mitspieler jederzeit über alle Karten seiner Mitspieler Kenntnis hätte. 
 
 Network traffic:
-Beispiel: In Mario Kart sammelt ein Spieler ein Item ein. Der Server würfelt für diesen Spieler ein zufälliges Item aus, welches der Spieler im Anschluss verwenden soll. Die Information über das Resultat der Zufallsauswahl sollte an den jeweiligen Spieler gesendet werden, welcher dieses Item erhalten soll. Alle Anderen Spieler muss diese Information nicht interessieren. 
-
-Interest Management:
+Beispiel: In Mario Kart sammelt ein Spieler ein Item ein. Der Server würfelt für diesen Spieler ein zufälliges Item aus, welches der Spieler im Anschluss verwenden soll. Die Information über das Resultat der Zufallsauswahl sollte an den jeweiligen Spieler gesendet werden, welcher dieses Item erhalten soll. Alle Anderen Spieler muss diese Information nicht interessieren.
+ 
+\textsf{\Large Interest Management:}
+\label{sec:interest_management}
 
 Interest Management beschreibt ein Konzept, welches deligiert, welche Informationen in welchem Kontext zu welcher Zeit für welche Personen verfügbar sind. Befindet sich der Spieler in einem bestimmten Bereich einer Spielwelt, kann das Interest Management dafür sorgen, dass dieser Spieler für manche Spieler sichtbar, und für manche Spieler nicht sichtbar ist, je nachdem wie nahe sich die Spieler zueinander befinden, oder in welchem Areal der Spielwelt sie sich befinden.
 
-\begin{figure}
-	\centering
-	\includegraphics[width=150mm]{images/interest_management.png}
-	\caption[Interest Management]{Illustration des Konzepts Interest Management. \cite{JeromeRenaux.2017} }
-	\label{pic:interest_management}
-\end{figure}
-
-Dieses Konzept wird besonders oft in MMO-Spielen \cite{Wikipedia.2021i} benutzt, damit ein Server mehrere Tausend Spieler ohne Abstürze verwalten kann. 
+Dieses Paradigma wird besonders oft in MMO-Spielen \cite{Wikipedia.2021i} benutzt, damit ein Server mehrere Tausend Spieler ohne Abstürze verwalten kann. Ebenso wird es benutzt, um Spiellogik umzusetzen, welche es nur ausgewählten Spielern erlaubt, andere Spieler oder Objekte innerhalb der Spielwelt zu sehen und/oder mit ihnen interagieren zu dürfen.
 
 \cite{Smed.2002c}
 
