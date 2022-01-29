@@ -52,6 +52,8 @@ Je nach Use-Case kann das Aufgabenfeld der API um weitere Punkte erweitert werde
 - Datenbank für Authentifizierung bzw. Kommunikation mit externen SSO-Service Providern \cite{Wikipedia.2021c} 
 - Datenbank für InGame Shop / Kommunikation mit externen Lösungen
 
+\section{Anti Cheat Patterns}
+
 
 \section{Client UI \& Visual Controller}
 
@@ -67,6 +69,22 @@ Das Konzepts des Client UI \& Visual Controllers beschreibt die Art und Weise, w
 Konkret sorgt ein Server-Ereignis, der Input eines Spielers (beispielsweise durch klicken eines Buttons oder einsammeln eines Gegenstands) oder eine andere Bedingung dafür, dass Funktionen innerhalb des Client UI \& Visual Controllers aufgerufen werden. Innerhalb dieser Funktionen werden Komponenten der Benutzeroberfläche wie z.b. Anzeigetexte, Bilder etc. oder Objekte innerhalb der Spielwelt selbst manipuliert.
 
 Wichtig ist, dass Funktionen des Client UI \& Visual Controller erst nach server- oder clientseitigen Überprüfungen ausgeführt werden. Der Controller selbst sollte nur überprüfen, ob die Komponente, welche er manipulieren will überhaupt existiert. Spielrelevante Logik, beispielsweise ob ein Spieler berechtigt ist, bestimmte Aktionen durchzuführen, ist nicht Teil des Client UI \& Visual Controllers.
+
+\section{Client Network Manager}
+
+// TODO: Add Content
+
+Abstrakte Methoden zum Implementieren beschreiben.
+
+\section{Server Network Manager}
+
+// TODO: Add Content
+
+Abstrakte Methoden zum Implementieren beschreiben.
+
+\section{Lobby / Multi Scene Manager (optional)}
+
+// TODO: Add Content
 
 \section{Client Connection Manager}
 
@@ -100,7 +118,7 @@ Z.B. Wird die notwendige Verbindung zum Internet während des Spiels unterbroche
 
 Das Konzept des serverseitigen Client Manager beinhaltet die Verwaltung aller verbundener Clients innerhalb eines aktiven Serverprozesses. Insbesondere speichert der serverseitige Client Manager 2 Arten von Information über jeden Client:
 
-Einerseits werden Netzwerk-bezogene Informationen über einen Client gespeichert, im einfachsten Fall ist dies lediglich die IP Adresse des Hosts sowie der Port, auf welchem der Client seinen Kommunikationskanal geöffnet hat. Bei Spielkonzepten, welche eine weitergehende Authentifizierung des Spielers voraussetzen, können hier auch Benutzernamen, Benutzertags, Email-Adressen o.ä. gespeichert und weiterverarbeitet werden.
+Einerseits werden Netzwerk-bezogene Informationen über einen Client gespeichert, im einfachsten Fall ist dies lediglich die IP Adresse des Hosts sowie der Port, auf welchem der Server seinen Kommunikationskanal geöffnet hat. Bei Spielkonzepten, welche eine weitergehende Authentifizierung des Spielers voraussetzen, können hier auch Benutzernamen, Benutzertags, Email-Adressen o.ä. gespeichert und weiterverarbeitet werden.
 
 Zum Anderen speichert und verwaltet der serverseitige Client Manager auch spielspezifische Informationen wie Bspw. den aktuellen Anzeigenamen, konfigurierte Individualisierung des Spielcharakters, Spielerrollen oder andere Eigenschaften, über die der Server während einer Spiel-Session Kenntnis haben sollte.
 
