@@ -1,32 +1,216 @@
 \chapter{Realisierung}
 \label{sec:realisierung}
 
-3. Implementierung 1 :
+In diesem Kapitel werden die im vorherigen Kapitel beschriebenen abstrakten Konzepte anhand von einem Prototypen umgesetzt. Die konkrete Logik wird bei jedem implementierten Konzept anhand von Codebeispielen erläutert.
 
-Genutzte Frameworks / Technologien
+\section{Eingesetzte Technologien}
 
-Grundlagen des Mirror Frameworks:
---> worauf basiert es eigendlich? 
---> Auszug Features | diese erklären.
---> Network-Manager
---> NetworkManager Callbacks
---> Network Idendity / Network Behavior / Network Transform
---> Network Behavior Callbacks
---> Server und Clientcode in einer Datei
---> Dedicated Server vs. Self-Host
---> Synchronization
---> Remote Actions
---> Player Game Objects
---> Anticheat
---> Transports
+Für die Entwicklung des Prototyps kamen folgende Technologien zum Einsatz:
 
-4. Implementierung 2:
+- Als Game-Engine wurde Unity\cite{Technologies.03.02.2022} benutzt. Die Entscheidung hierfür begründet sich durch die gute Dokumentation und den Long-Time-Support der verschiedenen Unity Versionen. Außerdem gibt es eine große Anzahl an Benutzer. Unity existiert bereits seit dem Jahr 2005 \cite{Wikipedia.2022c}, und hat sich seitdem in Entwickler-Kreisen einen nachhaltigen Ruf erarbeitet.
+
+- C\# kommt als Programmiersprache zum Einsatz. Unity hat eine sehr gute Unterstützung hierfür.
+
+- Zusätzlich zu Unity wurde Mirror\cite{.03.02.2022} als weiteres Framework benutzt. Mirror ist eine kostenloses Open Source Networking Bibliothek, welche die Entwicklung von Netzwerk-Code deutlich erleichtert.
+
+\section{Spielidee des Prototyps}
+
+// TODO Add Content
+
+--> Hide and Seek kurz erklären
+
+\section{Architektur des Prototyps}
+
+// TODO Add Content
+
+--> Miro-Diagramm mit verwendeten Konzepten
+
+--> Spielflussdiagramm (inkl. Szenen-Erklärung)
+
+MenuScene:
+
+GameScene:
+
+\section{Implementierung: API für Matchmaking \& Server Runner}
+
+// TODO: Add Content
+
+\section{Implementierung: Client UI \& Visual Controller}
+
+Der Client UI \& Visual Controller spielt im Prototyp eine wesentliche Rolle. Er kommt in der GameScene als Singleton \cite{M.Gatrell.2009} zum Einsatz, wo er alle nötigen Methoden implementiert, um das lokale UI des Spielers manipulieren zu können. Hier sind nun 3 Beispiele aufgeführt:
+
+Die folgenden "Update" Methode ist eine Unity bereitgestellte Schnittstelle. Der Rumpf der Update Methode ist nie vorgegeben, und muss vom Entwickler selbst implementiert werden. Unity führt diese Methode jedes "Frame" (Einzelbild) \cite{Wikipedia.2021j} aus. Dies ermöglicht eine nahezu vollständige Echtzeitabfrage der Inputs (Tastatur / Maus / andere Eingangsgeräte) des Spielers.
+
+Im unten wird dauerhaft abgefragt, ob ein Spieler die Taste "E" oder "Q" auf seiner Tastatur drückt. Wenn er das tut, und ebenfalls ein paar andere Randbedingungen erfüllt sind, so wird ein "Linksklick" auf den im UI des Spielers sichtbaren Button simuliert.
+
+\begin{lstlisting}[caption= InGameUiControllerScript.cs Update Method]
+private void Update()
+{
+	if (Input.GetKeyDown(KeyCode.E) && hotkeyImage != null && hotkeyImage.sprite == HOTKEY_KEYBOARD_E && interactButton.GetComponent<Button>().interactable )
+	{
+		interactButton.GetComponent<Button>().onClick.Invoke();
+	}
+	if (Input.GetKeyDown(KeyCode.Q) && lightButton.GetComponent<Button>().interactable)
+	{
+		lightButton.GetComponent<Button>().onClick.Invoke();
+	}
+}
+\end{lstlisting}
+
+Doch was heißt das genau? Im folgenden Code wird ein Event definiert, welches durch andere Klassen "aboniert" werden kann. Wird dann das Event durch .Invoke() ausgelöst, so werden alle Funktionen in externen Skripten ausgeführt, die dieses Event aboniert haben. Hier zunächst die Definition des Events im InGameUiControllerScript und die Funktion "clickInteractButton", die ausgeführt wird, wenn beispiese wie im obrigen Code die Taste "E" auf der Tastatur gedrückt wird.
+
+\begin{lstlisting}[caption= InGameUiControllerScript.cs OnInteractButtonClick Event]
+public event Action OnInteractButtonClick;	
+
+public void clickInteractButton()
+{
+	OnInteractButtonClick?.Invoke();
+}
+\end{lstlisting}
+
+Um den gesamten Aufrufstapel\cite{Wikipedia.2021k} nachvollziehen zu können, folgt nun ein Beispiel aus einem anderen Script.
+Die Klasse "HiderScript.cs" aboniert nun in seiner Methode "RpcEnableHideButton()" das Event des InGameUiControllerScript Singletons "OnInteractButtonClick" mit seiner eigenen Methode "OnHiderHideButtonClick()". Die Methode "RpcEnableHideButton()" wird dann ausgeführt, wenn der Server einem Spieler mit der Roller "Hider" erlaubt, ein Versteck betreten zu dürfen.
+
+\begin{lstlisting}[caption= HiderScript.cs Subscribe to InGameUiControllerScript Event]
+[TargetRpc]
+private void RpcEnableHideButton()
+{
+	InGameUiControllerScript.singleton.resetInteractButtonClickEvents();
+	InGameUiControllerScript.singleton.OnInteractButtonClick += OnHiderHideButtonClick;
+	InGameUiControllerScript.singleton.setInteractButtonEnabled(true);
+	InGameUiControllerScript.singleton.setInteractButtonTextAndHotkeyImage("Hide");
+}
+\end{lstlisting}
+
+Sollte der Hider nun auf seinen "Interact"-Button drücken, so wird die folgende Methode "OnHiderHideButtonClick()" aufgerufen. Diese ruft eine weitere Methode "CmdHideHider()" auf, welche einen Remote Procedure Call\cite{.05.02.2022} zum Server darstellt.
+
+\begin{lstlisting}[caption= HiderScript.csOnHiderHideButtonClick() Method]
+
+[Client]
+private void OnHiderHideButtonClick()
+{
+	if (enabled)
+	{
+		CmdHideHider();
+	}
+}
+
+\end{lstlisting}
+
+Der Server führt nun innerhalb des Methodenrumpfs von "CmdHideHider()" einige Überprüfungen durch, ändert server-interne Variablen und sorgt somit dafür, dass alle Spieler darüber bescheid wissen, dass sich der Spieler nun in einem Versteck befindet.
+
+\begin{lstlisting}[caption= HiderScript.cs Subscribe to InGameUiControllerScript Event]
+	
+	[Command]
+	private void CmdHideHider()
+	{
+		if(vicinityScript.getHideoutObjectScript() != null)
+		{
+			HideableObjectScript curHideoutScript = vicinityScript.getHideoutObjectScript();
+			if (!vicinityScript.getHideoutObjectScript().getIsTaken())
+			{
+				GetComponent<PlayerBaseScript>().setCurHideout(curHideoutScript.gameObject);
+				curHideoutScript.setIsTaken(true);
+				curHideoutScript.setCurrentHider(gameObject);
+				isHiding = true;
+				GetComponent<PlayerBaseScript>().playerLightEnabled = false;
+				GameNetworkManager.FindObject(gameObject, "FeetTrigger").SetActive(!isHiding);
+				RpcNotifyHideState(true, GameNetworkManager.singleton.gameRules[4].playerSpeed);
+				RpcEnableLeaveHideoutButton();
+				GetComponent<PlayerBaseScript>().TargetEnableLightButton(false);
+			}
+			else
+			{
+				RpcDisableInteractButton();
+			}
+		}
+	}	
+\end{lstlisting}
+
+Die nächste Beispielmethode implementiert die Logik, den Interact-Button selbst aktiv- und inaktiv zu setzen. Der Interact Button selbst verfügt ebenfalls über ein "HotkeyImage", welches einem visuellen Indikator gleich kommt, der die aktuell zu drückende Taste auf der Tastatur darstellt. Dieser Indikator wird bei jedem Aufruf von setInteractButtonEnabled ebenfalls an - oder ausgeschaltet.
+
+\begin{lstlisting}[caption= Client UI Controller setInteractButtonEnabled]
+public void setInteractButtonEnabled(bool enabled)
+	{
+		interactButton.GetComponent<Button>().interactable = enabled;
+		if(hotkeyImage != null)
+		hotkeyImage.gameObject.SetActive(enabled);
+	}
+\end{lstlisting}
+
+Das letzte Beispiel ist eine Implementung eines simplen Flip-Mechanismus bei Betätigen des Light-Buttons (An- und ausschalten der Taschenlampe eines Spielers). Diese Logik tauscht lediglich das Bild (Sprite) aus, welches auf dem Button liegt.
+
+\begin{lstlisting}[caption= Client UI Controller flipLightButtonImage]
+public void flipLightButtonImage()
+{
+	if (!lightOn)
+	{
+		lightButton.GetComponent<Image>().sprite = lightOnSprite;
+	}
+	else
+	{
+		lightButton.GetComponent<Image>().sprite = lightOffSprite;
+	}
+	lightOn = !lightOn;
+}
+
+\end{lstlisting}
 
 
---> Beispiel Implementierung Matchmaking System (Hide n seek)
+\section{Implementierung: Server Network Manager}
+
+// TODO: Add Content
+
+\section{Implementierung: Lobby / Multi Scene Manager}
+
+// TODO: Add Content
+
+\section{Implementierung: Client Connection Manager}
+
+// TODO: Add Content
+
+\section{Implementierung: Serverside Client Manager}
+
+// TODO: Add Content
+
+\section{Implementierung: Prepare-Game-Manager}
+
+// TODO: Add Content
+
+\section{Implementierung: Progress / Game-State Manager}
+
+// TODO: Add Content
+
+\section{Implementierung: Runtime Spawn Manager}
+
+// TODO: Add Content
+
+\section{Implementierung: Interest Manager}
+
+// TODO: Add Content
 
 
-5. Abschluss:
+% 3. Implementierung 1 :
+
+% Genutzte Frameworks / Technologien
+
+% Grundlagen des Mirror Frameworks:
+% --> worauf basiert es eigendlich? 
+% --> Auszug Features | diese erklären.
+% --> Network-Manager
+% --> NetworkManager Callbacks
+% --> Network Idendity / Network Behavior / Network Transform
+%  --> Network Behavior Callbacks
+% --> Server und Clientcode in einer Datei
+% --> Dedicated Server vs. Self-Host
+% --> Synchronization
+% --> Remote Actions
+% --> Player Game Objects
+% --> Anticheat
+% --> Transports
+
+
+
 
 
 

@@ -25,6 +25,8 @@ Wie bereits in der Einführung erläutert, sind die folgenden Konzepte keine kon
 
 Konkret muss beachtet werden, dass einige der Konzepte nicht als einzelne Programm-Klassen verstanden werden müssen, sondern als Hilfestellung für Ableitungen zu konkreten Klassen oder Skripten genutzt werden können. Es ist auch gut denkbar, dass einige Implementierungen deutliche Vorteile genießen, wenn bestimmte Konzepte jeweils für getrennte Spiel-Szenen \cite{Wikipedia.2012} umgesetzt werden.
 
+Die Konzepte sind als separat voneinander zu betrachtende Softwarekomponenten zu sehen, die miteinander kommunizieren können. Man könnte die einzelnen implementierten Konzepte auch als Microservices \cite{Thones.2015} bezeichnen, die innerhalb eines Server-Prozesses eigene interne Abläufe besitzen und durchführen. Die Kommunikation zwischen den Komponenten sollte über direkte gegenseitige Funktionsaufrufe oder über Event-gesteuerte Funktionen \cite{Michelson.2006} geschehen.
+
 \section{API für Matchmaking \& Server Runner}
 
 Bei diesem Konzept muss eine API entworfen werden, welche unabhängig von einem existierenden Client oder Serverprozess arbeitet. Diese API hat 2 grundsätzliche Aufgaben. 
@@ -65,7 +67,7 @@ Das Konzepts des Client UI \& Visual Controllers beschreibt die Art und Weise, w
 
 Konkret sorgt ein Server-Ereignis, der Input eines Spielers (beispielsweise durch klicken eines Buttons oder einsammeln eines Gegenstands) oder eine andere Bedingung dafür, dass Funktionen innerhalb des Client UI \& Visual Controllers aufgerufen werden. Innerhalb dieser Funktionen werden Komponenten der Benutzeroberfläche wie z.b. Anzeigetexte, Bilder etc. oder Objekte innerhalb der Spielwelt selbst manipuliert.
 
-Wichtig ist, dass Funktionen des Client UI \& Visual Controller erst nach server- oder clientseitigen Überprüfungen ausgeführt werden. Der Controller selbst sollte nur überprüfen, ob die Komponente, welche er manipulieren will überhaupt existiert. Spielrelevante Logik, beispielsweise ob ein Spieler berechtigt ist, bestimmte Aktionen durchzuführen, ist nicht Teil des Client UI \& Visual Controllers.
+Wichtig ist, dass Funktionen des Client UI \& Visual Controller erst nach server- oder clientseitigen Überprüfungen ausgeführt werden. Der Controller selbst sollte nur überprüfen, ob fluktuierende Komponenten noch existieren oder sich in einem konsistenten Zustand befinden. Spielrelevante Logik, beispielsweise ob ein Spieler berechtigt ist, bestimmte Aktionen durchzuführen, ist nicht Teil des Client UI \& Visual Controllers.
 
 \section{Server Network Manager}
 
@@ -232,11 +234,13 @@ Sollte keine der hier beschriebenen Beispiele auf das gewünschte Spielkonzept p
 \section{Studienkonzept}
 \label{studienkonzept}
 
+! STUDIENKONZEPT IST NOCH PRE-PRE-ALPHA (enthält Notizen)!
+
 Wie bereits im Teil der Einführung erwähnt, hat diese Arbeit nicht den Anspruch zu beweisen, dass die Konzepte tatsächlich einen Mehrwert für eine Vielzahl an Projekten bieten. Um dies beweisen zu können, ist eine weitere Studie nötig. Im Rahmen dieser Arbeit wurde ein Studienkonzept erarbeitet, welches zukünftig für andere Arbeiten genutzt werden kann.
 
 Das Studienkonzept gliedert sich in:
 
-Repräsentative Umfragen:
+Repräsentative Umfragen (Umsetzung mit Likert-Skala):
 Diese beinhaltet die Befragung von mehreren Hundert Personen aus unterschiedlichen Ländern sowie unterschiedlichen Online-Genres (MMORPG, First Person Shooter, Mobile-Games, etc.).
 
 Folgende Fragestellungen müssen untersucht werden:
@@ -263,7 +267,11 @@ Die Umfrage soll per Email an ausgewählte Personen an Hochschulen und Unternehm
 
 Die Umfrage kann anonymm, oder mit Personenbezug für eine bessere Auswertung der Ergebnisse erfolgen. Ebenso wäre es denkbar getrennte Umfragen für eine Gruppe an ausgewählten Einzelpersonen sowie die öffentliche Entwickler-Community im Internet zu erstellen.
 	
-	--> Parallel Versuch starten: 2 Gruppen von Anfänger Entwicklern eine Aufgabe geben (Multiplayer-Spiel bauen), eine bekommt die Konzepte, die andere nicht
+	--> Parallel Versuch starten: 2 Gruppen von Anfänger Entwicklern eine Aufgabe geben (Multiplayer-Spiel bauen), eine bekommt die Konzepte, die andere nicht.
+	
+	- Control Experiment -> Mehr Beschreiben: Was für Variablen gibt es?
+	-> Anforderungen an ein Spiel (Wurde alles erfüllt)
+	-> Methodisches Vorgehen
 	
 Mithilfe eines Experiments (oder mehrerer Experimente) soll gezeigt werden, dass Einstiegs-Entwickler in der Multiplayer-Spieleprogrammierung einen klaren Vorteil haben, wenn sie das technische Design eines Neuprojekts nach diesen Konzepten ausrichten.
 
@@ -294,7 +302,8 @@ Die Daten aus dem Experiment (Zeitmessung, Umfrageergebnisse) sollen nun wie fol
 --> Hatte die Gruppe, welche das Projekt mit den Konzepten umgesetzt hat, weniger Start-Schwierigkeiten bei der Umsetzung des Projekts, als die Gruppe ohne Hilfestellung der Konzepte?
 
 
-
+Weitere Punkte, die in Studienkonzept noch fehlen:
+--> Methodik für semi-strukturiertes Experteninterviews beschreiben
 
 
 
