@@ -25,7 +25,7 @@ Für die Entwicklung des Prototyps kamen folgende Technologien zum Einsatz:
 
 --> Miro-Diagramm mit verwendeten Konzepten
 
---> Spielflussdiagramm (inkl. Szenen-Erklärung)
+--> Spielflussdiagramm (inkl. Szenen-Erklärung (GameScene = Spielszene, MenuScene = Menüszene))
 
 MenuScene:
 
@@ -129,7 +129,7 @@ Der Server führt nun innerhalb des Methodenrumpfs von "CmdHideHider()" einige �
 
 Die nächste Beispielmethode implementiert die Logik, den Interact-Button selbst aktiv- und inaktiv zu setzen. Der Interact Button selbst verfügt ebenfalls über ein "HotkeyImage", welches einem visuellen Indikator gleich kommt, der die aktuell zu drückende Taste auf der Tastatur darstellt. Dieser Indikator wird bei jedem Aufruf von setInteractButtonEnabled ebenfalls an - oder ausgeschaltet.
 
-\begin{lstlisting}[caption= Client UI Controller setInteractButtonEnabled]
+\begin{lstlisting}[caption= InGameUiControllerScript.cs setInteractButtonEnabled]
 public void setInteractButtonEnabled(bool enabled)
 	{
 		interactButton.GetComponent<Button>().interactable = enabled;
@@ -140,7 +140,7 @@ public void setInteractButtonEnabled(bool enabled)
 
 Das letzte Beispiel ist eine Implementung eines simplen Flip-Mechanismus bei Betätigen des Light-Buttons (An- und ausschalten der Taschenlampe eines Spielers). Diese Logik tauscht lediglich das Bild (Sprite) aus, welches auf dem Button liegt.
 
-\begin{lstlisting}[caption= Client UI Controller flipLightButtonImage]
+\begin{lstlisting}[caption= InGameUiControllerScript.cs flipLightButtonImage]
 public void flipLightButtonImage()
 {
 	if (!lightOn)
@@ -153,13 +153,113 @@ public void flipLightButtonImage()
 	}
 	lightOn = !lightOn;
 }
-
 \end{lstlisting}
 
 
 \section{Implementierung: Server Network Manager}
 
-// TODO: Add Content
+In der Implementierung des Prototyps ist der Server Network Manager ein Teil der GameNetworkManager Klasse. Diese implementiert sowohl Client- als auch Serverseitige Netzwerkfunktionen. Die nicht vorhandene Separierung von Client-und Serverfunktionen ist dem Mirror Framework geschuldet. Die Klasse GameNetworkManager ist ebenfalls ein Singleton und erbt die Klasse NetworkManager, welche von Mirror bereitgestellt wird. Durch die Vererbung ist es möglich, virtuelle Methoden\cite{Billwagner.08.02.2022} der NetworkManager Klasse zu überschreiben, Netzwerkseitige Events abzufangen und mit eigener Logik auf diese zu reagieren. 
+
+Im folgenden Beispiel wird die virtuelle Methode OnServerConnect() überschrieben, um zu überprüfen, ob ein Spieler einer Spiel-Session beitreten darf. Sollte sich eine Spielsession bereits in der Spiel-Szene befinden, so wird eine neue Message erzeugt, welche an den Client geschickt wird, welcher aktuell versucht sich zu verbinden. Das struct "Message" nutzt ein von Unity bereitgestelltes Interface "NetworkMessage", welches eine leichtgewichtige Art und Weise der Netzwerk-Kommunikation ermöglicht. Das gleiche Schema wird im zweiten "if" Block benutzt, hier wird überprüft, ob die maximale Anzahl an Spielern innerhalb einer Lobby bereits erreicht ist.
+
+\begin{lstlisting}[caption= GameNetworkManager.cs OnServerConnect() und Message struct]
+public struct Message : NetworkMessage
+{
+	public string message;
+	public MessageType messageType;
+}
+	
+public override void OnServerConnect(NetworkConnection conn)
+{
+	// If the game server is already in gameScene, forbid access to game
+	if (singleton.getNetworkSceneName() == "Assets/Scenes/GameScene.unity")
+	{
+		Message msg = new Message()
+		{
+			message = "Game has already started",
+			messageType = MessageType.gameAlreadyStartedError
+		};
+		conn.Send(msg);
+		conn.Disconnect();
+	}
+	
+	// Forbid access to a lobby, if the lobby is already at maxPlayers (configurable inside GameNetworkManager Component)
+	if(lobbyPlayers.Count == maxPlayers)
+	{
+		Message msg = new Message()
+		{
+			message = "Maximum Players reached for this lobby",
+			messageType = MessageType.tooManyPlayersError
+		};
+		conn.Send(msg);
+		conn.Disconnect();
+	}
+}
+\end{lstlisting}
+
+Als Gegenstück zu OnServerConnect() gibt es ebenfalls die virtuelle Methode OnServerDisconnect(), welche dann aufgerufen wird, wenn eine Spieler den Server gewollt, oder ungewollt (bspw. durch Netzwerkabbruch) verlässt. Im Prototyp wurde diese Methode ebenfalls überschrieben und im GameNetworkManager selbst implementiert. 
+
+Zunächst wird überprüft, ob die Anzahl aller Spieler, welche sich aktuell auf dem Server befinden nach dem Beenden der aktuell abgefangenen und beendeten Client-Verbindung 0 beträgt. Falls ja, wird der Server-Prozess beendet. 
+
+Falls sich noch Spieler auf dem Server-Prozess befinden werden je nach Spielszene verschiedene Szenarien durchlaufen. Falls die Spielszene aktuell läuft, so wird überprüft ob die Anzahl an Spielern mit der Rolle "Hider" oder "Seeker" aktuell 0 beträgt. Falls eine der beiden Fälle zutrifft, so wird das Spiel zu Gunsten des konkurrierenden Teams beendet.
+
+Sollte sich die Spiel-Session aktuell in der Menü-Szene befinden, so werden Lobby-Relevante Variablen aktualisiert und zunächst überprüft, ob der Spieler, welche grade den Server verlassen hat, den Leader-Status hatte. Sollte dieser Fall zutreffen, wird der Leader-Status weiter gegeben. Zuletzt werden alle Spieler über den neuen Zustand der Lobby informiert.
+
+\begin{lstlisting}[caption= GameNetworkManager.cs OnServerDisconnect()]
+public override void OnServerDisconnect(NetworkConnection conn)
+{
+	if ((NetworkServer.connections.Count == 0)
+	{
+		Debug.Log("Server shutdown because all Players left");
+		Application.Quit();
+	}
+
+	if (SceneManager.GetActiveScene().path == gameScene)
+	{
+		// if Seeker disconnected and no seeker left, let hiders win
+		if(inGameProgressManager.getTotalSeekerCount() == 0)
+		{
+			inGameProgressManager.notifyHidersWinEvent();
+		}
+		
+		// If Hider disconnected and no hiders left, let seekers win
+		if(inGameProgressManager.getTotalHidersCount() == 0)
+		{
+			inGameProgressManager.notifySeekerWinEvent();
+		}
+	}
+	else if(conn.identity != null)
+	{
+		lobbyPlayers.Remove(conn);
+		LobbyPlayer curPlayerScript = conn.identity.GetComponent<LobbyPlayer>();
+			
+		if (curPlayerScript.isLeader)
+		{
+			// Pass Leader State to next Player
+			var newLeader = lobbyPlayers.First().Value;
+			newLeader.isLeader = true;
+			leader = newLeader;
+			leader.TargetNotifyLobbyReady(isLobbyReady);
+		}
+			
+		var index = 0;
+		// Pass the index
+		foreach (var lobbyPlayer in lobbyPlayers.Values)
+		{
+			lobbyPlayer.index = index;
+			index++;
+		}
+	}
+		
+	UpdateLobbyReadyState();
+}
+\end{lstlisting}
+
+Weitere virtuelle Methoden, welche der Prototyp implementiert hat sind:
+
+OnServerChangeScene() - Diese Methode wird ausgeführt, sobald ein Szenenwechsel bevorsteht, aber noch nicht vollzogen ist.
+
+OnServerSceneChanged() - Diese Methode wird ausgeführt, sobald ein Szenenwechsel vollständig vollzogen ist.
 
 \section{Implementierung: Lobby / Multi Scene Manager}
 
