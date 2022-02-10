@@ -20,6 +20,8 @@ Für die Entwicklung des Prototyps kamen folgende Technologien zum Einsatz:
 
 --> Hide and Seek kurz erklären
 
+--> Join Random Lobby / Zugangscode erklären
+
 \section{Architektur des Prototyps}
 \label{Architektur}
 
@@ -314,12 +316,95 @@ private void clearLobbyData()
 		NetworkServer.Destroy(lobbyPlayer.gameObject);
 	}
 }
-
 \end{lstlisting}
+
+Der Aufruf der Initialisierung des Szenenwechsels zurück in die Menü-Szene geschieht aus Komplexitätsgründen aus dem InGameProgressManager heraus. Die nähere Erläuterung folgt in der Sektion \hyperref[Progress Manager]{Implementierung: Progress / Game-State Manager}
 
 \section{Implementierung: Client Connection Manager}
 
-// TODO: Add Content
+Die Prinzipien des Client Connection Manager Konzepts wurden im Prototyp innerhalb der Klasse "ConnectionScript.cs" realisiert. Die Hauptaufgabe ist der Kommunikationsaustausch mit der Matchmaking API sowie der Verbingdungsaufbau zu einer Mirror-Server Instanz. Für diesen Kommunikationsaustausch wurde das Open Source Package "Rest Client" von Juan Nicholls (proyecto26) benutzt \cite{GitHub.10.02.2022}.
+
+Im folgenden Code Beispiel wird zunächst das Datenmodell einer Lobby aus der Sicht der Matchmaking API und dem ConnectionScript aufgezeigt. Eine kurze Erläuterung der einzelenen Felder:
+
+- "bool isPublic" sagt aus, ob eine Lobby öffentlich bereitgestellt wurde. Falls ja, können andere Spieler auch ohne Zugangs-Code über die "Join Random Lobby" Funktion des Prototyps dieser Lobby beitreten.
+
+- "string adress" gibt die IP Adresse des Servers an, auf dem die der Mirror-Serverprozess zu dieser Lobby gestartet wurde.
+
+- "int port" gibt den Port des Mirror-Serverprozesses an, den der Server für diesen Prozess reserviert hat.
+
+- "string code" enthält einen Zugangsschlüssel, den Clients nutzen können, um im Austausch mit der Matchmaking API das passende Lobby Objekt zu erhalten, mit dem sie sich dann (mithilfe des adress + port Felds) ebenfalls auf den gleichen Mirror-Serverprozess verbinden können.
+
+\begin{lstlisting}[caption= ConnectionScript.cs Matchmaking Data]
+// The Data which is necessary for describing a lobby. This Information is synchronized between the REST API and the Mirror Server & Client
+private class Lobby
+{
+	public bool isPublic;
+	public string address;
+	public int port;
+	public string code;
+}
+
+private class PublicLobbys
+{
+	public Lobby[] lobbys;
+}
+\end{lstlisting}
+
+Sollte ein Spieler im Hauptmenü auf den Button "Create Lobby" drücken, so wird eine POST Anfrage an die Matchmaking API geschickt, diese liefert ein neu erzeugtes Lobby-Objekt zurück, mit welchem sich der Spieler auf den neu erzeugten Mirror-Serverprozess verbindet. Folgender Code zeigt die Implementierung:
+
+\begin{lstlisting}[caption= ConnectionScript.cs createLobby()]
+private void createLobby()
+{
+	RestClient.Post<Lobby>(apiBaseUrl + "/v0/lobbies", "{\"isPublic\": true}").Then(lobby =>
+	{
+		string[] splitAddress = lobby.address.Split(new string[] { "://" }, StringSplitOptions.None);
+		
+		GameNetworkManager.singleton.StartClient(new UriBuilder(splitAddress[0], splitAddress[1], lobby.port).Uri);
+	}).Catch(error =>
+	{
+		onFailure();
+		Debug.LogError("Error when creating lobby: " + error);
+	});
+}	
+\end{lstlisting}
+
+Im Fall, dass ein Spieler auf den Button "Join Lobby" drückt, wird die Zeichenkette, welche der Nutzer in das entsprechende Code-Input Feld eingegeben hat, der Methode joinWithCode() übergeben. Diese überprüft zunächst, ob der Spieler keinen Code eingegeben hat. Falls die übergebene Zeichenkette nicht leer ist, führt das ConnectionScript eine GET Anfrage an die Matchmaking API aus, welche intern überprüft, ob eine Lobby mit diesem Zugangsschlüssel existiert. Falls dies der Fall ist, verbindet sich der Spieler automatisch mit der entsprechenden Lobby. 
+
+\begin{lstlisting}[caption= ConnectionScript.cs joinWithCode()]
+private void joinWithCode(string code)
+{
+	registerCallbacks();
+	if (code == "")
+	{
+		noCodeEnteredFailure();
+		return;
+	}
+			
+	RestClient.Get<Lobby>(GameNetworkManager.singleton.frapiBaseUrl + "/v0/lobbies/" + code).Then(lobby =>
+	{
+		string[] splitAddress = lobby.address.Split(new string[] { "://" }, StringSplitOptions.None);
+		GameNetworkManager.singleton.StartClient(new UriBuilder(splitAddress[0], splitAddress[1], lobby.port).Uri);
+	}).Catch(error =>
+	{
+		Debug.LogError("Error when joining lobby: " + error);
+		onFailure();
+	}
+}
+\end{lstlisting}
+
+In den beiden obrigen Beispielen wird beim Auslösen des Catch-Falls die Methode onFailure() aufgerufen. Dieser Fall tritt bei verschiedenen Szenarien ein. Beispielsweise wenn die Komminikation mit der REST API nicht möglich ist, oder diese einen 4XX oder 5XX HTTP-Status-Code liefert. Die Methode sorgt dafür, dass der Nutzer zurück ins Main-Menü geschickt wird, und ihm eine Nachricht angezeigt wird, dass die Verbindungsversuch gescheitert ist.
+
+\begin{lstlisting}[caption= ConnectionScript.cs onFailure()]
+private void onFailure()
+{
+	unregisterCallbacks();
+	GameNetworkManager.singleton.curNetworkMessage.message = "Network Error: Could not Connect to Server";
+	changeToMainMenu(true);
+}
+
+\end{lstlisting}
+
+Die Implementierung einer onSuccess Funktion innerhalb des Connection-Managers ist nicht nötig, da bei erfolgreicher Verbindungsherstellung Mirror-spezifische Events und Handler-Funktionen für die weitere Logik sorgen. Diese sind nicht mehr Teil des ConnectionScript.
 
 \section{Implementierung: Serverside Client Manager}
 
@@ -330,7 +415,7 @@ private void clearLobbyData()
 // TODO: Add Content
 
 \section{Implementierung: Progress / Game-State Manager}
-
+\label{Progress Manager}
 // TODO: Add Content
 
 \section{Implementierung: Runtime Spawn Manager}
