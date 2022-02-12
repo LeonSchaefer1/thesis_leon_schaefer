@@ -266,6 +266,7 @@ OnServerChangeScene() - Diese Methode wird ausgeführt, sobald ein Szenenwechsel
 OnServerSceneChanged() - Diese Methode wird ausgeführt, sobald ein Szenenwechsel vollständig vollzogen ist.
 
 \section{Implementierung: Lobby / Multi Scene Manager}
+\label{Lobby Manager Implementierung}
 
 Das Spielkonzept beinhaltet wie im Teil der \hyperref[Spielidee]{Spielidee} und \hyperref[Architektur]{Architektur} des Prototyps beschrieben auch eine Lobbymechanik. Die Ideen aus dem Konzept des Lobby / Multi Scene Managers wurden aufgrund der geringen Anforderungen des Prototyps ebenfalls in der Klasse GameNetworkManager.cs untergebracht. Dies hat den Vorteil, dass man die Lobby-spezifischen Variablen direkt mit den überschriebenen virutellen Methoden der Mirror Klasse "NetworkManager" kombinieren kann.
 
@@ -404,11 +405,53 @@ private void onFailure()
 
 \end{lstlisting}
 
-Die Implementierung einer onSuccess Funktion innerhalb des Connection-Managers ist nicht nötig, da bei erfolgreicher Verbindungsherstellung Mirror-spezifische Events und Handler-Funktionen für die weitere Logik sorgen. Diese sind nicht mehr Teil des ConnectionScript.
+Die Implementierung einer onSuccess Funktion (Das Gegenstück zu onFaliure()) innerhalb des Connection-Managers ist nicht nötig, da bei erfolgreicher Verbindungsherstellung Mirror-spezifische Events und Handler-Funktionen für die weitere Logik sorgen. Diese sind nicht mehr Teil des ConnectionScript.
 
 \section{Implementierung: Serverside Client Manager}
 
-// TODO: Add Content
+Das Konzept des Serverside Client Managers wird nahezu vollständig durch Mirror-interne Prozesse gelöst. Die Verwaltung aller Clients geschieht durch die "GameNetworkManager" Klasse, welche von der Mirror Klasse "NetworkManager" erbt. Die Superklasse NetworkManager wiederum nutzt eine andere Mirror-Klasse "NetworkServer", diese beinhaltet ein Dictionary, welches die Verbindungen zu allen Clients verwaltet. Im folgenden Code ist das Dictionary, sowieso die dazu gehörenden Methoden AddConnection() und RemoveConnection() zu sehen.
+
+\begin{lstlisting}[caption= Mirror Class NetworkServer.cs Connection Handling]
+/// <summary>
+/// A list of local connections on the server.
+/// </summary>
+public static Dictionary<int, NetworkConnectionToClient> connections = new Dictionary<int, NetworkConnectionToClient>();
+
+/// <summary>
+/// <para>This accepts a network connection and adds it to the server.</para>
+/// <para>This connection will use the callbacks registered with the server.</para>
+/// </summary>
+/// <param name="conn">Network connection to add.</param>
+/// <returns>True if added.</returns>
+public static bool AddConnection(NetworkConnectionToClient conn)
+{
+	if (!connections.ContainsKey(conn.connectionId))
+	{
+		// connection cannot be null here or conn.connectionId
+		// would throw NRE
+		connections[conn.connectionId] = conn;
+		conn.SetHandlers(handlers);
+		return true;
+	}
+	// already a connection with this id
+	return false;
+}
+
+
+/// <summary>
+/// This removes an external connection added with AddExternalConnection().
+/// </summary>
+/// <param name="connectionId">The id of the connection to remove.</param>
+/// <returns>True if the removal succeeded</returns>
+public static bool RemoveConnection(int connectionId)
+{
+	return connections.Remove(connectionId);
+}
+\end{lstlisting}
+
+In der aktuellen Version des Prototyps werden spielerbezogene "Sonderinformationen" wie Spielername und Rolle im GameNetworkManager  mitverwaltet. Die Aufgabe des Serverside Client Managers wird in der Komponente, welche in die der Sektion \hyperref[Lobby Manager Implementierung]{Implementierung: Lobby / Multi Scene Manager} beschrieben wird, mitverwaltet. 
+
+Diese Tatsache ist allerdings an die Randbedingungen geknüpft, dass für das den Prototypen das Mirror Framework genutzt wurde, welches viele Funktionen auf die (überschriebene) NetworkManager Klasse abwälzt, sowie dass der Prototyp keine große Anzahl an "Sonderinformationen" (wie Charakterindividualisierung, Account-Informationen / In-Game-Shop Daten etc.) speichern muss. Da der Komplexitätsaufwand für eine gesonderte Handhabung dieser Informationen bei steigender Anforderungen enorm zunimmt, ist es ratsam die Komponente "Serverside Client Manager" gesondert zu implementieren.
 
 \section{Implementierung: Prepare-Game-Manager}
 
