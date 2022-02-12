@@ -3,7 +3,7 @@
 \chapter{Hintergrund}
 \label{sec:hintergrund}
 
-In diesem Kapitel wird das Hintergrundwissen erläutert, welches nötig ist um die Konzepte und Realisierung genauer zu verstehen. Unter anderem Wird auf die Grundlagen des Networkings, die verschiedenen Arten des Hosting, Datenspeicherung und Transfer, Informationskontrolle sowie Interest Management, Matchmaking und Synchronisation eingegangen.
+In diesem Kapitel werden die Grundlagen erläutert, welche nötig sind um die Konzepte und Realisierung genauer zu verstehen. Unter anderem wird auf die Grundlagen des Networkings, die verschiedenen Arten des Hosting, Datenspeicherung und Transfer, Informationskontrolle sowie Interest Management, Matchmaking und Synchronisation eingegangen.
 
 \section{Grundlagen des Networkings in Online-Videospielen}
 
@@ -34,11 +34,11 @@ Die Kommunikation zwischen Clients und Server kann in zwei verschiedenen Variant
 
 
 
-Bei dieser Variante wird der Serverprozess auf dem selben Gerät ausgeführt, auf dem auch eine Client-Instanz gestartet wurde. Ein Spieler übernimmt also "selbst" das Hosting. Andere Clients haben die Information, welcher Client einen Serverprozess "besitzt" und wie sie sich dorthin verbinden können. 
+Bei dieser Variante wird der Serverprozess auf dem selben Gerät ausgeführt, auf dem auch eine Client-Instanz gestartet wurde. Ein Spieler übernimmt also selbst das Hosting. Andere Clients haben die Information, welcher Client einen Serverprozess besitzt und wie sie sich dorthin verbinden können. 
 
-Vorteile: Die Unabhängigkeit von Hardwareressourcen für Entwickler, dieses "Problem" wird schlichtweg an die Spieler ausgelagert. 
+\textbf{Vorteile:} Die Unabhängigkeit von Hardwareressourcen für Entwickler, dieses "Problem" wird an die Spieler ausgelagert. 
 
-Nachteile: Da der Serverprozess nun ebenfalls auf einem Gerät läuft, auf welches Spieler Zugriff haben gibt es ebenfalls mehr Möglichkeiten des Hackings (Spielmanipulation) \cite{Wikipedia.2021h}. Die Entwickler haben keinerlei Einfluss auf die Serverprozesse, welche ein Spieler startet.
+\textbf{Nachteile:} Da der Serverprozess nun ebenfalls auf einem Gerät läuft, auf welches Spieler Zugriff haben gibt es ebenfalls mehr Möglichkeiten des Hackings (Spielmanipulation) \cite{Wikipedia.2021h}. Die Entwickler haben keinerlei Einfluss auf die Serverprozesse, welche ein Spieler startet.
 \cite{Smed.2002}
 
 \textsf{\Large Client Server:}
@@ -54,25 +54,24 @@ Nachteile: Da der Serverprozess nun ebenfalls auf einem Gerät läuft, auf welch
 
 Diese Variante trennt Client und Server physikalisch von einander. Serverprozesse werden außerhalb einer Client-Umgebung gestartet und verwaltet. Clients haben einen (oder mehrere) zentrale Zielsysteme, zu welchen sie sich verbinden können.
 
-Vorteile: 
+\textbf{Vorteile:}
 
 Mehr Kontrolle auf Seiten der Entwickler. Hacking ist deutlich erschwert. Die Software-Architektur kann verhindern, dass spielentscheidende Daten nicht in der Hand der Spieler liegen, und somit ein sicheres und faires Spiel gewährleistet werden kann.
 \cite{Smed.2002}
 
-Nachteile: 
+\textbf{Nachteile:}
 
 Die Kosten für Hardware und Bandbreite skalieren mit den Spielerzahlen. Diese Tatsache kann sehr schnell hohe Kosten verursachen. \cite{Deng.2018}
 
-Ein Ausfall des zentralen Servers kann dazu führen, dass ein Großteil der Spielerfahrung nicht mehr spielbar ist. 
-
+Bei einer simplen, monolithischen Architektur ist kann dieses Modell dazu führen, dass die Hardware, welche als Server fungiert zum Single Point of Failure wird. Das heißt, dass ein Ausfall des zentralen Spielservers dazu führen kann, dass ein Großteil der Spielerfahrung nicht mehr spielbar ist.
 
 \section{Datenspeicherung und Transfer}
 
-Um ein bestmögliches Spielerlebnis zu ermöglichen, sollte innerhalb der Entwicklung von Online Multiplayerspielen darauf geachtet werden, dass spielentscheidende Daten schnellstmöglich zwischen den Clients synchronisiert werden. Wie auch bei anderen Echtzeitsystemen \cite{Wikipedia.2021} kommt es also auch bei der Entwicklung von dieser Art von Software darauf an, Daten zu serialisieren \cite{Wikipedia.2019}. 
+Um das bestmögliche Spielerlebnis zu ermöglichen, sollte innerhalb der Entwicklung von Multiplayer-Spielen darauf geachtet werden, dass spielentscheidende Daten schnellstmöglich zwischen den Clients synchronisiert werden. Wie auch bei anderen Echtzeitsystemen \cite{Wikipedia.2021} kommt es also auch bei der Entwicklung von dieser Art von Software darauf an, Daten zu serialisieren (Konvertierung der Daten für die Übertragung über das Netzwerk) \cite{Wikipedia.2019}. 
 
 Daten unterscheiden sich im Kontext der Online Spielentwicklung grundsätzlich nicht großartig von anderer Software. Typischerweise werden Programmiersprachen wie C\# oder C++ genutzt, um Klassen und Datenstrukturen zu erstellen, welche die eigene Spiellogik abbilden. \cite{Glinka.2008}
 
-Das folgende rudimentäre Klassendiagramm zeigt zwei simple Klassen. Eine Spielerklasse, welche Informationen über den Spieler enthält sowie eine Network Manager Klasse, welche alle Spieler verwaltet.
+Das folgende Klassendiagramm zeigt zwei simple Klassen. Eine Klasse, welche den Spieler abbildet sowie eine Klasse, welche alle Spieler verwaltet.
 
 \begin{figure}
 	\centering
@@ -81,11 +80,11 @@ Das folgende rudimentäre Klassendiagramm zeigt zwei simple Klassen. Eine Spiele
 	\label{pic:UML_class_Player_NM}
 \end{figure}
 
-Das Beispiel hat nicht den Anspruch auf Vollständigkeit, soll jedoch illustrieren, auf welche Art und Weise Daten typischerweise innerhalb eines Multiplayer-Kontextes verwaltet werden.
+Das Beispiel ist stark vereinfacht, soll jedoch illustrieren, auf welche Art und Weise Daten typischerweise innerhalb eines Multiplayer-Kontextes verwaltet werden.
 
 Der Entwickler entscheidet hierbei selbst, welche Informationen in welchem Kontext vorhanden ist. Konkret muss sich ein Entwickler stets die Frage stellen, ob eine Information im Server-Kontext oder im Client-Kontext verwaltet bzw. verarbeitet werden soll.
 
-Serialisierte Daten werden über ein Netzwerk transportiert. Je Nach Art des Hostings erfolgt ein Umweg über eine Server-Instanz, oder direkt zu einem anderen Client. \cite{Smed.2002c}
+Serialisierte Daten werden über ein Netzwerk transportiert. Je Nach Art der Architektur erfolgt ein Umweg über eine Server-Instanz, oder direkt zu einem anderen Client. \cite{Smed.2002c}
 
 \section{Informationskontrolle und Interest Management}
 
@@ -94,10 +93,10 @@ Serialisierte Daten werden über ein Netzwerk transportiert. Je Nach Art des Hos
 "Welche Information soll zu welchem Zeitpunkt in welchem Kontext verfügbar sein?" Diese Frage müssen sich Multiplayer-Spieleentwickler aus verschiedenen Gründen regelmäßig stellen.
 Die Gründe sind:
 
-Security:
+\textbf{Security:}
 Beispiel: Bei einem Online-Poker Spiel wäre es fatal, wenn ein Mitspieler jederzeit über alle Karten seiner Mitspieler Kenntnis hätte. 
 
-Network traffic:
+\textbf{Network traffic:}
 Beispiel: In Mario Kart sammelt ein Spieler ein Item ein. Der Server würfelt für diesen Spieler ein zufälliges Item aus, welches der Spieler im Anschluss verwenden soll. Die Information über das Resultat der Zufallsauswahl sollte an den jeweiligen Spieler gesendet werden, welcher dieses Item erhalten soll. Alle Anderen Spieler muss diese Information nicht interessieren.
  
 \textsf{\Large Interest Management:}
@@ -105,7 +104,7 @@ Beispiel: In Mario Kart sammelt ein Spieler ein Item ein. Der Server würfelt f�
 
 Interest Management beschreibt ein Konzept, welches deligiert, welche Informationen in welchem Kontext zu welcher Zeit für welche Personen verfügbar sind. Befindet sich der Spieler in einem bestimmten Bereich einer Spielwelt, kann das Interest Management dafür sorgen, dass dieser Spieler für manche Spieler sichtbar, und für manche Spieler nicht sichtbar ist, je nachdem wie nahe sich die Spieler zueinander befinden, oder in welchem Areal der Spielwelt sie sich befinden.
 
-Dieses Paradigma wird besonders oft in MMO-Spielen \cite{Wikipedia.2021i} benutzt, damit ein Server mehrere Tausend Spieler ohne Abstürze verwalten kann. Ebenso wird es benutzt, um Spiellogik umzusetzen, welche es nur ausgewählten Spielern erlaubt, andere Spieler oder Objekte innerhalb der Spielwelt zu sehen und/oder mit ihnen interagieren zu dürfen.
+Dieses Konzept wird besonders oft in MMO-Spielen \cite{Wikipedia.2021i} benutzt, damit ein Server mehrere Tausend Spieler ohne Abstürze verwalten kann. Ebenso wird es benutzt, um Spiellogik umzusetzen, welche es nur ausgewählten Spielern erlaubt, andere Spieler oder Objekte innerhalb der Spielwelt zu sehen und/oder mit ihnen interagieren zu dürfen.
 
 \cite{Smed.2002c}
 
@@ -116,43 +115,54 @@ Matchmaking bei Multiplayer Online Spielen ist ein Dienst, der es Spielern ermö
 
 Die häufigsten Konzepte von Matchmaking Diensten sind:
 
-Playlists:
+\textbf{Playlists:}
 
-Playlists sind automatisch verwaltete Ströme von "Spielsitzungen", denen die Spieler nach Belieben beitreten und Verlassen können. Anhand einer Reihe vordefinierter Regeln wird die Konfiguration der einzelnen Sitzungen festgelegt, ohne dass ein Mensch eingreifen muss.  
+Playlists sind automatisch verwaltete Ströme von Spielsitzungen, denen die Spieler nach Belieben beitreten und verlassen können. Anhand einer Reihe vordefinierter Regeln wird die Konfiguration der einzelnen Sitzungen festgelegt, ohne dass ein Mensch eingreifen muss.  
 
 Die Spiele bieten in der Regel eine Auswahl an thematischen Wiedergabelisten (z. B. Teams oder Einzelspieler, ausgefallene Regeln usw.), um verschiedenen Geschmäckern oder Stimmungen gerecht zu werden. Da die Wiedergabelisten von Servern verwaltet werden, die vom Entwickler des Spiels kontrolliert werden, können sie im Laufe der Zeit geändert werden.
 
 Wenn ein Spieler eine Wiedergabeliste auswählt, schließt er sich einem Pool von anderen Spielern an, die die gleiche Wahl getroffen haben. Der Playlist-Server verbindet sie dann entweder mit einer bestehenden Sitzung oder erstellt eine neue. 
 
-Parties:
+\cite{Wikipedia.2021b}
 
-Partys sind Gruppen von Spielern, die von Matchmaking-Systemen als eine Einheit behandelt werden. Eine Gruppe kann von Sitzung zu Sitzung wechseln, ohne dass ihre Spieler voneinander getrennt werden. Das Konzept eignet sich besonders gut für Wiedergabelisten, die automatisch die Logistik der Suche oder Erstellung von Spielsitzungen mit genügend Platz für die gesamte Gruppe übernehmen können. 
+\textbf{Parties:}
 
-Lobbies:
+Partys sind Gruppen von Spielern, die von Matchmaking-Systemen als eine Einheit behandelt werden. Eine Gruppe kann von Sitzung zu Sitzung wechseln, ohne dass ihre Spieler voneinander getrennt werden. Das Konzept eignet sich besonders gut für Wiedergabelisten, die automatisch die Logistik der Suche oder Erstellung von Spielsitzungen mit genügend Platz für die gesamte Gruppe übernehmen können.
 
-Lobbys sind Menübildschirme, in denen die Spieler die bevorstehende Spielsitzung einsehen, die Ergebnisse der letzten Sitzung prüfen, ihre Einstellungen ändern und miteinander sprechen können.
+\cite{Wikipedia.2021b} 
+
+\textbf{Lobbys:}
+Bei manchen Spielmodellen wird zwischen mehreren Spielszenen hin-und hergewechselt. Eine Spielszene ist eine Sammlung an Spielobjekten, Spielmenüs und Spielcharakteren, die als eine Einheit innerhalb eines Spiels zu verstehen ist. Oft sind Szenenwechsel mit Ladezeiten verbunden. Die Aufgliederung eines Spiels in Spielszenen erleichtert Entwicklern den Umgang mit limitierten Hardwareressourcen. \cite{Wikipedia.2012}
+
+Lobbys sind Spielszenen, in denen die Spieler die bevorstehende Spielsitzung einsehen, die Ergebnisse der letzten Sitzung prüfen, ihre Einstellungen ändern und miteinander sprechen können.
 
 In vielen Spielen kehren die Spieler am Ende jeder Sitzung in die Lobby zurück. In einigen Spielen werden Spieler, die einer bereits begonnenen Sitzung beitreten, bis zum Beginn der nächsten Sitzung in der Lobby untergebracht. Da Lobbys nur wenige Ressourcen verbrauchen, werden sie manchmal zusätzlich als "Warteschleife" für Spieler verwendet, bis ein geeigneter Gastgeber für die nächste Sitzung gefunden ist.
 
 Lobbys, die von Playlists erstellt werden, haben oft einen Countdown-Timer, bevor die Sitzung beginnt, während Lobbys, die von einem Spieler erstellt werden, im Allgemeinen nach dessen Ermessen übergehen.
 
-Ranking:
+\cite{Wikipedia.2021b}
 
-Viele Matchmaking-Systeme verfügen über ein Ranglistensystem, mit dem versucht wird, Spieler mit ungefähr gleichen Fähigkeiten zusammenzubringen. Ein Beispiel dafür ist das TrueSkill-System von Xbox Live.
+\textbf{Ranking:}
 
-Spiele wie League of Legends verwenden Divisionen und Ränge für ihr Matchmaking-Bewertungssystem. Jeder Spieler tritt in verschiedenen Rängen an: Eisen, Bronze, Silber, Gold, Platin, Diamant, Meister, Großmeister, Herausforderer, und für jeden Sieg gibt es Ligapunkte, für jede Niederlage werden Ligapunkte abgezogen.
+Viele Matchmaking-Systeme verfügen über ein Ranglistensystem, mit dem versucht wird, Spieler mit ähnlichen Fähigkeiten zusammenzubringen.
 
-Bei Spielen mit Rangliste werden in der Regel nicht gewertete Sitzungen für Spieler angeboten, die nicht wollen, dass ihre Leistung aufgezeichnet und analysiert wird. Diese werden getrennt gehalten, damit sich rangierte und nicht rangierte Spieler nicht vermischen. Videospiele wie League of Legends, Counter-Strike: Global Offensive, Rocket League und Brawlhalla verwenden das Elo-Bewertungssystem in ihren Ranglistenspielen.
+Spiele wie League of Legends verwenden Divisionen und Ränge für ihr Matchmaking-Bewertungssystem. Jeder Spieler tritt in verschiedenen Rängen an und für jeden Sieg gibt es Ligapunkte, für jede Niederlage werden Ligapunkte abgezogen.
 
-Server browsers:
+Bei Spielen mit Rangliste werden in der Regel nicht gewertete Sitzungen für Spieler angeboten, die nicht wollen, dass ihre Leistung aufgezeichnet und analysiert wird. Diese werden getrennt gehalten, damit sich rangierte und nicht rangierte Spieler nicht vermischen.
 
-Einige Spiele (vor allem solche mit dedizierten Servern) zeigen den Spielern eine Liste aktiver Sitzungen an und ermöglichen ihnen, manuell eine Sitzung auszuwählen. Dieses System kann in Verbindung mit Ranglisten und Lobbys verwendet werden, wird aber durch die On-Demand-Sitzungserstellung von Wiedergabelisten vereitelt.
+\cite{Wikipedia.2021b}
+
+\textbf{Server browsers:}
+
+Einige Spiele zeigen den Spielern eine Liste aktiver Sitzungen an und ermöglichen diesen manuell eine Sitzung auszuwählen, der sie beitreten möchten. Dieses System kann in Verbindung mit Ranglisten und Lobbys verwendet werden, wird aber durch die On-Demand-Sitzungserstellung von Playlists vereitelt.
 
 Die meisten dieser Server-Browser ermöglichen es den Spielern, die Ergebnisse zu filtern, die sie liefern. Zu den üblichen Filterkriterien gehören Servername, Spielerzahl, Spielmodus und Latenzzeit. 
 
-Contacts lists:
+\cite{Wikipedia.2021b}
 
-Eine der grundlegendsten und gängigsten Formen des Matchmaking besteht darin, den Spielern eine Liste anderer Spieler zur Verfügung zu stellen, die sie bereits kennengelernt haben und mit denen sie vielleicht wieder spielen möchten. Der Status jedes Spielers (offline, online, spielend) wird angezeigt, es besteht die Möglichkeit, einer laufenden Sitzung beizutreten, und im Allgemeinen ist es möglich, Chat-Nachrichten zu senden.
+\textbf{Contacts lists:}
+
+Eine der gängigsten Formen des Matchmaking besteht darin, den Spielern eine Liste anderer Spieler zur Verfügung zu stellen, die sie bereits kennengelernt haben und mit denen sie vielleicht wieder spielen möchten. Der Status jedes Spielers (offline, online, spielend) wird angezeigt, es besteht die Möglichkeit, einer laufenden Sitzung beizutreten.
 
 In vielen Fällen werden die Kontaktlisten von der Plattform verwaltet, auf der ein Spiel läuft (z. B. Xbox Live, PlayStation Network, Steam), um den Spielern den Aufwand zu ersparen, viele separate Listen für viele einzelne Spiele zu verwalten. 
 
