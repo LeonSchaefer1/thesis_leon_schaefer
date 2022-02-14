@@ -20,6 +20,10 @@ Für die Entwicklung des Prototyps kamen folgende Technologien zum Einsatz:
 
 --> Hide and Seek kurz erklären
 
+--> Zusatz: Objekte von A nach B bringen (Item Devlivery Feature) kurz erklären (Verlorene Objekte zu ihrem Urpsrungsort zurück bringen)
+
+--> Portal Spawning erklären
+
 --> Join Random Lobby / Zugangscode erklären
 
 \section{Architektur des Prototyps}
@@ -455,10 +459,144 @@ Diese Tatsache ist allerdings an die Randbedingungen geknüpft, dass für das de
 
 \section{Implementierung: Prepare-Game-Manager}
 
-// TODO: Add Content
+Der PrepareGameManager sorgt innerhalb des Prototypen dafür, dass anhand der vom Lobby-Leiter konfigurierten Anzahl an Objekten eine entsprechende Menge an zufällig ausgewählten 'Collectable'-Objekten im Spielfeld platziert werden. Anschließend wählt der PrepareGameManager zufällig ein von drei, für dieses spezifische 'Collectable'-Objekt mögliches 'Destination'-Objekt aus, welches als Zielpunkt dient. Die folgende Methode spawnObjects() führt diese Logik aus. Zunächst eine kurze Erläuterung der Variablen und aufgerufenen Methoden innerhalb von spawnObjects().
+
+Das Feld 'spawnableCollectableObjects' enthält alle 'Collectable'-Objekte, 'spawnableDestinationObjects' alle 'Destination' Objekte, welche gespawnt werden können.
+
+'possibleCollectableSpawnPoints' und 'possibleDestinationSpawnPoints' beinhalten alle möglichen Spawnpunkte für 'Collectable' und 'Destination' Objekte.
+
+'amountOfCollectablesSetting' ist die vom Lobby-Leiter konfigurierte Anzahl an 'Collectable' Objekten, die in der Spielwelt platziert werden sollen.
+
+'popCollectableSpawnpointAt()' gibt einen Spawnpunkt für ein 'Collectable'-Objekt zurück für einen gegebenen Index.
+
+'popCollectableObjectAt()' gibt ein 'Collectable' Objekt zurück für einen gegebenen Index.
+
+'popRelatedDestinationSpawnPoints' gibt drei Spawnpunkte zurück für einen gegebenen Index.
+
+'popRelatedDestinationObjects' gibt drei 'Destination' Objekte zurück für einen gegebenen Index.
+
+
+\begin{lstlisting}[caption= PrepareGameManager.cs Variablen und spawnObjects()]
+	
+private List<GameObject> spawnableCollectableObjects;
+private List<GameObject> spawnableDestinationObjects;
+
+private List<Transform> possibleCollectableSpawnPoints;
+private List<Transform> possibleDestinationSpawnPoints;
+
+private void spawnObjects()
+{
+	int amountOfCollectablesSetting = GameNetworkManager.singleton.gameRules[1].dropdownValue + 1;
+	for (int i = 0; i < amountOfCollectablesSetting; i++)
+	{
+		// take one random index from collectable object spawnpoint, use this index to instantiate collectable object [index] inside collectable object spawnpoint [index],
+		// remove the index in both lists
+		// find corresponding 3 destination objects, pick a random one of these 3, make relation collectable <--> Destination
+		
+		int randomIndex = new Random().Next(possibleCollectableSpawnPoints.Count - 1);
+		Transform curCollectableSpawnPoint = popCollectableSpawnpointAt(randomIndex);
+		
+		GameObject curCollectableGameObject = popCollectableObjectAt(randomIndex);
+		GameObject collectInstance = Instantiate(curCollectableGameObject, curCollectableSpawnPoint.position, curCollectableSpawnPoint.rotation);
+		NetworkServer.Spawn(collectInstance);
+		
+		// Destroy the the spawnpoint that is used to place current collectable Object
+		NetworkServer.Destroy(curCollectableSpawnPoint.gameObject);
+		
+		List<Transform> relatedDestinationSpawnPoints = popRelatedDestinationSpawnPoints(randomIndex);
+		List<GameObject> relatedDestinationObjects = popRelatedDestinationObjects(randomIndex);
+
+		
+		// pick a random value between e.g. 0-2 or 3-5 or 6-8 .. etc. (based on random Collectable index)
+		int randomRelatedDestinationObjectPickIndex = new Random().Next(relatedDestinationObjects.Count);
+		Transform curDestinationSpawnpoint = relatedDestinationSpawnPoints[randomRelatedDestinationObjectPickIndex];
+		GameObject curDestinationObject = relatedDestinationObjects[randomRelatedDestinationObjectPickIndex];
+		
+		// Spawn Destination Object, link it with the Collect Object
+		GameObject destinationInstance = Instantiate(curDestinationObject, curDestinationSpawnpoint.position, curDestinationSpawnpoint.rotation);
+		destinationInstance.GetComponent<DestinationObjectScript>().expectedObject = collectInstance;
+		NetworkServer.Spawn(destinationInstance);
+	}
+	destroyUnusedCollectableSpawnPoints();
+}
+\end{lstlisting}
+
+Der PrepareGameManager sorgt außerdem für die Verwaltung der Spawn-Punkte aller Spieler. Innerhalb der Variable 'possiblePlayerSpawnPoints' werden diese gespeichert. Die Methode fillPossiblePlayerSpawnPoints() sorgt dafür, dass die Variable mit Werten gefüllt wird.
+
+\begin{lstlisting}[caption= PrepareGameManager.cs fillPossiblePlayerSpawnPoints()]
+private List<Transform> possiblePlayerSpawnPoints;
+
+public void fillPossiblePlayerSpawnPoints()
+{
+	possiblePlayerSpawnPoints = new List<Transform>();
+	GameObject[] portals = GameObject.FindGameObjectsWithTag("Portal");
+	foreach (GameObject portal in portals)
+	{
+		possiblePlayerSpawnPoints.Add(portal.transform);
+	}
+}
+\end{lstlisting}
+
+Mit der Methode 'popRandomPlayerSpawnPoint()' gibt einen zufälligen Spieler-Spawnpunkt zurück, und entfernt ihn von der Liste der noch möglichen Spieler-Spawnpunkte.
+
+\begin{lstlisting}[caption= PrepareGameManager.cs popRandomPlayerSpawnPoint()]
+public Transform popRandomPlayerSpawnPoint()
+{
+	int randomIndex = new Random().Next(possiblePlayerSpawnPoints.Count);
+	Transform result = possiblePlayerSpawnPoints[randomIndex];
+	possiblePlayerSpawnPoints.Remove(possiblePlayerSpawnPoints[randomIndex]);
+	return result;
+}
+\end{lstlisting}
+
+Aufgerufen wird die Methode popRandomPlayerSpawnPoint() innerhalb der \hyperref[Lobby Manager Implementierung]{Lobby Manager Implementierung} in der Methode 'replaceLobbyPlayersWithGamePlayers()'. In dieser Methode werden alle Lobby-Spielerobjekte mit InGame-Spielerobjekten (Charakteren) ersetzt. Unter anderem wird in diesem Ersetzungsprozess der neue, zufällige Spawn-Punkt benötigt, welcher popRandomPlayerSpawnPoint() liefert.
+
+\begin{lstlisting}[caption= GameNetworkManager.cs replaceLobbyPlayersWithGamePlayers()]
+private void replaceLobbyPlayersWithGamePlayers()
+{
+	int firstSeekerIndex = new Random().Next(NetworkServer.connections.Count);
+	int secondSeekerIndex = -1;
+	
+	// Only set secondSeekerIndex if Leader has Configured 2 Seekers & we are at least 3 Players
+	
+	if(getConfiguredSeekerAmount() == 2 && getLobbyPlayerCount() >= 3)
+	{
+		while(secondSeekerIndex == -1 || secondSeekerIndex == firstSeekerIndex)
+		{
+			secondSeekerIndex = new Random().Next(NetworkServer.connections.Count);
+		}
+	}
+	
+	int currentIndex = 0;
+	bool isDayTime = Convert.ToBoolean(gameRules[5].dropdownValue);
+	
+	foreach (var pair in lobbyPlayers)
+	{
+		var conn = pair.Key;
+		var lobbyPlayer = pair.Value;
+		
+		Transform spawnPoint = prepareGameManager.popRandomPlayerSpawnPoint();
+		Vector3 spawnPosition = new Vector3(spawnPoint.position.x, 0.88f, spawnPoint.position.z);
+		GameObject gamePlayerInstance = Instantiate(gamePlayerPrefab, spawnPosition, spawnPoint.rotation);
+		
+		Role curRole = (currentIndex == firstSeekerIndex || currentIndex == secondSeekerIndex) ? Role.Seeker : Role.Hider;
+		gamePlayerInstance.GetComponent<PlayerBaseScript>().role = curRole;
+		gamePlayerInstance.GetComponent<PlayerBaseScript>().playerName = lobbyPlayer.playerName;
+		gamePlayerInstance.GetComponent<PlayerBaseScript>().globalLightEnabled = isDayTime;
+		gamePlayerInstance.GetComponent<PlayerBaseScript>().playerLightEnabled = !isDayTime;
+		gamePlayerInstance.GetComponent<PlayerMovementScript>().setPlayerSpeed(getConfiguredPlayerSpeed());
+		
+		NetworkServer.ReplacePlayerForConnection(conn, gamePlayerInstance, true);
+		currentIndex++;
+	}
+	lobbyPlayers.Clear();
+}
+\end{lstlisting}
+
 
 \section{Implementierung: Progress / Game-State Manager}
 \label{Progress Manager}
+
 // TODO: Add Content
 
 \section{Implementierung: Runtime Spawn Manager}
