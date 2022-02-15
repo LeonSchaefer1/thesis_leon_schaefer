@@ -33,7 +33,7 @@ Für Spiele, welche ein Matchmaking-System benötigen muss eine API entworfen we
 
 Die API muss einen Algorithmus implementieren, welcher mehrere Spieler zu einer Spiel-Session zusammenführt. Mögliche Matchmaking Konzepte sind bereits im Hintergrund-Kapitel beschrieben. Die Matchnaking API verwaltet als eine Liste an aktiven Serverprozessen sowie die Information, wie man sich zu ihnen verbindet. In der Regel wird pro Serverprozess ein Netzwerk-Port an der Server-Maschine reserviert, auf denen sich dann N Spieler verbinden können.
 
-Je nach Spielkonzept können hunderte, tausende Serverprozesse existieren, welche jeweils nur eine vergleichsweise geringe Anzahl (1-20) an Spieler verwalten. Spielkonzepte, welche viele Spieler (200-1000) innerhalb eines einzigen Serverprozesses voraussetzten, erzeugen dagegen zwar quantitativ weniger Serverprozesse, diese neigen aber in der Regel schnell zu Überlastung. Neben der Umsetzung von Interest Management und einer performanten Architektur für möglichst wenig Network-Traffic kann aber auch die Matchmaking API Abhilfe schaffen, bspw. durch "Umverlegung" von Spielern auf andere oder neue Cluster.
+Je nach Spielkonzept können hunderte, tausende Serverprozesse existieren, welche jeweils nur eine vergleichsweise geringe Anzahl (1-20) an Spieler verwalten. Spielkonzepte, welche viele Spieler (200-1000) innerhalb eines einzigen Serverprozesses voraussetzten, erzeugen dagegen zwar quantitativ weniger Serverprozesse, diese neigen aber in der Regel schnell zu Überlastung. Neben der Umsetzung von Interest Management und einer performanten Architektur für möglichst wenig Network-Traffic kann aber auch die Matchmaking API Abhilfe schaffen, bspw. durch 'Umverlegung' von Spielern auf andere oder neue Cluster.
 
 \textbf{Server Runner:}
 
@@ -190,7 +190,7 @@ Außerdem ist der Progress Manager / Game-State Manager dafür verantwortlich, a
 \section{Runtime Spawn Manager}
 \label{spawn_manager}
 
-Der Runtime Spawn Manager verwaltet die zur Laufzeit zu erzeugenden Spieler und Nicht-Spieler Objekte. Konkret werden Funktionen des Runtime Spawn Managers ausgeführt, wenn ein spezifisches Event innerhalb einer Spiel-Session ausgelöst wird oder ein Spieler bzw. Nicht-Spieler-Character stirbt, und diese erneut an anderer Position spawnen sollen ("Re-Spawning"). Die Logik, wo genau ein Spieler oder Nicht-Spieler Objekt seine neue Einstiegsposition erhält, regelt ebenfalls der Runtime Spawn-Manager.
+Der Runtime Spawn Manager verwaltet die zur Laufzeit zu erzeugenden Spieler und Nicht-Spieler Objekte. Konkret werden Funktionen des Runtime Spawn Managers ausgeführt, wenn ein spezifisches Event innerhalb einer Spiel-Session ausgelöst wird oder ein Spieler bzw. Nicht-Spieler-Character stirbt, und diese erneut an anderer Position spawnen sollen ('Re-Spawning'). Die Logik, wo genau ein Spieler oder Nicht-Spieler Objekt seine neue Einstiegsposition erhält, regelt ebenfalls der Runtime Spawn-Manager.
 
 \textbf{Beispiel:} In einem Online Multiplayer Ego-Shooter \cite{Wikipedia.2021g} stirbt ein Spieler durch Schüsse anderer Spieler. Der Runtime Spawn Manager sorgt dafür, dass anhand von bestimmten, zur Laufzeit ausgerechneten Bedingungen eine neue Spawn-Position für den gestorbenen Spieler gefunden wird. 
 
@@ -218,7 +218,7 @@ Mögliche Faktoren, die der Interest Manager benutzen kann, um den Spielern die 
 
 - Teams bzw. Gruppen. Die registrierten (Spieler)-Objekte innerhalb eines Teams/ einer Gruppe sind für Spieler, welche ebenfalls innerhalb des Teams/Gruppe registriert sind sichtbar.
 
-- Spatial Hashing / Grid Checker: Die Spielwelt und ihre Objekte werden in quadratische Zellen eingeteilt. Je nachdem in welcher Zelle sich ein Spieler befindet, werden nur diejenigen Objekte der Spielwelt mit dem Spieler snychronisiert, welche sich innerhalb der 8 "Nachbarzellen" befinden:
+- Spatial Hashing / Grid Checker: Die Spielwelt und ihre Objekte werden in quadratische Zellen eingeteilt. Je nachdem in welcher Zelle sich ein Spieler befindet, werden nur diejenigen Objekte der Spielwelt mit dem Spieler snychronisiert, welche sich innerhalb der 8 'Nachbarzellen' befinden:
 
 \begin{figure}
 	\centering
