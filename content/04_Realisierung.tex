@@ -7,18 +7,29 @@ In diesem Kapitel werden die im vorherigen Kapitel beschriebenen Konzepte anhand
 
 Für die Entwicklung des Prototyps kamen folgende Technologien zum Einsatz:
 
-- Als Game-Engine wurde Unity \cite{Technologies.03.02.2022} benutzt. Die Entscheidung hierfür begründet sich durch die gute Dokumentation und den Long-Time-Support der verschiedenen Unity Versionen. Außerdem gibt es eine große Anzahl an Benutzer. Unity existiert bereits seit dem Jahr 2005 \cite{Wikipedia.2022c}, und hat sich seitdem in Entwickler-Kreisen einen nachhaltigen Ruf erarbeitet.
+Als Game-Engine wurde Unity \cite{Technologies.03.02.2022} benutzt. Die Entscheidung hierfür begründet sich durch die gute Dokumentation und den Long-Time-Support der verschiedenen Unity Versionen. Außerdem gibt es eine große Anzahl an Benutzer. Unity existiert bereits seit dem Jahr 2005 \cite{Wikipedia.2022c}, und hat sich seitdem in Entwickler-Kreisen einen nachhaltigen Ruf erarbeitet.
 
-- C\# kommt als Programmiersprache zum Einsatz. Unity hat eine sehr gute Unterstützung hierfür.
+C\# kommt als Programmiersprache zum Einsatz. Unity hat eine sehr gute Unterstützung hierfür.
 
-- Zusätzlich zu Unity wurde Mirror\cite{.03.02.2022} als weiteres Framework benutzt. Mirror ist eine kostenloses Open Source Networking Bibliothek, welche die Entwicklung von Netzwerk-Code deutlich erleichtert.
+Zusätzlich zu Unity wurde Mirror\cite{.03.02.2022} als weiteres Framework benutzt. Mirror ist eine kostenloses Open Source Networking Bibliothek, welche die Entwicklung von Netzwerk-Code deutlich erleichtert.
 
 \section{Spielidee des Prototyps}
 \label{Spielidee}
 
-// TODO Add Content
+Das Grundprinzip des Prototyps basiert auf dem Kinderspiel 'Fangen und Verstecken'. Hinzu kommen weitere Spiel-Elemente, die in dieser Sektion erläutert werden. Innerhalb der Spielwelt existieren 2 verschiedene 'Teams', welche aus Spielern bestehen.
 
---> Hide and Seek kurz erklären
+Spieler mit der Rolle 'Hider' und 'Ghost' gehören zu einem Team.  Spieler mit der Rolle 'Seeker' bilden das zweite Team. Anfangs wird per Zufall entschieden, welche Spieler zum Team 'Hider/Ghost' und welche zum Team 'Seeker' gehören. Alle Teammitglieder des Teams 'Hider/Ghost' beginnen das Spiel initial als 'Hider'. Der Leiter einer Lobby kann festlegen, ob ein oder zwei Seeker ausgewürfelt werden sollen. Zum Leiter einer Lobby wird derjenige Spieler, der als erstes einer Lobby beitritt. In der Regel also derjenige, der die Lobby eröffnet hat. 
+
+Die Aufgaben der Rollen sind je nach Rolle unterschiedlich:
+
+\textbf{Hider:}
+Spieler mit der Rolle Hider haben die Aufgabe, bestimmte Objekte in der Spielwelt zu finden, und diese zu einem Zielort zu bringen. Sind alle Objekte zu ihrem Zielort gebracht, so hat das Team 'Hider/Ghost' das Spiel gewonnen. Hider müssen außerdem vor den Spielern mit der Rolle 'Seeker' flüchten, bzw. sich vor diesen verstecken.
+
+\textbf{Seeker:}
+
+\textbf{Ghost:}
+
+
 
 --> Zusatz: Objekte von A nach B bringen (Item Devlivery Feature) kurz erklären (Verlorene Objekte zu ihrem Urpsrungsort zurück bringen)
 
@@ -27,6 +38,22 @@ Für die Entwicklung des Prototyps kamen folgende Technologien zum Einsatz:
 --> Join Random Lobby / Zugangscode erklären
 
 --> Game Timer erklären
+
+\begin{figure}
+	\centering
+	\includegraphics[width=150mm]{images/game_concept.jpg}
+	\caption[Spielkonzept Diagramm]{Veranschaulichung des Spielkonzepts}
+	\label{pic:game_concept}
+\end{figure}
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=150mm]{images/matchmaking_concept.jpg}
+	\caption[Matchmaking-Konzept Diagramm]{Veranschaulichung des Matchmaking Konzepts}
+	\label{pic:matchmaking_concept}
+\end{figure}
+
 
 \section{Architektur des Prototyps}
 \label{Architektur}
@@ -46,6 +73,7 @@ GameScene:
 // TODO: Add Content
 
 \section{Implementierung: Client UI \& Visual Controller}
+\label{implementierung:client_UI_Controller}
 
 Der Client UI \& Visual Controller spielt im Prototyp eine wesentliche Rolle. Er kommt in der GameScene als Singleton \cite{M.Gatrell.2009} zum Einsatz, wo er alle nötigen Methoden implementiert, um das lokale UI des Spielers manipulieren zu können. Hier sind nun 3 Beispiele aufgeführt:
 
@@ -460,6 +488,7 @@ In der aktuellen Version des Prototyps werden spielerbezogene 'Sonderinformation
 Diese Tatsache ist allerdings an die Randbedingungen geknüpft, dass für das den Prototypen das Mirror Framework genutzt wurde, welches viele Funktionen auf die (überschriebene) NetworkManager Klasse abwälzt, sowie dass der Prototyp keine große Anzahl an 'Sonderinformationen' (wie Charakterindividualisierung, Account-Informationen / In-Game-Shop Daten etc.) speichern muss. Da der Komplexitätsaufwand für eine gesonderte Handhabung dieser Informationen bei steigender Anforderungen enorm zunimmt, ist es ratsam die Komponente 'Serverside Client Manager' gesondert zu implementieren.
 
 \section{Implementierung: Prepare-Game-Manager}
+\label{Implementierung:prepare_game_manager}
 
 Der PrepareGameManager sorgt innerhalb des Prototypen dafür, dass anhand der vom Lobby-Leiter konfigurierten Anzahl an Objekten eine entsprechende Menge an zufällig ausgewählten 'Collectable'-Objekten im Spielfeld platziert werden. Anschließend wählt der PrepareGameManager zufällig ein von drei, für dieses spezifische 'Collectable'-Objekt mögliches 'Destination'-Objekt aus, welches als Zielpunkt dient. Die folgende Methode spawnObjects() führt diese Logik aus. Zunächst eine kurze Erläuterung der Variablen und aufgerufenen Methoden innerhalb von spawnObjects().
 
@@ -694,34 +723,20 @@ IEnumerator endGameCoroutine()
 
 \end{lstlisting}
 
-\section{Implementierung: Runtime Spawn Manager}
+\section{Nicht implementierte Konzepte}
+\textbf{Runtime Spawn Manager:}
 
-// TODO: Add Content
+Das Spielkonzept hat nicht vorausgesetzt, dass nach Initialisierung der Spiel-Szene weitere Objekte gespawnt werden müssen. Jegliche Objekte, die für eine Spiel-Session benötigt werden, spawnt der \hyperref[Implementierung:prepare_game_manager]{Prepare-Game-Manager} bereits zum Szenenwechsel zwischen Menü-Szene und Spiel-Szene. Aus diesem Grund wurde für den Prototypen auf den Runtime Spawn Manager verzichtet.
 
-\section{Implementierung: Interest Manager}
+\textbf{Interest Manager:}
 
-// TODO: Add Content
+Mirror bietet eine Reihe an Komponenten an, welche eine eigene Implementierung eines Interest Managers überflüssig machen.\cite{.17.02.2022} Für den Prototypen wurde die Komponente "Team Interest Management" \cite{.17.02.2022b} benutzt. Diese sorgt dafür, dass (Spieler)-Objekte nur für die Mitglieder einer Gruppe sichtbar sind. Im Falle des Prototyps sollen Spieler mit der Rolle "Ghost" lediglich für Spieler mit der Rolle "Hider" und "Ghost" sichtbar sein. Spieler mit der Rolle "Seeker" sollen Spieler mit der Rolle "Ghost" nicht sehen können.
 
+Sollte ein Spielkonzept jedoch Voraussetzungen besitzen, über die Möglichkeiten der vordefinierten Interest Manager Komponenten von Mirror hinausgeht, so bietet Mirror ebenfalls die Möglichkeit eigene Interest Manager Implementierungen zu erstellen, indem Mirror eine abstrakte Klasse "InterestManagement" bereitstellt. Falls eine eigene Interest Manager Klasse von dieser erbt, so kann sie die Methoden OnCheckObserver() und OnRebuildObservers() überschreiben.
 
-% 3. Implementierung 1 :
+OnCheckObserver() wird aufgerufen, wenn ein neuer Spieler spawnt. Gibt 'true' zurück, wenn ein (Spieler)-Objekt von dem neu gespawnten Spieler gesehen werden kann.
 
-% Genutzte Frameworks / Technologien
-
-% Grundlagen des Mirror Frameworks:
-% --> worauf basiert es eigendlich? 
-% --> Auszug Features | diese erklären.
-% --> Network-Manager
-% --> NetworkManager Callbacks
-% --> Network Idendity / Network Behavior / Network Transform
-%  --> Network Behavior Callbacks
-% --> Server und Clientcode in einer Datei
-% --> Dedicated Server vs. Self-Host
-% --> Synchronization
-% --> Remote Actions
-% --> Player Game Objects
-% --> Anticheat
-% --> Transports
-
+OnRebuildObservers() wird innerhalb einer Update() Methode (wurde bereits in der Sektion \hyperref[implementierung:client_UI_Controller]{Implementierung: Client UI \& Visual Controller} erklärt) aufgerufen. Diese sorgt dafür, dass die Sichtbarkeit aller gespawnten Objekte neu berechnet wird.
 
 
 
