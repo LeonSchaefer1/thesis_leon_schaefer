@@ -31,7 +31,9 @@ Spieler mit der Rolle Seeker haben lediglich eine Aufgabe. Sie müssen alle Spie
 \textbf{Ghost:}
 Spieler, welche initial mit der Rolle 'Hider' gespawnt sind, und von einem Seeker gefangen wurden, wechseln ihre Rolle zu 'Ghost'. Ghosts dürfen nicht mehr mit Objekten der Spielwelt interagieren, sie können sich lediglich noch über das Spielfeld bewegen. Außerdem bekommt ein Ghost eine Fähigkeit, welche er einsetzen kann, um seinem Team zu helfen. Diese Fähigkeit bemächtet den Spieler einen Seeker für 3 Sekunden bewegungsunfähig zu machen, sollte der Spieler in der unmittelbaren Nähe eines Seekers sein, und die Taste 'E' bzw. den dafür vorgesehen Knopf in der Benutzeroberfläche drücken. Diese Fähigkeit kann lediglich alle 30 Sekunden eingesetzt werden.
 
-\begin{figure}
+Das Spielkonzept wird in folgendem Spielflussdiagramm zusammengefasst:
+
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=150mm]{images/game_concept.jpg}
 	\caption[Spielkonzept Diagramm]{Veranschaulichung des Spielkonzepts}
@@ -42,10 +44,12 @@ Spieler, welche initial mit der Rolle 'Hider' gespawnt sind, und von einem Seeke
 
 Zunächst muss ein Spieler eine Lobby erstellen. Dies tut er, indem er auf den Knopf 'Create Lobby' im Hauptmenü drückt. Nun erhält dieser Spieler einen 'Code', welcher eindeutig diese Lobby identifiziert. Diesen Code kann der Spieler nun an seine Mitspieler weitergeben. Diese können den Code im Hauptmenü in ein Eingabefeld eingeben, und auf 'Join Lobby' drücken. Der Spieler, welcher die Lobby erstellt hat, ist nun auch Lobby-Leiter und kann einstellen, ob die Lobby als 'public' markiert werden soll. In diesem Fall können andere Spieler durch den Button 'Join Random Lobby' ebenfalls der Lobby beitreten, ohne den Code zu kennen. 
 
-\begin{figure}
+Das folgende Aktivitätsdiagramm zeigt die möglichen Abfolgen des Beitritts einer Lobby:
+
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=150mm]{images/matchmaking_concept.jpg}
-	\caption[Matchmaking-Konzept Diagramm]{Veranschaulichung des Matchmaking Konzepts}
+	\caption[Matchmaking-Konzept Diagramm]{Veranschaulichung des Prototyp-Matchmaking}
 	\label{pic:matchmaking_concept}
 \end{figure}
 
@@ -59,7 +63,7 @@ Aus insgesamt 10 möglichen Spawn-Punkten würfelt der Prepare-Game-Manager Spaw
 \textbf{Matchmaking:}
 Die Matchmaking Architektur basiert auf einem Client Server Modell, sowie dem Einsatz einer REST API, welche als Matchmaking- und Server-Runner Schnittstelle dient. Der oben beschriebene Ablauf zum Beitreten einer Lobby ist im folgenden Diagramm noch einmal aus technischer Sicht visualisiert:
 
-\begin{figure}
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=150mm]{images/prototype_architecture_matchmaking.jpg}
 	\caption[Architektur Matchmaking Diagramm]{Veranschaulichung der Architektur des Matchmakings im Prototyp}
@@ -73,16 +77,16 @@ Die Menu Scene gliedert sich in 2 verschiedene Sub-Menüs. Das 'Main Menu' wird 
 
 Die Game Scene wird geladen sobald ein Spiel aus dem 'Lobby Menu' heraus gestartet wird. Das ist dann der Fall, sobald alle Mitglieder einer Lobby auf den Button 'Ready' gedrückt haben, und der Leiter dieser Lobby auf den Button 'Start Game' gedrückt hat. 
 
-\begin{figure}
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=150mm]{images/scene_architecture.jpg}
 	\caption[Architektur Szenen Diagramm]{Veranschaulichung der Szenen-Architektur im Prototyp}
-	\label{pic:prototype_architecture_matchmaking}
+	\label{pic:scene_architecture}
 \end{figure}
 
 Auf die Implementierungen der einzelnen Konzepte wird in den kommenden Sektionen im Detail eingegangen. Die folgende Grafik zeigt die Relationen zwischen den implementierten Konzepten untereinander:
 
-\begin{figure}
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=150mm]{images/concept_relations.jpg}
 	\caption[Architektur Konzept Relationen]{Veranschaulichung der Konzept Relationen im Prototyp}
@@ -91,7 +95,55 @@ Auf die Implementierungen der einzelnen Konzepte wird in den kommenden Sektionen
 
 \section{Implementierung: API für Matchmaking \& Server Runner}
 
-// TODO: Add Content
+Für die Matchmaking \& Server Runner API wurde auf eine externe Lösung zurückgegriffen, da eine eigene Entwicklung aus zeitlichen Gründen nicht möglich war. Genutzt wurde eine Lösung von Felix Bruebach \cite{GitHub.20.02.2022}. Diese beinhaltet eine REST API sowie eine Verwaltung von beliebig vielen Server-Threads. Diese Serverthreads werden repräsentiert durch eine Aneinanderreihung von einem Adjektiv und Tiernamen als 'Identifier'(ID). Dieser Identifier wird in unserem Spielkonzept als 'Code' verwendet. Außerdem kann die REST API so konfiguiert werden, dass ein eigenes Datenmodell zusätzlich zu den IDs verwaltet werden. Die REST API erwartet ebenfalls eine Datei, welche sie zur Laufzeit als Server-Thread ausführen kann. Im Falle des Prototyps ist das eine Mirror Server-Instanz.
+
+Die REST API akzeptiert die HTTP-Verben GET, POST, PUT und DELETE, mit denen Server-relevante Daten abgefragt und Serverprozesse erzeugt, manipuliert, oder gelöscht werden können. Die Erzeugung der Serverprozesse erfolgt durch Ausführung der Mirror-Serverdatei und Übergabe der folgenden 2 Programm-Argumente:
+
+'--port': Die nächste freie Port-Nummer auf der Hardware, auf welcher auch die REST API läuft
+
+'--id': Die ID, welche die REST API für diesen Serverprozess erzeugt hat. Im Falle des Prototyps wird diese als 'Code' behandelt.
+
+Der folgende Code zeigt die Methode ServerStart(), welche innerhalb des Mirror-Serverprozesses aufgerufen wird, sobald die REST API den Prozess startet:
+
+\begin{lstlisting}[caption= OwnKcpTransport.cs ServerStart()]
+public override void ServerStart()
+{
+	ushort port = 7777;
+	
+	string lobbyCode = 'No Code specified';
+	
+	int portIndex = Array.FindIndex(System.Environment.GetCommandLineArgs(), elem => elem == '--port') + 1;
+	
+	int codeIndex = Array.FindIndex(System.Environment.GetCommandLineArgs(), elem => elem == '--id') + 1;
+	
+	if (portIndex > 1 && System.Environment.GetCommandLineArgs().Length > portIndex)
+	{
+		try
+		{
+			port = Convert.ToUInt16(System.Environment.GetCommandLineArgs()[portIndex]);
+		} catch
+		{
+			Debug.LogError('Invalid port specified: ' + System.Environment.GetCommandLineArgs()[portIndex]);
+		}
+	}
+	if(codeIndex > 1 && System.Environment.GetCommandLineArgs().Length > codeIndex)
+	{
+		try
+		{
+			lobbyCode = System.Environment.GetCommandLineArgs()[codeIndex];
+			GameNetworkManager.singleton.curLobbyCode = lobbyCode;
+		}
+		catch
+		{
+			Debug.LogError('Invalid code specified: ' + System.Environment.GetCommandLineArgs()[codeIndex]);
+		}
+	}
+	
+	base.server.Start(port);
+	Debug.Log('Server started on Port ' + port + 'and with code ' + lobbyCode);
+}
+\end{lstlisting}
+
 
 \section{Implementierung: Client UI \& Visual Controller}
 \label{implementierung:client_UI_Controller}
@@ -100,7 +152,7 @@ Der Client UI \& Visual Controller spielt im Prototyp eine wesentliche Rolle. Er
 
 Die folgenden 'Update' Methode ist eine Unity bereitgestellte Schnittstelle. Der Rumpf der Update Methode ist nie vorgegeben, und muss vom Entwickler selbst implementiert werden. Unity führt diese Methode jedes 'Frame' (Einzelbild) \cite{Wikipedia.2021j} aus. Dies ermöglicht eine nahezu vollständige Echtzeitabfrage der Inputs (Tastatur / Maus / andere Eingangsgeräte) des Spielers.
 
-Im unten wird dauerhaft abgefragt, ob ein Spieler die Taste 'E' oder 'Q' auf seiner Tastatur drückt. Wenn er das tut, und ebenfalls ein paar andere Randbedingungen erfüllt sind, so wird ein 'Linksklick' auf den im UI des Spielers sichtbaren Button simuliert.
+Es wird dauerhaft abgefragt, ob ein Spieler die Taste 'E' oder 'Q' auf seiner Tastatur drückt. Wenn er das tut, und ebenfalls ein paar andere Randbedingungen erfüllt sind, so wird ein 'Linksklick' auf den im UI des Spielers sichtbaren Button simuliert.
 
 \begin{lstlisting}[caption= InGameUiControllerScript.cs Update Method]
 private void Update()
@@ -721,7 +773,7 @@ public void notifyHidersWinEvent()
 {
 	winMsg = new Message()
 	{
-		message = "Hiders won the Game",
+		message = 'Hiders won the Game',
 		messageType = MessageType.hidersWinNotification
 	};
 		
@@ -751,9 +803,12 @@ Das Spielkonzept hat nicht vorausgesetzt, dass nach Initialisierung der Spiel-Sz
 
 \textbf{Interest Manager:}
 
-Mirror bietet eine Reihe an Komponenten an, welche eine eigene Implementierung eines Interest Managers überflüssig machen.\cite{.17.02.2022} Für den Prototypen wurde die Komponente "Team Interest Management" \cite{.17.02.2022b} benutzt. Diese sorgt dafür, dass (Spieler)-Objekte nur für die Mitglieder einer Gruppe sichtbar sind. Im Falle des Prototyps sollen Spieler mit der Rolle "Ghost" lediglich für Spieler mit der Rolle "Hider" und "Ghost" sichtbar sein. Spieler mit der Rolle "Seeker" sollen Spieler mit der Rolle "Ghost" nicht sehen können.
+Mirror bietet eine Reihe an Komponenten an, welche eine eigene Implementierung eines Interest Managers überflüssig machen. Für den Prototypen wurde die Komponente 'Team Interest Management' benutzt. Diese sorgt dafür, dass (Spieler)-Objekte nur für die Mitglieder einer Gruppe sichtbar sind. \cite{.03.02.2022}
 
-Sollte ein Spielkonzept jedoch Voraussetzungen besitzen, über die Möglichkeiten der vordefinierten Interest Manager Komponenten von Mirror hinausgeht, so bietet Mirror ebenfalls die Möglichkeit eigene Interest Manager Implementierungen zu erstellen, indem Mirror eine abstrakte Klasse "InterestManagement" bereitstellt. Falls eine eigene Interest Manager Klasse von dieser erbt, so kann sie die Methoden OnCheckObserver() und OnRebuildObservers() überschreiben.
+Im Falle des Prototyps sollen Spieler mit der Rolle 'Ghost' lediglich für Spieler mit der Rolle 'Hider' und 'Ghost' sichtbar sein. Spieler mit der Rolle 'Seeker' sollen Spieler mit der Rolle 'Ghost' nicht sehen können.
+
+Sollte ein Spielkonzept jedoch Voraussetzungen besitzen, über die Möglichkeiten der vordefinierten Interest Manager Komponenten von Mirror hinausgeht, so bietet Mirror ebenfalls die Möglichkeit eigene Interest Manager Implementierungen zu erstellen \cite{.03.02.2022}, indem Mirror eine abstrakte Klasse 'InterestManagement' bereitstellt. Falls eine eigene Interest Manager Klasse von dieser erbt, so kann sie die Methoden OnCheckObserver() und OnRebuildObservers() überschreiben.
+\cite{.03.02.2022}
 
 OnCheckObserver() wird aufgerufen, wenn ein neuer Spieler spawnt. Gibt 'true' zurück, wenn ein (Spieler)-Objekt von dem neu gespawnten Spieler gesehen werden kann.
 

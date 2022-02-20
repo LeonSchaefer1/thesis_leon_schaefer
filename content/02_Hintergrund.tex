@@ -25,15 +25,12 @@ Die Kommunikation zwischen Clients und Server kann in zwei verschiedenen Variant
 
 \textsf{\Large Client Host:}
 
-\begin{figure}
+\begin{figure}[H]
 	\centering
-	\includegraphics{images/Client_Host.jpg}
+	\includegraphics[width=150mm]{images/Client_Host.jpg}
 	\caption[Client-Server Modell]{Das Client-Host Modell einfach veranschaulicht}
 	\label{pic:Client_Host}
 \end{figure}
-
-
-
 
 Bei dieser Variante wird der Serverprozess auf dem selben Gerät ausgeführt, auf dem auch eine Client-Instanz gestartet wurde. Ein Spieler übernimmt also selbst das Hosting. Andere Clients haben die Information, welcher Client einen Serverprozess besitzt und wie sie sich dorthin verbinden können. 
 
@@ -42,11 +39,12 @@ Bei dieser Variante wird der Serverprozess auf dem selben Gerät ausgeführt, au
 \textbf{Nachteile:} Da der Serverprozess nun ebenfalls auf einem Gerät läuft, auf welches Spieler Zugriff haben gibt es ebenfalls mehr Möglichkeiten des Hackings (Spielmanipulation) \cite{Wikipedia.2021h}. Die Entwickler haben keinerlei Einfluss auf die Serverprozesse, welche ein Spieler startet.
 \cite{Smed.2002}
 
+\newpage
 \textsf{\Large Client Server:}
 
-\begin{figure}
+\begin{figure}[H]
 \centering
-\includegraphics{images/Client_Server.jpg}
+\includegraphics[width=150mm]{images/Client_Server.jpg}
 \caption[Client-Server Modell]{Das Client-Server Modell einfach veranschaulicht}
 \label{pic:Client_Server}
 \end{figure}
@@ -74,7 +72,7 @@ Daten unterscheiden sich im Kontext der Online Spielentwicklung grundsätzlich n
 
 Das folgende Klassendiagramm zeigt zwei simple Klassen. Eine Klasse, welche den Spieler abbildet sowie eine Klasse, welche alle Spieler verwaltet.
 
-\begin{figure}
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=150mm]{images/UML_class_Player_NM.png}
 	\caption[UML Klassen]{UML Klasse Player und Network Manager}

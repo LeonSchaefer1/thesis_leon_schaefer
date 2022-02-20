@@ -38,34 +38,31 @@ Je nach Spielkonzept können hunderte, tausende Serverprozesse existieren, welch
 \textbf{Server Runner:}
 
 Neben dem Matchmaking ist die API ebenfalls auch zuständig für das Starten und die Überwachung von Serverprozessen.
-Ebenfalls können technische Statusinformationen über aktuell laufende Spiel innerhalb eines Serverprozesses von der API verwaltet werden, beispielsweise ob es möglich ist einem Server beizutreten, oder wie viele Spieler bereits auf einem Serverprozess spielen
+Ebenfalls können technische Statusinformationen über aktuell laufende Spiel innerhalb eines Serverprozesses von der API verwaltet werden, beispielsweise ob es möglich ist einem Server beizutreten, oder wie viele Spieler bereits auf einem Serverprozess spielen.
 
-\begin{figure}
+Die folgende Grafik visualisiert beide Aufgaben:
+
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=150mm]{images/API_Konzept_Diagramm.jpg}
 	\caption[API Konzept Diagramm]{Veranschaulichung des API Konzepts}
 	\label{pic:API_Konzept_Diagramm}
 \end{figure}
 
-
-Je nach Spiel kann das Aufgabenfeld der API um weitere Punkte erweitert werden, hier ein paar Beispiele:
-
-- Datenbank für Authentifizierung bzw. Kommunikation mit externen Authentifizierungs-Service Providern \cite{Wikipedia.2021c}
- 
-- Datenbank für InGame Shop oder Kommunikation mit externen Lösungen.
+Je nach Spiel kann das Aufgabenfeld der API um weitere Punkte erweitert werden, beispielsweise die Verwaltung einer Datenbank für Authentifizierung bzw. Kommunikation mit externen Authentifizierungs-Service Providern oder für einen InGame Shop.
 
 \section{Client UI \& Visual Controller}
 
 Der Client UI \& Visual Controller beschreibt die Art und Weise, wie die Benutzeroberfläche und visuelle Ebene eines Spielers durch Antworten des Servers oder einzelner Spieleraktivitäten manipuliert wird.
 
-\begin{figure}
+Konkret sorgt ein Server-Ereignis, der Input eines Spielers (beispielsweise durch klicken eines Buttons oder einsammeln eines Gegenstands) oder ein anderes Ereignis dafür, dass Funktionen innerhalb des Client UI \& Visual Controllers aufgerufen werden. Innerhalb dieser Funktionen werden Komponenten der Benutzeroberfläche wie z.b. Anzeigetexte, Bilder etc. oder Objekte innerhalb der Spielwelt selbst manipuliert. In der folgenden Grafik zeigt die beschriebene Folge an Ereignissen:
+
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=150mm]{images/Client_UI_und_Visual_Konzept.jpg}
 	\caption[Client UI \& Visual Controller Diagramm]{Veranschaulichung des Client UI \& Visual Controller Konzepts}
 	\label{pic:Client_UI_und_Visual_Konzept}
 \end{figure}
-
-Konkret sorgt ein Server-Ereignis, der Input eines Spielers (beispielsweise durch klicken eines Buttons oder einsammeln eines Gegenstands) oder eine andere Bedingung dafür, dass Funktionen innerhalb des Client UI \& Visual Controllers aufgerufen werden. Innerhalb dieser Funktionen werden Komponenten der Benutzeroberfläche wie z.b. Anzeigetexte, Bilder etc. oder Objekte innerhalb der Spielwelt selbst manipuliert.
 
 Wichtig ist, dass Funktionen des Client UI \& Visual Controller erst nach server- oder clientseitigen Überprüfungen ausgeführt werden. Der Controller selbst sollte nur überprüfen, ob fluktuierende Komponenten noch existieren oder sich in einem konsistenten Zustand befinden. Spiel-Relevante Logik, beispielsweise ob ein Spieler berechtigt ist, bestimmte Aktionen durchzuführen, ist nicht Teil des Client UI \& Visual Controllers.
 
@@ -78,24 +75,26 @@ Der Server Network Manager ist für die korrekte Abarbeitung von serverseitigen 
 \textbf{Beispiel:} In einem Online-Ableger des Spiels 'Mensch ärger dich nicht' verliert ein Spieler seine Netzwerk-Verbindung. Als Reaktion kümmert sich der Server Network Manager darum, dass das Spiel trotzdem zu ende gespielt werden kann. Die gespawnten Spielfiguren des ausgeschiedenen Spielers müssen entfernt, und der Spiel-Fortschritt aktualisiert werden. Diese Funktionen stellt möglicherweise der \hyperref[spawn_manager]{Runtime Spawn Manager}, \hyperref[progress_manager]{Progress / Game State Manager } zur Verfügung.
 Außerdem muss dem \hyperref[serverside_client_manager]{Serverside Client Manager} mitgeteilt werden, dass dieser Spieler nun nicht mehr Teil der Spiel-Session ist.
 
+Die folgende Grafik illustriert die Aufgaben des Server Network Managers:
 
-\begin{figure}
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=150mm]{images/Server_Network_Manager.jpg}
 	\caption[Server Network Manager Diagramm]{Veranschaulichung des Server Network Manager Konzepts}
 	\label{pic:Server_Network_Manager}
 \end{figure}
 
-
 \section{Lobby / Multi Scene Manager}
 
 Der Lobby/ Multi Scene Manager ist eine serverseitige Komponente, welche es erlaubt, Spielszenen-übergreifende Informationen zu speichern und zu verwalten. Beispielsweise könnte bei einem Lobby-basierten Matchmaking die Information des Leiters einer Lobby über Spielszenen hinweg gespeichert werden. Ebenso wäre es denkbar, dass der Bereitschafts-Status vor dem tatsächlichen Spiel innerhalb des Lobby / Multi Scene Managers gespeichert wird.
 
 Außerdem stellt der Lobby / Multi Scene Manager Funktionen bereit, welche
+
 - alle Clients informiert, sobald ein globaler Szenenwechsel angestoßen werden soll
+
 - alle Clients über den aktuellen Status einer Lobby informiert.
 
-\begin{figure}
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=150mm]{images/Lobby_Multi_Scene_Manager.jpg}
 	\caption[Lobby / Mutli Scene Manager Diagramm]{Veranschaulichung des Lobby / Mutli Scene Manager Konzepts}
@@ -124,14 +123,12 @@ Z.B. Die soeben erlangte Information über den verweigerten Serverbeitritt muss 
 
 Z.B. Wird die notwendige Verbindung zum Internet während des Spiels unterbrochen. Der Client Connection Manager löst Callbacks aus, welche im Client UI \& Visual Controller implementiert sind. Diese Sorgen dafür, dass der Spieler zurück ins Hauptmenü geleitet wird, in dem eine Fehlermeldung dargestellt wird, welche erklärt warum das Spiel abgebrochen ist.
 
-\begin{figure}
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=150mm]{images/Client_Connection_Manager.jpg}
 	\caption[Client Connection Manager Diagramm]{Veranschaulichung des Client Connection Manager Konzepts}
 	\label{pic:Client_Connection_Manager}
 \end{figure}
-
-
 
 \section{Serverside Client Manager}
 
@@ -143,7 +140,9 @@ Einerseits werden Netzwerk-bezogene Informationen über einen Client gespeichert
 
 Zum Anderen speichert und verwaltet der serverseitige Client Manager auch spielspezifische Informationen wie bspw. den aktuellen Anzeigenamen, konfigurierte Individualisierung des Spielcharakters, Spielerrollen oder andere Eigenschaften, über die der Server während einer Spiel-Session Kenntnis haben sollte.
 
-\begin{figure}
+Die folgende Grafik visualisiert diesen Informationsfluss:
+
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=150mm]{images/serversided_client_manager.jpg}
 	\caption[Serversided Client Manager]{Veranschaulichung des serverseitigen Client Manager Konzepts}
@@ -162,7 +161,9 @@ Der Prepare-Game-Manager ist Teil des Serverprozesses und beinhaltet alle Funkti
 
 - Abarbeitung sonstiger serverseitigen Abläufe, welche Voraussetzung für den Start des Spiels sind
 
-\begin{figure}
+Das folgende Diagramm zeigt, wann der Prepare-Game-Manager bei einem Lobby-basierten Spielkonzept zum Einsatz kommt:
+
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=150mm]{images/prepare_game_manager.jpg}
 	\caption[Prepare-Game-Manager]{Veranschaulichung des Prepare Game Manager Konzepts}
@@ -176,11 +177,13 @@ Die Aufgabe eines Progress bzw. Game-State Managers ist es, Gewinn bzw. Verlustb
 
 Beispiele hierfür sind:
 - Verwaltung und Synchronisierung von globalen Timern
-- Verwaltung und Synchronisierung von Spiel-Kennzahlen (z.B. der Spielstand bei einem Fußball-Match)
+- Verwaltung und Synchronisierung von Spiel-Kennzahlen bzw. Variablen (z.B. der Spielstand bei einem Fußball-Match)
 
 Außerdem ist der Progress Manager / Game-State Manager dafür verantwortlich, alle Clients über spielentscheidende Ereignisse zu informieren. 
 
-\begin{figure}
+Die Abfolge dieser Ereignisse werden im folgenden Diagramm aufgezeigt:
+
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=150mm]{images/Progress_State_Manager.jpg}
 	\caption[Progress / Game-State Manager]{Veranschaulichung des Progress / Game-State Manager Konzepts}
@@ -192,20 +195,21 @@ Außerdem ist der Progress Manager / Game-State Manager dafür verantwortlich, a
 
 Der Runtime Spawn Manager verwaltet die zur Laufzeit zu erzeugenden Spieler und Nicht-Spieler Objekte. Konkret werden Funktionen des Runtime Spawn Managers ausgeführt, wenn ein spezifisches Event innerhalb einer Spiel-Session ausgelöst wird oder ein Spieler bzw. Nicht-Spieler-Character stirbt, und diese erneut an anderer Position spawnen sollen ('Re-Spawning'). Die Logik, wo genau ein Spieler oder Nicht-Spieler Objekt seine neue Einstiegsposition erhält, regelt ebenfalls der Runtime Spawn-Manager.
 
-\textbf{Beispiel:} In einem Online Multiplayer Ego-Shooter \cite{Wikipedia.2021g} stirbt ein Spieler durch Schüsse anderer Spieler. Der Runtime Spawn Manager sorgt dafür, dass anhand von bestimmten, zur Laufzeit ausgerechneten Bedingungen eine neue Spawn-Position für den gestorbenen Spieler gefunden wird. 
-
-\begin{figure}
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=150mm]{images/Runtime_Spawn_Manager.jpg}
 	\caption[Runtime Spawn Manager]{Veranschaulichung des Runtime Spawn Manager Konzepts}
 	\label{pic:Runtime_Spawn_Manager}
 \end{figure}
 
+\textbf{Beispiel:} In einem Online Multiplayer Ego-Shooter \cite{Wikipedia.2021g} stirbt ein Spieler durch Schüsse anderer Spieler. Der Runtime Spawn Manager sorgt dafür, dass anhand von bestimmten, zur Laufzeit ausgerechneten Bedingungen eine neue Spawn-Position für den gestorbenen Spieler gefunden wird. 
+
+
 \section{Interest Manager}
 
-Der Interest Manager kümmert sich um die Verwaltung der Sichtbarkeit von Objekten. Wie bereits in der Sektion über \hyperref[interest_management]{Interest Management} erklärt, ist es je nach Spielkonzept notwendig, dass der Spieler stets nur über den für ihn relevanten Teil der Spielwelt Kenntnis hat. Aus diesem Grund sollten sich angehende Spieler-Entwickler fragen, ob sie eine solche Software-Komponente in die Architektur ihres Projekts integrieren möchten.
+Der Interest Manager kümmert sich um die Sichtbarkeit von Objekten. Wie bereits in der Sektion über \hyperref[interest_management]{Interest Management} erklärt, ist es je nach Spielkonzept notwendig, dass der Spieler stets nur über den für ihn relevanten Teil der Spielwelt Kenntnis hat. Aus diesem Grund sollten sich angehende Spieler-Entwickler fragen, ob sie eine solche Software-Komponente in die Architektur ihres Projekts integrieren möchten. Die folgende Grafik veranschaulicht diese Aufgabe:
 
-\begin{figure}
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=150mm]{images/Interest_Manager.jpg}
 	\caption[Interest Manager]{Veranschaulichung des Interest Manager Konzepts}
@@ -220,92 +224,11 @@ Mögliche Faktoren, die der Interest Manager benutzen kann, um den Spielern die 
 
 - Spatial Hashing / Grid Checker: Die Spielwelt und ihre Objekte werden in quadratische Zellen eingeteilt. Je nachdem in welcher Zelle sich ein Spieler befindet, werden nur diejenigen Objekte der Spielwelt mit dem Spieler snychronisiert, welche sich innerhalb der 8 'Nachbarzellen' befinden:
 
-\begin{figure}
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=150mm]{images/interest_management.png}
-	\caption[Interest Management]{Illustration des Konzepts Interest Management. \cite{JeromeRenaux.2017} }
+	\caption[Spatial Hashing]{Illustration des Interest Management Konzepts Spatial Hashing. \cite{JeromeRenaux.2017} }
 	\label{pic:interest_management}
 \end{figure}
 
 Sollte keine der hier beschriebenen Beispiele auf das gewünschte Spielkonzept passen, so ist es notwendig, eine komplett eigene Logik für das Interest Management zu implementieren.
-
-\section{Studienkonzept}
-\label{studienkonzept}
-
-! STUDIENKONZEPT IST NOCH PRE-PRE-ALPHA (enthält Notizen)!
-
-Wie bereits im Teil der Einführung erwähnt, hat diese Arbeit nicht den Anspruch zu beweisen, dass die Konzepte tatsächlich einen Mehrwert für eine Vielzahl an Projekten bieten. Um dies beweisen zu können, ist eine weitere Studie nötig. Im Rahmen dieser Arbeit wurde ein Studienkonzept erarbeitet, welches zukünftig für andere Arbeiten genutzt werden kann.
-
-Das Studienkonzept gliedert sich in:
-
-Repräsentative Umfragen (Umsetzung mit Likert-Skala):
-Diese beinhaltet die Befragung von mehreren Hundert Personen aus unterschiedlichen Ländern sowie unterschiedlichen Online-Genres (MMORPG, First Person Shooter, Mobile-Games, etc.).
-
-Folgende Fragestellungen müssen untersucht werden:
-
-Welche Probleme haben angehende Entwickler für Online-Multiplayer Spiele?
-Lassen sich diese Probleme auf die in dieser Arbeit beschriebenen Konzepte übersetzen?
-Bringen die hier beschriebenen Konzepte einen Vorteil in der Praxis?
-	
-Zunächst müssen Frage - und Problemstellungen, welche als Annahme getroffen wurden, in Fragen umgewandelt werden. Diese Frage - und Problemstellungen beziehen sich auf konkrete Themen der Multiplayer-Spielenentwicklung.
-	
-Fragen an junge, angehende Online-Spieleentwickler, welche ein eigenes Projekt umgesetzt haben bzw. welches sich aktuell in Umsetzung befindet:
-
-Problemstellung/Annahme: Es gibt inzwischen viele Frameworks und Engines zur Entwicklung von Online-Multiplayerspielen \cite{MFatihMAR.2021}. Die Entscheidung eine passende Technologie auszuwählen ist mühsam.
-
-Abgeleitete Frage: Wie leicht kamen sie zurecht bei der Auswahl eines Frameworks und/oder eine Game-Engine für ihr erstes Online-Multiplayer Projekt?
-
-Auswahlmöglichkeiten: Auswahl fiel mir sehr leicht, Auswahl fiel mir leicht, Auswahl fiel mir schwer, Auswahl fiel mir sehr schwer
-
-...weitere Fragen...
-
-	--> Umfrage veröffentlichen
-	
-Die Umfrage soll per Email an ausgewählte Personen an Hochschulen und Unternehmen verschickt werden. Außerdem kann die Umfrage in einschlägige Entwicker-Foren gepostet werden. Beispiele hierfür sind: forum.unity.com , forums.unrealengine.com, www.gamedev.net/forums/forum/8-networking-and-multiplayer.
-
-Die Umfrage kann anonymm, oder mit Personenbezug für eine bessere Auswertung der Ergebnisse erfolgen. Ebenso wäre es denkbar getrennte Umfragen für eine Gruppe an ausgewählten Einzelpersonen sowie die öffentliche Entwickler-Community im Internet zu erstellen.
-	
-	--> Parallel Versuch starten: 2 Gruppen von Anfänger Entwicklern eine Aufgabe geben (Multiplayer-Spiel bauen), eine bekommt die Konzepte, die andere nicht.
-	
-	- Control Experiment -> Mehr Beschreiben: Was für Variablen gibt es?
-	-> Anforderungen an ein Spiel (Wurde alles erfüllt)
-	-> Methodisches Vorgehen
-	
-Mithilfe eines Experiments (oder mehrerer Experimente) soll gezeigt werden, dass Einstiegs-Entwickler in der Multiplayer-Spieleprogrammierung einen klaren Vorteil haben, wenn sie das technische Design eines Neuprojekts nach diesen Konzepten ausrichten.
-
-Hierfür werden 2 Gruppen aus jeweils maximal 3 Personen bestimmt, welche beide ein identisches, rudimentäres Online-Spiel entwickeln sollen. Die eine Gruppe bekommt die Konzepte als Orientierung zur Verfügung, die andere nicht.
-
-Die Anforderungen an die Probanden sind:
---> Sollten die Probanden aus Studenten bestehen, so müssen alle Probanden im gleichen Semester sein.
---> Die Probanden müssen gleich viel (am besten keine, oder wenig) Erfahrung im Bereich der Multiplayer-Spieleentwicklung haben.
-
-Die Anforderungen an das Experiment sind:
---> Es muss die Zeit gemessen werden, wie viel Stunden jede Gruppe zur Fertigstellung des vorgegebenen Projekts benötigt werden.
---> Alle Probanden müssen Zugang zu ähnlicher Hardware besitzen.
---> Die Gruppen teilen die Aufgaben unter sich auf, und suchen sich selbstständig Frameworks und Engines für das Projekt aus.
---> Im Anschluss müssen beide Gruppen die oben erarbeitete Umfrage ausfüllen.
-
-
-	--> Ergebnisse der Umfrage auswerten, passen die Ergebnisse zu der hier beschriebenen Problemstellung?
-
-Die Ergebnisse der Umfrage an ausgewählte Personen und an die Entwickler Community werden ausgewertet. Kann man einen Trend erkennen? Können die Problemstellungen / Thesen validiert werden? 
-(Konkret: Sind die Annahmen dieser Arbeit korrekt? Haben Anfänger-Entwickler tatsächliche Schwierigkeiten mit den Punkten X, Y, Z ..?)
-
-	--> Auswertung des Experiments / der Experimente: Hat die Gruppe, welche sich an die Konzepte gehalten hat einen messbaren Vorteil gehabt? (Geschwindigkeit, Anfangsschwierigkeiten)
-	
-Die Daten aus dem Experiment (Zeitmessung, Umfrageergebnisse) sollen nun wie folgt ausgewertet werden:
-
---> Ist die Gruppe, welche das Projekt mit den Konzepten umgesetzt hat, schneller zum Ziel gekommen, als die Gruppe ohne Hilfestellung der Konzepte?
-
---> Hatte die Gruppe, welche das Projekt mit den Konzepten umgesetzt hat, weniger Start-Schwierigkeiten bei der Umsetzung des Projekts, als die Gruppe ohne Hilfestellung der Konzepte?
-
-
-Weitere Punkte, die in Studienkonzept noch fehlen:
---> Methodik für semi-strukturiertes Experteninterviews beschreiben
-
-
-
-
-
-
-
