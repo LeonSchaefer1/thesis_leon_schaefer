@@ -9,11 +9,11 @@ Das grundsätzliche Spielkonzept steht fest.
 
 Anhand von dem festgelegten Spielkonzept kann abgeschätzt werden, ob sich für das Spiel eine Client / Server oder eine Client / Host Architektur eignet.
 
-Sollte das Team bzw. der Solo-Entwickler zum Entschluss gekommen sein dass sich ein Client / Server Modell am besten für den spezifischen Use-Case eignet, so müssen Vorkehrungen getroffen werden, um die Hardware-Ressourcen für den späteren Server-Runner bzw. die Matchmaking API sicher zu stellen. Die Grundvoraussetzung ist jedoch ein aus dem Internet erreichbarer PC mit einer festen IP-Adresse. 
+Sollte das Team bzw. der Solo-Entwickler zum Entschluss gekommen sein, dass sich ein Client / Server Modell am besten für den spezifischen Use Case eignet, so müssen Vorkehrungen getroffen werden, um die Hardware-Ressourcen für den späteren Server-Runner bzw. die Matchmaking API sicherzustellen. Die Grundvoraussetzung ist jedoch ein aus dem Internet erreichbarer PC mit einer festen IP-Adresse. 
 
 Alternativ kann auch zunächst lokal innerhalb eines LAN \cite{Wikipedia.2022} entwickelt werden. Hierbei ist jedoch wichtig, dass eventuell auftretende Seiteneffekte, die durch Latenz \cite{Wikipedia.2022b} oder Bandbreite \cite{Wikipedia.2019b} verursacht werden, nicht unter Realbedingungen getestet werden können. Es empfiehlt sich deshalb bereits innerhalb der ersten Entwicklungsiterationen auszutesten, wie Prototypen für Serverprozesse auf unterschiedliche Standorte der Serverhardware reagieren. 
 
-Nun gilt es passende Technologien zu finden. Hier gibt es keine klare Empfehlung, jedoch können die in diesem Kapitel beschriebenen Konzepte bei der Entscheidung helfen. Es gibt bereits Frameworks \& Game Engines, die Manche dieser Konzepte bereits implementiert haben und als Libraries für Entwickler bereitstellen.
+Nun gilt es, passende Technologien zu finden. Hier gibt es keine klare Empfehlung, jedoch können die in diesem Kapitel beschriebenen Konzepte bei der Entscheidung helfen. Es gibt bereits Frameworks \& Game Engines, die manche dieser Konzepte bereits implementiert haben und als Libraries für Entwickler bereitstellen.
 
 \cite{MFatihMAR.2021}
 
@@ -27,11 +27,11 @@ Die Konzepte sind als separat voneinander zu betrachtende Softwarekomponenten zu
 
 \section{API für Matchmaking \& Server Runner}
 
-Für Spiele, welche ein Matchmaking-System benötigen muss eine API entworfen werden, welche unabhängig von einem existierenden Client oder Serverprozess arbeitet. Diese API hat 2 grundsätzliche Aufgaben. 
+Für Spiele, welche ein Matchmaking-System benötigen, muss eine API entworfen werden, welche unabhängig von einem existierenden Client oder Serverprozess arbeitet. Diese API hat 2 grundsätzliche Aufgaben. 
 
 \textbf{Matchmaking:}
 
-Die API muss einen Algorithmus implementieren, welcher mehrere Spieler zu einer Spiel-Session zusammenführt. Mögliche Matchmaking Konzepte sind bereits im Hintergrund-Kapitel beschrieben. Die Matchnaking API verwaltet als eine Liste an aktiven Serverprozessen sowie die Information, wie man sich zu ihnen verbindet. In der Regel wird pro Serverprozess ein Netzwerk-Port an der Server-Maschine reserviert, auf denen sich dann N Spieler verbinden können.
+Die API muss einen Algorithmus implementieren, welcher mehrere Spieler zu einer Spiel-Session zusammenführt. Mögliche Matchmaking Konzepte sind bereits im Hintergrund-Kapitel beschrieben. Die Matchmaking API verwaltet als eine Liste an aktiven Serverprozessen sowie die Information, wie man sich zu ihnen verbindet. In der Regel wird pro Serverprozess ein Netzwerk-Port an der Server-Maschine reserviert, auf denen sich dann N Spieler verbinden können.
 
 Je nach Spielkonzept können hunderte, tausende Serverprozesse existieren, welche jeweils nur eine vergleichsweise geringe Anzahl (1-20) an Spieler verwalten. Spielkonzepte, welche viele Spieler (200-1000) innerhalb eines einzigen Serverprozesses voraussetzten, erzeugen dagegen zwar quantitativ weniger Serverprozesse, diese neigen aber in der Regel schnell zu Überlastung. Neben der Umsetzung von Interest Management und einer performanten Architektur für möglichst wenig Network-Traffic kann aber auch die Matchmaking API Abhilfe schaffen, bspw. durch 'Umverlegung' von Spielern auf andere oder neue Cluster.
 
@@ -45,17 +45,17 @@ Die folgende Grafik visualisiert beide Aufgaben:
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=150mm]{images/API_Konzept_Diagramm.jpg}
-	\caption[API Konzept Diagramm]{Veranschaulichung des API Konzepts}
+	\caption[API Konzept Diagramm]{Veranschaulichung des API-Konzepts}
 	\label{pic:API_Konzept_Diagramm}
 \end{figure}
 
-Je nach Spiel kann das Aufgabenfeld der API um weitere Punkte erweitert werden, beispielsweise die Verwaltung einer Datenbank für Authentifizierung bzw. Kommunikation mit externen Authentifizierungs-Service Providern oder für einen InGame Shop.
+Je nach Spiel kann das Aufgabenfeld der API um weitere Punkte erweitert werden, beispielsweise die Verwaltung einer Datenbank für Authentifizierung bzw. Kommunikation mit externen Authentifizierungs-Service-Providern oder für einen In-Game Shop.
 
 \section{Client UI \& Visual Controller}
 
 Der Client UI \& Visual Controller beschreibt die Art und Weise, wie die Benutzeroberfläche und visuelle Ebene eines Spielers durch Antworten des Servers oder einzelner Spieleraktivitäten manipuliert wird.
 
-Konkret sorgt ein Server-Ereignis, der Input eines Spielers (beispielsweise durch klicken eines Buttons oder einsammeln eines Gegenstands) oder ein anderes Ereignis dafür, dass Funktionen innerhalb des Client UI \& Visual Controllers aufgerufen werden. Innerhalb dieser Funktionen werden Komponenten der Benutzeroberfläche wie z.b. Anzeigetexte, Bilder etc. oder Objekte innerhalb der Spielwelt selbst manipuliert. In der folgenden Grafik zeigt die beschriebene Folge an Ereignissen:
+Konkret sorgt ein Server-Ereignis, der Input eines Spielers (beispielsweise durch Klicken eines Buttons oder einsammeln eines Gegenstands) oder ein anderes Ereignis dafür, dass Funktionen innerhalb des Client UI \& Visual Controllers aufgerufen werden. Innerhalb dieser Funktionen werden Komponenten der Benutzeroberfläche wie z. B. Anzeigetexte, Bilder etc. oder Objekte innerhalb der Spielwelt selbst manipuliert. In der folgenden Grafik zeigt die beschriebene Folge an Ereignissen:
 
 \begin{figure}[H]
 	\centering
@@ -64,15 +64,15 @@ Konkret sorgt ein Server-Ereignis, der Input eines Spielers (beispielsweise durc
 	\label{pic:Client_UI_und_Visual_Konzept}
 \end{figure}
 
-Wichtig ist, dass Funktionen des Client UI \& Visual Controller erst nach server- oder clientseitigen Überprüfungen ausgeführt werden. Der Controller selbst sollte nur überprüfen, ob fluktuierende Komponenten noch existieren oder sich in einem konsistenten Zustand befinden. Spiel-Relevante Logik, beispielsweise ob ein Spieler berechtigt ist, bestimmte Aktionen durchzuführen, ist nicht Teil des Client UI \& Visual Controllers.
+Wichtig ist, dass Funktionen des Client UI \& Visual Controller erst nach server- oder clientseitigen Überprüfungen ausgeführt werden. Der Controller selbst sollte nur überprüfen, ob fluktuierende Komponenten noch existieren oder sich in einem konsistenten Zustand befinden. Spiel-Relevante Logik, beispielsweise, ob ein Spieler berechtigt ist, bestimmte Aktionen durchzuführen, ist nicht Teil des Client UI \& Visual Controllers.
 
 \section{Server Network Manager}
 
 Der Server Network Manager ist für die korrekte Abarbeitung von serverseitigen Aufgaben zuständig, welche aufkommen, sobald ein Netzwerk-spezifisches Ereignis stattfindet.
 
-\textbf{Beispiel:} Die Verbindung eines Clients bricht mitten in der laufenden Spielszene ab. Der Server Network Manager stößt in Folge dessen Funktionen anderer serverseitigen Manager-Komponenten an, welche dafür sorgen, dass alle Spieler über den neuen Zustand des Spiels informiert werden. Hierfür müssen zunächst serverinterne Variablen aktualisiert werden.
+\textbf{Beispiel:} Die Verbindung eines Clients bricht mitten in der laufenden Spielszene ab. Der Server Network Manager stößt infolgedessen Funktionen anderer serverseitigen Manager-Komponenten an, welche dafür sorgen, dass alle Spieler über den neuen Zustand des Spiels informiert werden. Hierfür müssen zunächst serverinterne Variablen aktualisiert werden.
 
-\textbf{Beispiel:} In einem Online-Ableger des Spiels 'Mensch ärger dich nicht' verliert ein Spieler seine Netzwerk-Verbindung. Als Reaktion kümmert sich der Server Network Manager darum, dass das Spiel trotzdem zu ende gespielt werden kann. Die gespawnten Spielfiguren des ausgeschiedenen Spielers müssen entfernt, und der Spiel-Fortschritt aktualisiert werden. Diese Funktionen stellt möglicherweise der \hyperref[spawn_manager]{Runtime Spawn Manager}, \hyperref[progress_manager]{Progress / Game State Manager } zur Verfügung.
+\textbf{Beispiel:} In einem Online-Ableger des Spiels 'Mensch ärger dich nicht' verliert ein Spieler seine Netzwerk-Verbindung. Als Reaktion kümmert sich der Server Network Manager darum, dass das Spiel trotzdem zu Ende gespielt werden kann. Die gespawnten Spielfiguren des ausgeschiedenen Spielers müssen entfernt, und der Spiel-Fortschritt aktualisiert werden. Diese Funktionen stellt möglicherweise der \hyperref[spawn_manager]{Runtime Spawn Manager}, \hyperref[progress_manager]{Progress / Game State Manager } zur Verfügung.
 Außerdem muss dem \hyperref[serverside_client_manager]{Serverside Client Manager} mitgeteilt werden, dass dieser Spieler nun nicht mehr Teil der Spiel-Session ist.
 
 Die folgende Grafik illustriert die Aufgaben des Server Network Managers:
@@ -107,21 +107,21 @@ Außerdem stellt der Lobby / Multi Scene Manager Funktionen bereit, welche
 Der Client Connection Manager beschreibt eine Softwarekomponente, welche folgende Aufgaben umsetzen muss:
 
 - Implementierung von clientseitigen Methoden zum Informationsaustausch mit Matchmaking API.
-Z.B. stellt die Matchmaking API dem Client über HTTP-Kommunikation Informationen bereit, mit denen sich der Client auf einen speziellen Server verbinden kann (IP + Port). \cite{Wikipedia.2021d} \cite{Wikipedia.2021e}
+Z. B. stellt die Matchmaking API dem Client über HTTP-Kommunikation Informationen bereit, mit denen sich der Client auf einen speziellen Server verbinden kann (IP + Port). \cite{Wikipedia.2021d} \cite{Wikipedia.2021e}
 
 - Verarbeitung der von Matchmaking API bereitgestellten Informationen. 
 
-Z.B. könnte die Matchmaking API einem Client die Information bereitstellen, dass aus einem bestimmten Grund dem angeforderten Serverbeitritt verweigert wird. Diese Information muss der Client Connection Manager Zwischenspeichern und verwalten.
+Z. B. könnte die Matchmaking API einem Client die Information bereitstellen, dass aus einem bestimmten Grund dem angeforderten Serverbeitritt verweigert wird. Diese Information muss der Client Connection Manager zwischenspeichern und verwalten.
 
 - Aufruf von Methoden eines Client UI Controllers.
 
-Z.B. Die soeben erlangte Information über den verweigerten Serverbeitritt muss nun dem Nutzer dargestellt werden, hierfür ruft der Client Connection Manager Funktionen auf, welche ein Client UI Controller implementiert hat.
+Z. B. Die soeben erlangte Information über den verweigerten Serverbeitritt muss nun dem Nutzer dargestellt werden, hierfür ruft der Client Connection Manager Funktionen auf, welche ein Client UI Controller implementiert hat.
 
 - Bereitstellung von Funktionen, welche den Beitritt zu einem Game-Server sicherstellen.
 
 - Ausführen von Handler-Funktionen und Auslösen von Events für clientseitige Konsequenzen bei Netzwerkabbruch, manuellem Verlassen einer Server-Session oder sonstigen Abbruchgründen, welche dazu führen, dass eine Online-Spielsession verlassen wird.
 
-Z.B. Wird die notwendige Verbindung zum Internet während des Spiels unterbrochen. Der Client Connection Manager löst Callbacks aus, welche im Client UI \& Visual Controller implementiert sind. Diese Sorgen dafür, dass der Spieler zurück ins Hauptmenü geleitet wird, in dem eine Fehlermeldung dargestellt wird, welche erklärt warum das Spiel abgebrochen ist.
+Z. B. wird die notwendige Verbindung zum Internet während des Spiels unterbrochen. Der Client Connection Manager löst Callbacks aus, welche im Client UI \& Visual Controller implementiert sind. Diese sorgen dafür, dass der Spieler zurück ins Hauptmenü geleitet wird, in dem eine Fehlermeldung dargestellt wird, welche erklärt, warum das Spiel abgebrochen ist.
 
 \begin{figure}[H]
 	\centering
@@ -134,11 +134,11 @@ Z.B. Wird die notwendige Verbindung zum Internet während des Spiels unterbroche
 
 \label{serverside_client_manager}
 
-Das Konzept des serverseitigen Client Manager beinhaltet die Verwaltung aller verbundener Clients innerhalb eines aktiven Serverprozesses. Insbesondere speichert der serverseitige Client Manager 2 Arten von Information über jeden Client:
+Das Konzept des serverseitigen Client Managers beinhaltet die Verwaltung aller verbundener Clients innerhalb eines aktiven Serverprozesses. Insbesondere speichert der serverseitige Client Manager 2 Arten von Information über jeden Client:
 
-Einerseits werden Netzwerk-bezogene Informationen über einen Client gespeichert, im einfachsten Fall ist dies lediglich die IP Adresse des Hosts sowie der Port, auf welchem der Server seinen Kommunikationskanal geöffnet hat. Bei Spielkonzepten, welche eine weitergehende Authentifizierung des Spielers voraussetzen, können hier auch Benutzernamen, Benutzertags, Email-Adressen o.ä. gespeichert und weiterverarbeitet werden.
+Einerseits werden Netzwerk-bezogene Informationen über einen Client gespeichert, im einfachsten Fall ist dies lediglich die IP-Adresse des Hosts sowie der Port, auf welchem der Server seinen Kommunikationskanal geöffnet hat. Bei Spielkonzepten, welche eine weitergehende Authentifizierung des Spielers voraussetzen, können hier auch Benutzernamen, Benutzertags, E-Mail-Adressen o. ä. gespeichert und weiterverarbeitet werden.
 
-Zum Anderen speichert und verwaltet der serverseitige Client Manager auch spielspezifische Informationen wie bspw. den aktuellen Anzeigenamen, konfigurierte Individualisierung des Spielcharakters, Spielerrollen oder andere Eigenschaften, über die der Server während einer Spiel-Session Kenntnis haben sollte.
+Zum Anderen speichert und verwaltet der serverseitige Client Manager auch spielespezifische Informationen wie bspw. den aktuellen Anzeigenamen, konfigurierte Individualisierung des Spielcharakters, Spielerrollen oder andere Eigenschaften, über die der Server während einer Spiel-Session Kenntnis haben sollte.
 
 Die folgende Grafik visualisiert diesen Informationsfluss:
 
@@ -151,7 +151,7 @@ Die folgende Grafik visualisiert diesen Informationsfluss:
 
 \section{Prepare-Game-Manager}
 
-Der Prepare-Game-Manager ist Teil des Serverprozesses und beinhaltet alle Funktionen, welche nötig sind um eine Spielszene aufzubauen, bevor die Spieler ihr beitreten dürfen. Die Funktionen sollten konkret umsetzen:
+Der Prepare-Game-Manager ist Teil des Serverprozesses und beinhaltet alle Funktionen, welche nötig sind, um eine Spielszene aufzubauen, bevor die Spieler ihr beitreten dürfen. Die Funktionen sollten konkret umsetzen:
 
 - Spawning \cite{Wikipedia.2020} von NPCs \cite{Wikipedia.2021f} oder Spielgegenständen, die in Abhängigkeit zur Anzahl der beitretenden Spieler, einer Spielkonfiguration oder sonstigen Parametern stehen.
 
@@ -161,7 +161,7 @@ Der Prepare-Game-Manager ist Teil des Serverprozesses und beinhaltet alle Funkti
 
 - Abarbeitung sonstiger serverseitigen Abläufe, welche Voraussetzung für den Start des Spiels sind
 
-Das folgende Diagramm zeigt, wann der Prepare-Game-Manager bei einem Lobby-basierten Spielkonzept zum Einsatz kommt:
+Das folgende Diagramm zeigt, wann der Prepare-Game-Manager bei einem lobby-basierten Spielkonzept zum Einsatz kommt:
 
 \begin{figure}[H]
 	\centering
@@ -177,7 +177,7 @@ Die Aufgabe eines Progress bzw. Game-State Managers ist es, Gewinn bzw. Verlustb
 
 Beispiele hierfür sind:
 - Verwaltung und Synchronisierung von globalen Timern
-- Verwaltung und Synchronisierung von Spiel-Kennzahlen bzw. Variablen (z.B. der Spielstand bei einem Fußball-Match)
+- Verwaltung und Synchronisierung von Spiel-Kennzahlen bzw. Variablen (z. B. der Spielstand bei einem Fußball-Match)
 
 Außerdem ist der Progress Manager / Game-State Manager dafür verantwortlich, alle Clients über spielentscheidende Ereignisse zu informieren. 
 
@@ -193,7 +193,7 @@ Die Abfolge dieser Ereignisse werden im folgenden Diagramm aufgezeigt:
 \section{Runtime Spawn Manager}
 \label{spawn_manager}
 
-Der Runtime Spawn Manager verwaltet die zur Laufzeit zu erzeugenden Spieler und Nicht-Spieler Objekte. Konkret werden Funktionen des Runtime Spawn Managers ausgeführt, wenn ein spezifisches Event innerhalb einer Spiel-Session ausgelöst wird oder ein Spieler bzw. Nicht-Spieler-Character stirbt, und diese erneut an anderer Position spawnen sollen ('Re-Spawning'). Die Logik, wo genau ein Spieler oder Nicht-Spieler Objekt seine neue Einstiegsposition erhält, regelt ebenfalls der Runtime Spawn-Manager.
+Der Runtime Spawn Manager verwaltet die zur Laufzeit zu erzeugenden Spieler und Nicht-Spieler Objekte. Konkret werden Funktionen des Runtime Spawn Managers ausgeführt, wenn ein spezifisches Event innerhalb einer Spiel-Session ausgelöst wird oder ein Spieler bzw. Nicht-Spieler-Charakter stirbt, und diese erneut an anderer Position spawnen sollen ('Re-Spawning'). Die Logik, wo genau ein Spieler oder Nicht-Spieler Objekt seine neue Einstiegsposition erhält, regelt ebenfalls der Runtime Spawn-Manager.
 
 \begin{figure}[H]
 	\centering
@@ -222,7 +222,7 @@ Mögliche Faktoren, die der Interest Manager benutzen kann, um den Spielern die 
 
 - Teams bzw. Gruppen. Die registrierten (Spieler)-Objekte innerhalb eines Teams/ einer Gruppe sind für Spieler, welche ebenfalls innerhalb des Teams/Gruppe registriert sind sichtbar.
 
-- Spatial Hashing / Grid Checker: Die Spielwelt und ihre Objekte werden in quadratische Zellen eingeteilt. Je nachdem in welcher Zelle sich ein Spieler befindet, werden nur diejenigen Objekte der Spielwelt mit dem Spieler snychronisiert, welche sich innerhalb der 8 'Nachbarzellen' befinden:
+- Spatial Hashing / Grid Checker: Die Spielwelt und ihre Objekte werden in quadratische Zellen eingeteilt. Je nachdem in welcher Zelle sich ein Spieler befindet, werden nur diejenigen Objekte der Spielwelt mit dem Spieler synchronisiert, welche sich innerhalb der 8 'Nachbarzellen' befinden:
 
 \begin{figure}[H]
 	\centering
