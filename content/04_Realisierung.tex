@@ -60,7 +60,7 @@ Aus insgesamt 10 möglichen Spawn-Punkten würfelt der Prepare-Game-Manager Spaw
 \section{Architektur des Prototyps}
 \label{Architektur}
 
-\textbf{Matchmaking:}
+\textbf{Matchmaking:} \\
 Die Matchmaking Architektur basiert auf einem Client Server Modell, sowie dem Einsatz einer REST API, welche als Matchmaking- und Server-Runner Schnittstelle dient. Der oben beschriebene Ablauf zum Beitreten einer Lobby ist im folgenden Diagramm noch einmal aus technischer Sicht visualisiert:
 
 \begin{figure}[H]
@@ -70,8 +70,7 @@ Die Matchmaking Architektur basiert auf einem Client Server Modell, sowie dem Ei
 	\label{pic:prototype_architecture_matchmaking}
 \end{figure}
 
-\textbf{Szenen:}
-
+\textbf{Szenen:} \\
 Im Prototypen gibt es lediglich 2 Szenen: Die Menü-Szene (Menu Scene) und die Spielszene (Game Scene).
 Die Menu Scene gliedert sich in 2 verschiedene Sub-Menüs. Das 'Main Menu' wird zu Spielstart angezeigt, sowie wenn ein Spieler die Verbindung zu einem Server abbricht oder verliert. Das 'Lobby Menu' wird angezeigt, sobald ein Spieler einer Lobby beigetreten ist. 
 
@@ -428,7 +427,7 @@ private void clearLobbyData()
 }
 \end{lstlisting}
 
-Der Aufruf der Initialisierung des Szenenwechsels zurück in die Menü-Szene geschieht aus Komplexitätsgründen aus dem InGameProgressManager heraus. Die nähere Erläuterung folgt in der Sektion \hyperref[Progress Manager]{Implementierung: Progress / Game-State Manager}
+Der Aufruf der Initialisierung des Szenenwechsels zurück in die Menü-Szene geschieht aus Komplexitätsgründen aus dem InGameProgressManager heraus. Die nähere Erläuterung folgt in der Sektion \hyperref[Progress Manager]{'Implementierung: Progress / Game-State Manager'}
 
 \section{Implementierung: Client Connection Manager}
 
@@ -560,7 +559,7 @@ public static bool RemoveConnection(int connectionId)
 }
 \end{lstlisting}
 
-In der aktuellen Version des Prototyps werden spielerbezogene 'Sonderinformationen' wie Spielername und Rolle im 'GameNetworkManager'  mitverwaltet. Die Aufgabe des Serverside Client Managers wird in der Komponente, welche in die der Sektion \hyperref[Lobby Manager Implementierung]{Implementierung: Lobby / Multi Scene Manager} beschrieben wird, mitverwaltet. 
+In der aktuellen Version des Prototyps werden spielerbezogene 'Sonderinformationen' wie Spielername und Rolle im 'GameNetworkManager'  mitverwaltet. Die Aufgabe des Serverside Client Managers wird in der Komponente, welche in die der Sektion \hyperref[Lobby Manager Implementierung]{'Implementierung: Lobby / Multi Scene Manager'} beschrieben wird, mitverwaltet. 
 
 Diese Tatsache ist allerdings an die Randbedingungen geknüpft, dass für das den Prototypen das Mirror Framework genutzt wurde, welches viele Funktionen auf die überschriebene 'NetworkManager' Klasse abwälzt, sowie dass der Prototyp keine große Anzahl an 'Sonderinformationen' (wie Charakterindividualisierung, Account-Informationen / In-Game-Shop Daten etc.) speichern muss. Da der Komplexitätsaufwand für eine gesonderte Handhabung dieser Informationen bei steigender Anforderungen enorm zunimmt, ist es ratsam, die Komponente 'Serverside Client Manager' gesondert zu implementieren.
 
