@@ -7,9 +7,9 @@ In diesem Kapitel werden die im vorherigen Kapitel beschriebenen Konzepte anhand
 
 Für die Entwicklung des Prototyps kamen folgende Technologien zum Einsatz:
 
-Als Game-Engine wurde Unity \cite{Technologies.03.02.2022} benutzt. Die Entscheidung hierfür begründet sich durch die gute Dokumentation und den Long-Time-Support der verschiedenen Unity Versionen. Außerdem gibt es eine große Anzahl an Benutzer. Unity existiert bereits seit dem Jahr 2005 \cite{Wikipedia.2022c}, und hat sich seitdem in Entwickler-Kreisen einen nachhaltigen Ruf erarbeitet.
+Als Game-Engine wurde Unity \cite{Technologies.03.02.2022} benutzt. Die Entscheidung hierfür begründet sich durch die gute Dokumentation und den Long-Time-Support der verschiedenen Unity-Versionen. Außerdem gibt es eine große Anzahl an Benutzern. Unity existiert bereits seit dem Jahr 2005 \cite{Wikipedia.2022c}, und hat sich seitdem in Entwickler-Kreisen einen nachhaltigen Ruf erarbeitet.
 
-C\# kommt als Programmiersprache zum Einsatz. Unity hat eine sehr gute Unterstützung hierfür.
+C\# kommt als Programmiersprache zum Einsatz. Unity bietet eine sehr gute Unterstützung hierfür.
 
 Zusätzlich zu Unity wurde Mirror\cite{.03.02.2022} als weiteres Framework benutzt. Mirror ist eine kostenloses Open Source Networking Bibliothek, welche die Entwicklung von Netzwerk-Code deutlich erleichtert.
 
@@ -18,17 +18,17 @@ Zusätzlich zu Unity wurde Mirror\cite{.03.02.2022} als weiteres Framework benut
 
 Das Grundprinzip des Prototyps basiert auf dem Kinderspiel 'Fangen und Verstecken'. Hinzu kommen weitere Spiel-Elemente, die in dieser Sektion erläutert werden. Innerhalb der Spielwelt existieren 2 verschiedene Teams, welche ausschließlich aus Spielern bestehen.
 
-Spieler mit der Rolle 'Hider' und 'Ghost' gehören zu einem Team.  Spieler mit der Rolle 'Seeker' bilden das zweite Team. Anfangs wird per Zufall entschieden, welche Spieler zum Team 'Hider/Ghost' und welche zum Team 'Seeker' gehören. Alle Teammitglieder des Teams 'Hider/Ghost' beginnen das Spiel initial als 'Hider'. Der Leiter einer Lobby kann festlegen, ob ein oder zwei Seeker ausgewürfelt werden sollen. Zum Leiter einer Lobby wird derjenige Spieler, der als erstes einer Lobby beitritt. Sollte der Leiter einer Lobby diese verlassen, so wird der Spieler zum Leiter, der am längsten Mitglied derselben Lobby war.
+Spieler mit der Rolle 'Hider' und 'Ghost' gehören zu einem Team.  Spieler mit der Rolle 'Seeker' bilden das zweite Team. Anfangs wird per Zufall entschieden, welche Spieler zum Team 'Hider/Ghost' und welche zum Team 'Seeker' gehören. Alle Teammitglieder des Teams 'Hider/Ghost' beginnen das Spiel initial als 'Hider'. Der Leiter einer Lobby kann festlegen, ob ein oder zwei Seeker ausgewürfelt werden sollen. Zum Leiter einer Lobby wird derjenige Spieler, der als Erstes einer Lobby beitritt. Sollte der Leiter einer Lobby diese verlassen, so wird der Spieler zum Leiter, der am längsten Mitglied derselben Lobby war.
 
 Die Aufgaben der Spieler sind je nach Rolle unterschiedlich:
 
-\textbf{Hider:}
-Spieler mit der Rolle Hider haben die Aufgabe, bestimmte Objekte in der Spielwelt zu finden, und diese zu einem Zielort zu bringen. Sind alle Objekte zu ihrem Zielort gebracht, so hat das Team 'Hider/Ghost' das Spiel gewonnen. Hider müssen zudem vor den Spielern mit der Rolle 'Seeker' flüchten, bzw. sich vor diesen verstecken. 
+\textbf{Hider:} \\
+Spieler mit der Rolle 'Hider' haben die Aufgabe, bestimmte Objekte in der Spielwelt zu finden, und diese zu einem Zielort zu bringen. Sind alle Objekte zu ihrem Zielort gebracht, so hat das Team 'Hider/Ghost' das Spiel gewonnen. Hider müssen zudem vor den Spielern mit der Rolle 'Seeker' flüchten, bzw. sich vor diesen verstecken. 
 
-\textbf{Seeker:}
-Spieler mit der Rolle Seeker haben lediglich eine Aufgabe. Sie müssen alle Spieler mit der Rolle 'Hider' fangen. Dies können sie tun, indem sie in die unmittelbare Reichweite eines Hiders laufen, und die Taste 'E' bzw. den in der Benutzeroberfäche festgelegten Knopf 'Catch' drücken. Sind alle Hider gefangen, so gewinnen die Seeker das Spiel.
+\textbf{Seeker:} \\
+Spieler mit der Rolle 'Seeker' haben lediglich eine Aufgabe. Sie müssen alle Spieler mit der Rolle 'Hider' fangen. Dies können sie tun, indem sie in die unmittelbare Reichweite eines Hiders laufen, und die Taste 'E' bzw. den in der Benutzeroberfäche festgelegten Knopf 'Catch' drücken. Sind alle Hider gefangen, so gewinnen die Seeker das Spiel.
 
-\textbf{Ghost:}
+\textbf{Ghost:} \\
 Spieler, welche initial mit der Rolle 'Hider' gespawnt sind, und von einem Seeker gefangen wurden, wechseln ihre Rolle zu 'Ghost'. Ghosts dürfen nicht mehr mit Objekten der Spielwelt interagieren, sie können sich lediglich noch über das Spielfeld bewegen. Außerdem bekommt ein Ghost eine Fähigkeit, welche er einsetzen kann, um seinem Team zu helfen. Diese Fähigkeit bemächtigt den Spieler einen Seeker für 3 Sekunden bewegungsunfähig zu machen, sollte der Spieler in der unmittelbaren Nähe eines Seekers sein, und die Taste 'E' bzw. den dafür vorgesehen Knopf in der Benutzeroberfläche drücken. Diese Fähigkeit kann lediglich alle 30 Sekunden eingesetzt werden.
 
 Das Spielkonzept wird in folgendem Spielflussdiagramm zusammengefasst:
@@ -42,7 +42,7 @@ Das Spielkonzept wird in folgendem Spielflussdiagramm zusammengefasst:
 
 \textbf{Spiel-Ablauf:}
 
-Zunächst muss ein Spieler eine Lobby erstellen. Dies tut er, indem er auf den Knopf 'Create Lobby' im Hauptmenü drückt. Nun erhält dieser Spieler einen 'Code', welcher eindeutig diese Lobby identifiziert. Diesen Code kann der Spieler jetzt an seine Mitspieler weitergeben. Diese können den Code im Hauptmenü in ein Eingabefeld eingeben, und auf 'Join Lobby' drücken. Der Spieler, welcher die Lobby erstellt hat, ist inzwischen auch Lobby-Leiter und kann einstellen, ob die Lobby als 'public' markiert werden soll. In diesem Fall können andere Spieler durch den Button 'Join Random Lobby' ebenfalls der Lobby beitreten, ohne den Code zu kennen. 
+Zunächst muss ein Spieler eine Lobby erstellen. Dies tut er, indem er auf den Knopf 'Create Lobby' im Hauptmenü drückt. Nun erhält dieser Spieler einen 'Code', welcher eindeutig diese Lobby identifiziert. Diesen 'Code' kann der Spieler jetzt an seine Mitspieler weitergeben. Diese können den Code im Hauptmenü in ein Eingabefeld eingeben, und auf 'Join Lobby' drücken. Der Spieler, welcher die Lobby erstellt hat, ist inzwischen auch Lobby-Leiter und kann einstellen, ob die Lobby als 'public' markiert werden soll. In diesem Fall können andere Spieler durch den Button 'Join Random Lobby' ebenfalls der Lobby beitreten, ohne den Code zu kennen. 
 
 Das folgende Aktivitätsdiagramm zeigt die möglichen Abfolgen des Beitritts einer Lobby:
 
@@ -53,7 +53,7 @@ Das folgende Aktivitätsdiagramm zeigt die möglichen Abfolgen des Beitritts ein
 	\label{pic:matchmaking_concept}
 \end{figure}
 
-Ist nun eine Lobby erstellt, und es sind mindestens 2 und maximal 10 Spieler der Lobby beigetreten, welche ihren Bereitschaftsstatus durch das drücken des Knopfes 'Ready' kommuniziert haben, so hat der Lobby-Leiter die Möglichkeit durch Drücken des Buttons 'Start Game' das Spiel zu starten.
+Ist nun eine Lobby erstellt, und es sind mindestens 2 und maximal 10 Spieler der Lobby beigetreten, welche ihren Bereitschaftsstatus durch das Drücken des Knopfes 'Ready' kommuniziert haben, so hat der Lobby-Leiter die Möglichkeit durch Drücken des Buttons 'Start Game' das Spiel zu starten.
 
 Aus insgesamt 10 möglichen Spawn-Punkten würfelt der Prepare-Game-Manager Spawn-Punkte für die beigetretenen Spieler aus. Sobald alle Spieler die Spiel-Szene geladen haben, und auf ihrem Startpunken stehen, beginnt das Spiel. Ab diesem Zeitpunkt läuft eine Stoppuhr ab, erreicht diese den Wert '0' bevor alle Objekte an ihren Zielort gebracht wurden, so hat das Team 'Seeker' gewonnen.
 
@@ -95,15 +95,15 @@ Auf die Implementierungen der einzelnen Konzepte wird in den kommenden Sektionen
 
 \section{Implementierung: API für Matchmaking \& Server Runner}
 
-Für die Matchmaking \& Server Runner API wurde auf eine externe Lösung zurückgegriffen, da eine eigene Entwicklung aus zeitlichen Gründen nicht möglich war. Genutzt wurde eine Lösung von Felix Brübach \cite{GitHub.20.02.2022}. Diese beinhaltet eine REST API sowie eine Verwaltung von beliebig vielen Server-Threads. Diese Serverthreads werden repräsentiert durch eine Aneinanderreihung von einem Adjektiv und Tiernamen als 'Identifier'(ID). Dieser Identifier wird in unserem Spielkonzept als 'Code' verwendet. Außerdem kann die REST API so konfiguiert werden, dass ein eigenes Datenmodell zusätzlich zu den IDs verwaltet werden. Die REST API erwartet ebenfalls eine Datei, welche sie zur Laufzeit als Server-Thread ausführen kann. Im Falle des Prototyps ist das eine Mirror Server-Instanz.
+Für die Matchmaking \& Server Runner API wurde auf eine externe Lösung zurückgegriffen, da eine eigene Entwicklung aus zeitlichen Gründen nicht möglich war. Genutzt wurde eine Lösung von Felix Brübach \cite{GitHub.20.02.2022}. Diese beinhaltet eine REST API sowie eine Verwaltung von beliebig vielen Serverthreads. Diese werden repräsentiert durch eine Aneinanderreihung von einem Adjektiv und Tiernamen als 'Identifier'(ID). Dieser Identifier wird in unserem Spielkonzept als 'Code' verwendet. Außerdem kann die REST API so konfiguiert werden, dass ein eigenes Datenmodell zusätzlich zu den IDs verwaltet werden. Die REST API erwartet ebenfalls eine Datei, welche sie zur Laufzeit als Server-Thread ausführen kann. Im Falle des Prototyps ist das eine Mirror Server-Instanz.
 
-Die REST API akzeptiert die HTTP-Verben GET, POST, PUT und DELETE, mit denen Server-relevante Daten abgefragt und Serverprozesse erzeugt, manipuliert, oder gelöscht werden können. Die Erzeugung der Serverprozesse erfolgt durch Ausführung der Mirror-Serverdatei und Übergabe der folgenden 2 Programm-Argumente:
+Die REST API akzeptiert die HTTP-Verben GET, POST, PUT und DELETE, mit denen server-relevante Daten abgefragt und Serverprozesse erzeugt, manipuliert, oder gelöscht werden können. Die Erzeugung der Serverprozesse erfolgt durch Ausführung der Mirror-Serverdatei und Übergabe der folgenden 2 Programm-Argumente:
 
 '--port': Die nächste freie Port-Nummer auf der Hardware, auf welcher auch die REST API läuft
 
 '--id': Die ID, welche die REST API für diesen Serverprozess erzeugt hat. Im Falle des Prototyps wird diese als 'Code' behandelt.
 
-Der folgende Code zeigt die Methode ServerStart(), welche innerhalb des Mirror-Serverprozesses aufgerufen wird, sobald die REST API den Prozess startet:
+Der folgende Code zeigt die Methode 'ServerStart', welche innerhalb des Mirror-Serverprozesses aufgerufen wird, sobald die REST API den Prozess startet:
 
 \begin{lstlisting}[caption= OwnKcpTransport.cs ServerStart()]
 public override void ServerStart()
@@ -148,7 +148,7 @@ public override void ServerStart()
 \section{Implementierung: Client UI \& Visual Controller}
 \label{implementierung:client_UI_Controller}
 
-Der Client UI \& Visual Controller spielt im Prototyp eine wesentliche Rolle. Er kommt in der GameScene als Singleton \cite{M.Gatrell.2009} zum Einsatz, wo er alle nötigen Methoden implementiert, um das lokale UI des Spielers manipulieren zu können. Hier sind nun 3 Beispiele aufgeführt:
+Der Client UI \& Visual Controller spielt im Prototyp eine wesentliche Rolle. Er kommt in der Game Scene als Singleton \cite{M.Gatrell.2009} zum Einsatz, wo er alle nötigen Methoden implementiert, um das lokale UI des Spielers manipulieren zu können. Hier sind nun 3 Beispiele aufgeführt:
 
 Die folgenden 'Update'-Methode ist eine Unity bereitgestellte Schnittstelle. Der Rumpf der Update Methode ist nie vorgegeben, und muss vom Entwickler selbst implementiert werden. Unity führt diese Methode jedes 'Frame' (Einzelbild) \cite{Wikipedia.2021j} aus. Dies ermöglicht eine nahezu vollständige Echtzeitabfrage der Inputs (Tastatur / Maus / andere Eingangsgeräte) des Spielers.
 
@@ -168,7 +168,7 @@ private void Update()
 }
 \end{lstlisting}
 
-Doch was heißt das genau? Im folgenden Code wird ein Event definiert, welches durch andere Klassen 'abonniert' werden kann. Wird dann das Event durch .Invoke() ausgelöst, so werden alle Funktionen in externen Skripten ausgeführt, die dieses Event abonniert haben. Hier zunächst die Definition des Events im InGameUiControllerScript und die Funktion 'clickInteractButton', die ausgeführt wird, wenn beispielsweise wie im obrigen Code die Taste 'E' auf der Tastatur gedrückt wird.
+Doch was heißt das genau? Im folgenden Code wird ein Event definiert, welches durch andere Klassen 'abonniert' werden kann. Wird dann das Event durch '.Invoke()' ausgelöst, so werden alle Funktionen in externen Skripten ausgeführt, die dieses Event abonniert haben. Hier zunächst die Definition des Events im InGameUiControllerScript und die Funktion 'clickInteractButton', die ausgeführt wird, wenn beispielsweise wie im obrigen Code die Taste 'E' auf der Tastatur gedrückt wird.
 
 \begin{lstlisting}[caption= InGameUiControllerScript.cs OnInteractButtonClick Event]
 public event Action OnInteractButtonClick;	
@@ -179,8 +179,8 @@ public void clickInteractButton()
 }
 \end{lstlisting}
 
-Um den gesamten Aufrufstapel\cite{Wikipedia.2021k} nachvollziehen zu können, folgt nun ein Beispiel aus einem anderen Script.
-Die Klasse 'HiderScript.cs' abonniert in seiner Methode 'RpcEnableHideButton()' das Event des InGameUiControllerScript Singletons 'OnInteractButtonClick' mit seiner eigenen Methode 'OnHiderHideButtonClick()'. Die Methode 'RpcEnableHideButton()' wird dann ausgeführt, wenn der Server einem Spieler mit der Roller 'Hider' erlaubt, ein Versteck betreten zu dürfen.
+Um den gesamten Aufrufstapel nachvollziehen zu können, folgt nun ein Beispiel aus einem anderen Script.
+Die Klasse 'HiderScript.cs' abonniert in seiner Methode 'RpcEnableHideButton' das Event des InGameUiControllerScript Singletons 'OnInteractButtonClick' mit seiner eigenen Methode 'OnHiderHideButtonClick'. Die Methode 'RpcEnableHideButton' wird dann ausgeführt, wenn der Server einem Spieler mit der Roller 'Hider' erlaubt, ein Versteck betreten zu dürfen.
 
 \begin{lstlisting}[caption= HiderScript.cs Subscribe to InGameUiControllerScript Event]
 [TargetRpc]
@@ -193,7 +193,7 @@ private void RpcEnableHideButton()
 }
 \end{lstlisting}
 
-Sollte der Hider nun auf seinen 'Interact'-Button drücken, so wird die folgende Methode 'OnHiderHideButtonClick()' aufgerufen. Diese ruft eine weitere Methode 'CmdHideHider()' auf, welche einen Remote Procedure Call\cite{.05.02.2022} zum Server darstellt.
+Sollte der Hider nun auf seinen 'Interact'-Button drücken, so wird die folgende Methode 'OnHiderHideButtonClick' aufgerufen. Diese ruft eine weitere Methode 'CmdHideHider' auf, welche einen Remote Procedure Call\cite{.05.02.2022} zum Server darstellt.
 
 \begin{lstlisting}[caption= HiderScript.csOnHiderHideButtonClick() Method]
 
@@ -208,7 +208,7 @@ private void OnHiderHideButtonClick()
 
 \end{lstlisting}
 
-Der Server führt nun innerhalb des Methodenrumpfs von 'CmdHideHider()' einige Überprüfungen durch, ändert Server-interne Variablen und sorgt somit dafür, dass alle Spieler darüber Bescheid wissen, dass sich der Spieler nun in einem Versteck befindet.
+Der Server führt nun innerhalb des Methodenrumpfs von 'CmdHideHider' einige Überprüfungen durch, ändert Server-interne Variablen und sorgt somit dafür, dass alle Spieler darüber Bescheid wissen, dass sich der Spieler nun in einem Versteck befindet.
 
 \begin{lstlisting}[caption= HiderScript.cs Subscribe to InGameUiControllerScript Event]
 	
@@ -238,7 +238,7 @@ Der Server führt nun innerhalb des Methodenrumpfs von 'CmdHideHider()' einige �
 	}	
 \end{lstlisting}
 
-Die nächste Beispielmethode implementiert die Logik, den Interact-Button selbst aktiv- und inaktiv zu setzen. Der Interact Button selbst verfügt ebenfalls über ein 'HotkeyImage', welches einem visuellen Indikator gleich kommt, der die aktuell zu drückende Taste auf der Tastatur darstellt. Dieser Indikator wird bei jedem Aufruf von setInteractButtonEnabled ebenfalls an - oder ausgeschaltet.
+Die nächste Beispielmethode implementiert die Logik, den Interact Button selbst aktiv- und inaktiv zu setzen. Der Interact Button selbst verfügt ebenfalls über ein 'HotkeyImage', welches einem visuellen Indikator gleich kommt, der die aktuell zu drückende Taste auf der Tastatur darstellt. Dieser Indikator wird bei jedem Aufruf von 'setInteractButtonEnabled' ebenfalls an - oder ausgeschaltet.
 
 \begin{lstlisting}[caption= InGameUiControllerScript.cs setInteractButtonEnabled]
 public void setInteractButtonEnabled(bool enabled)
@@ -249,7 +249,7 @@ public void setInteractButtonEnabled(bool enabled)
 	}
 \end{lstlisting}
 
-Das letzte Beispiel ist eine Implementierung eines simplen Flip-Mechanismus beim Betätigen des Light-Buttons (An- und ausschalten der Taschenlampe eines Spielers). Diese Logik tauscht lediglich das Bild (Sprite) aus, welches auf dem Button liegt.
+Das letzte Beispiel ist eine Implementierung eines simplen 'Flip-Mechanismus' beim Betätigen des 'Light-Buttons' (An- und ausschalten der Taschenlampe eines Spielers). Diese Logik tauscht lediglich das Bild (Sprite) aus, welches auf dem Button liegt.
 
 \begin{lstlisting}[caption= InGameUiControllerScript.cs flipLightButtonImage]
 public void flipLightButtonImage()
@@ -269,9 +269,9 @@ public void flipLightButtonImage()
 
 \section{Implementierung: Server Network Manager}
 
-In der Implementierung des Prototyps ist der Server Network Manager ein Teil der GameNetworkManager Klasse. Diese implementiert sowohl client- als auch serverseitige Netzwerkfunktionen. Die nicht vorhandene Separierung von Client- und Serverfunktionen ist dem Mirror Framework geschuldet. Die Klasse GameNetworkManager ist ebenfalls ein Singleton und erbt die Klasse NetworkManager, welche von Mirror bereitgestellt wird. Durch die Vererbung ist es möglich, virtuelle Methoden\cite{Billwagner.08.02.2022} der NetworkManager Klasse zu überschreiben, Netzwerkseitige Events abzufangen und mit eigener Logik auf diese zu reagieren. 
+In der Implementierung des Prototyps ist der Server Network Manager ein Teil der 'GameNetworkManager' Klasse. Diese implementiert sowohl client- als auch serverseitige Netzwerkfunktionen. Die nicht vorhandene Separierung von Client- und Serverfunktionen ist dem Mirror Framework geschuldet. Die Klasse 'GameNetworkManager' ist ebenfalls ein Singleton und erbt die Klasse 'NetworkManager', welche von Mirror bereitgestellt wird. Durch die Vererbung ist es möglich, virtuelle Methoden\cite{Billwagner.08.02.2022} der NetworkManager Klasse zu überschreiben, netzwerkseitige Events abzufangen und mit eigener Logik auf diese zu reagieren. 
 
-Im folgenden Beispiel wird die virtuelle Methode OnServerConnect() überschrieben, um zu überprüfen, ob ein Spieler einer Spiel-Session beitreten darf. Sollte sich diese bereits in der Spiel-Szene befinden, so wird eine neue Message erzeugt, welche an den Client geschickt wird, welcher aktuell versucht sich zu verbinden. Das struct 'Message' nutzt ein von Unity bereitgestelltes Interface 'NetworkMessage', welches eine leichtgewichtige Art und Weise der Netzwerk-Kommunikation ermöglicht. Das gleiche Schema wird im zweiten 'if' Block benutzt, hier wird überprüft, ob die maximale Anzahl an Spielern innerhalb einer Lobby bereits erreicht ist.
+Im folgenden Beispiel wird die virtuelle Methode 'OnServerConnect' überschrieben, um zu überprüfen, ob ein Spieler einer Spiel-Session beitreten darf. Sollte sich diese bereits in der Spiel-Szene befinden, so wird eine neue Message erzeugt, welche an den Client geschickt wird, welcher aktuell versucht sich zu verbinden. Das struct 'Message' nutzt ein von Unity bereitgestelltes Interface 'NetworkMessage', welches eine leichtgewichtige Art und Weise der Netzwerk-Kommunikation ermöglicht. Das gleiche Schema wird im zweiten 'if' Block benutzt. Hier wird überprüft, ob die maximale Anzahl an Spielern innerhalb einer Lobby bereits erreicht ist.
 
 \begin{lstlisting}[caption= GameNetworkManager.cs OnServerConnect() und Message struct]
 public struct Message : NetworkMessage
@@ -308,13 +308,13 @@ public override void OnServerConnect(NetworkConnection conn)
 }
 \end{lstlisting}
 
-Als Gegenstück zu OnServerConnect() gibt es ebenfalls die virtuelle Methode OnServerDisconnect(), welche dann aufgerufen wird, wenn ein Spieler den Server gewollt, oder ungewollt (bspw. durch Netzwerkabbruch) verlässt. Im Prototyp wurde diese Methode ebenfalls überschrieben und im GameNetworkManager selbst implementiert. 
+Als Gegenstück zu 'OnServerConnect' gibt es ebenfalls die virtuelle Methode 'OnServerDisconnect', welche dann aufgerufen wird, wenn ein Spieler den Server gewollt, oder ungewollt (bspw. durch Netzwerkabbruch) verlässt. Im Prototyp wurde diese Methode ebenfalls überschrieben und im GameNetworkManager selbst implementiert. 
 
-Zunächst wird überprüft, ob die Anzahl aller Spieler, welche sich auf dem Server befinden, nach dem Beenden der aktuell abgefangenen und beendeten Client-Verbindung 0 beträgt. Falls ja, wird der Server-Prozess beendet. 
+Zunächst wird überprüft, ob die Anzahl aller Spieler, welche sich auf dem Server befinden, nach dem Beenden der aktuell abgefangenen und beendeten Client-Verbindung '0' beträgt. Falls ja, wird der Server-Prozess beendet. 
 
-Sollte sich noch Spieler auf dem Server-Prozess befinden, werden je nach Spielszene verschiedene Szenarien durchlaufen. Wenn die Spielszene aktuell läuft, so wird überprüft, ob die Anzahl an Spielern mit der Rolle 'Hider' oder 'Seeker' aktuell 0 beträgt. Falls eine der beiden Fälle zutrifft, so wird das Spiel zugunsten des konkurrierenden Teams beendet.
+Sollten sich noch Spieler auf dem Server-Prozess befinden, werden je nach Spielszene verschiedene Szenarien durchlaufen. Wenn die Spielszene aktuell läuft, so wird überprüft, ob die Anzahl an Spielern mit der Rolle 'Hider' oder 'Seeker' aktuell '0' beträgt. Falls eine der beiden Fälle zutrifft, so wird das Spiel zugunsten des konkurrierenden Teams beendet.
 
-Sollte sich die Spiel-Session aktuell in der Menü-Szene befinden, so werden Lobby-Relevante Variablen aktualisiert und zunächst überprüft, ob der Spieler, welche grade den Server verlassen hat, den Leader-Status hatte. Sollte dieser Fall zutreffen, wird der Leader-Status weiter gegeben. Zuletzt werden alle Spieler über den neuen Zustand der Lobby informiert.
+Wenn sich die Spiel-Session aktuell in der Menü-Szene befindet, so werden Lobby-Relevante Variablen aktualisiert und zunächst überprüft, ob der Spieler, welche gerade den Server verlassen hat, den Leader-Status hatte. Sollte dieser Fall zutreffen, wird der Leader-Status weiter gegeben. Zuletzt werden alle Spieler über den neuen Zustand der Lobby informiert.
 
 \begin{lstlisting}[caption= GameNetworkManager.cs OnServerDisconnect()]
 public override void OnServerDisconnect(NetworkConnection conn)
@@ -368,31 +368,33 @@ public override void OnServerDisconnect(NetworkConnection conn)
 
 Weitere virtuelle Methoden, welche der Prototyp implementiert hat, sind:
 
-OnServerChangeScene() - Diese Methode wird ausgeführt, sobald ein Szenenwechsel bevorsteht, aber noch nicht vollzogen ist.
+'OnServerChangeScene' - Diese Methode wird ausgeführt, sobald ein Szenenwechsel bevorsteht, aber noch nicht vollzogen ist.
 
-OnServerSceneChanged() - Diese Methode wird ausgeführt, sobald ein Szenenwechsel vollständig vollzogen ist.
+'OnServerSceneChanged' - Diese Methode wird ausgeführt, sobald ein Szenenwechsel vollständig vollzogen ist.
 
 \section{Implementierung: Lobby / Multi Scene Manager}
 \label{Lobby Manager Implementierung}
 
-Das Spielkonzept beinhaltet wie im Teil der \hyperref[Spielidee]{Spielidee} und \hyperref[Architektur]{Architektur} des Prototyps beschrieben auch eine Lobbymechanik. Die Ideen aus dem Konzept des Lobby / Multi Scene Managers wurden aufgrund der geringen Anforderungen des Prototyps ebenfalls in der Klasse GameNetworkManager.cs untergebracht. Dies hat den Vorteil, dass man die Lobby-spezifischen Variablen direkt mit den überschriebenen virutellen Methoden der Mirror Klasse 'NetworkManager' kombinieren kann.
+Das Spielkonzept beinhaltet wie im Teil der \hyperref[Spielidee]{Spielidee} und \hyperref[Architektur]{Architektur} des Prototyps beschrieben auch eine Lobbymechanik. Die Ideen aus dem Konzept des Lobby / Multi Scene Managers wurden aufgrund der geringen Anforderungen des Prototyps ebenfalls in der Klasse 'GameNetworkManager.cs' untergebracht. Dies hat den Vorteil, dass man die Lobby-spezifischen Variablen direkt mit den überschriebenen virutellen Methoden der Mirror Klasse 'NetworkManager' kombinieren kann.
 
 Im folgenden Beispiel werden die server-internen Variablen aufgeführt, welche im Prototyp für die Szenen-Übergreifenden Lobby-Verwaltung verantwortlich sind:
 
-'List<GameRule>' wird verwendet, um die für diesen Server-Prozess konfigurierten Spielregeln zu verwalten. Diese sind durch den Leader einer Lobby konfigurierbar. Beispiele für konfigurierbare Spielregeln sind: 
-Total Game Time - Nach wieviel Sekunden wird das Spiel automatisch zu Gunsten der Spieler entschieden, welche zum Team 'Seeker' gehören.
-Player Base Speed - Die Grundgeschwindigkeit der Spieler-Avatare.
-Daytime - Einstellung für den Wechsel zwischen Tag - und Nacht.
+1. 'List<GameRule>' wird verwendet, um die für diesen Server-Prozess konfigurierten Spielregeln zu verwalten. Diese sind durch den Leader einer Lobby konfigurierbar. Beispiele für konfigurierbare Spielregeln sind: \\
+- Total Game Time - Nach wieviel Sekunden wird das Spiel automatisch zu Gunsten der Spieler entschieden, welche zum Team 'Seeker' gehören. \\
+- Player Base Speed - Die Grundgeschwindigkeit der Spieler-Avatare. \\
+- Daytime - Einstellung für den Wechsel zwischen Tag - und Nacht.
 
-'LobbyPlayer leader' beinhaltet das Spieler-Objekt, welches der Server als Leader einer Lobby ansieht.
+2. 'LobbyPlayer leader' beinhaltet das Spieler-Objekt, welches der Server als Leader einer Lobby ansieht.
 
-'Dictionary<NetworkConnection, LobbyPlayer> lobbyPlayers' in diesem Dictionary wird pro Spieler die dazugehörige 'NetworkConnection' Objekt und das 'LobbyPlayer' Spieler-Objekt verwaltet. 'NetworkConnection' ist eine Mirror-spezifische Klasse, welche alle Netzwerk-relevanten Informationen zu einem Spieler verwaltet (Bspw. die IP-Adresse oder eine für diesen Spieler einzigartige Verbindungs-ID).
+3. 'Dictionary<NetworkConnection, LobbyPlayer> lobbyPlayers' in diesem Dictionary wird pro Spieler die dazugehörige 'NetworkConnection' Objekt und das 'LobbyPlayer' Spieler-Objekt verwaltet. 'NetworkConnection' ist eine Mirror-spezifische Klasse, welche alle Netzwerk-relevanten Informationen zu einem Spieler verwaltet (Bspw. die IP-Adresse oder eine für diesen Spieler einzigartige Verbindungs-ID).
 
-'bool isLobbyReady' ist ein boolscher Wert, welcher nur dann den Wert 'true' annimmt, sobald alle Spieler durch das Drücken auf einen 'Ready'-Button signalisiert haben, dass sie bereit für den Wechsel in die Spiel-Szene sind.
+4. 'bool isLobbyReady' ist ein boolscher Wert, welcher nur dann den Wert 'true' annimmt, sobald alle Spieler durch das Drücken auf einen 'Ready'-Button signalisiert haben, dass sie bereit für den Wechsel in die Spiel-Szene sind.
 
-'uint maxPlayers' ist ein Wert, welcher bestimmt wieviele Spieler maximal einer Lobby beitreten dürfen.
+5. 'uint maxPlayers' ist ein Wert, welcher bestimmt wieviele Spieler maximal einer Lobby beitreten dürfen.
 
-'uint keepLobbyAliveTimeInSeconds' ist ein Wert, welcher festlegt nach wie viel Sekunden Inaktivität der Spieler ein Server-Prozess beendet wird.
+6. 'uint keepLobbyAliveTimeInSeconds' ist ein Wert, welcher festlegt nach wie viel Sekunden Inaktivität der Spieler ein Server-Prozess beendet wird.
+
+\newpage
 
 \begin{lstlisting}[caption= GameNetworkManager.cs Lobby Variables]
 	public List<GameRule> gameRules = new List<GameRule>();
@@ -408,7 +410,7 @@ Daytime - Einstellung für den Wechsel zwischen Tag - und Nacht.
 	private uint keepLobbyAliveTimeInSeconds = 600;
 \end{lstlisting}
 
-Die folgenden Methoden sorgen dafür, dass vor dem Übergang in die Spiel-Szene die nun nicht mehr benötigten Lobby-Spielerobjekte zerstört werden und im Anschluss der gewünschte Übergang in die Spiel-Szene erfolgt. Hierfür stellt Mirror die Methode ServerChangeScene() bereit, welche dafür sorgt, dass der Szenenwechsel wohl beim Server, als auch bei allen verbundenen Clients vollzogen wird.
+Die folgenden Methoden sorgen dafür, dass vor dem Übergang in die Spiel-Szene die nun nicht mehr benötigten Lobby-Spielerobjekte zerstört werden und im Anschluss der gewünschte Übergang in die Spiel-Szene erfolgt. Hierfür stellt Mirror die Methode 'ServerChangeScene' bereit, welche dafür sorgt, dass der Szenenwechsel sowohl beim Server, als auch bei allen verbundenen Clients vollzogen wird.
 
 \begin{lstlisting}[caption= GameNetworkManager.cs StartGame]
 public void StartGame()
@@ -432,7 +434,7 @@ Der Aufruf der Initialisierung des Szenenwechsels zurück in die Menü-Szene ges
 
 Die Prinzipien des Client Connection Manager Konzepts wurden im Prototyp innerhalb der Klasse 'ConnectionScript.cs' realisiert. Die Hauptaufgabe ist der Kommunikationsaustausch mit der Matchmaking API sowie der Verbingdungsaufbau zu einer Mirror-Serverinstanz. Für diesen Kommunikationsaustausch wurde das Open Source Package 'Rest Client' von Juan Nicholls (proyecto26) benutzt \cite{GitHub.10.02.2022}.
 
-Im folgenden Code Beispiel wird zunächst das Datenmodell einer Lobby aus der Sicht der Matchmaking API und dem ConnectionScript aufgezeigt. Eine kurze Erläuterung der einzelnen Felder:
+Im folgenden Code Beispiel wird zunächst das Datenmodell einer Lobby aus der Sicht der Matchmaking API und dem 'ConnectionScript' aufgezeigt. Eine kurze Erläuterung der einzelnen Felder:
 
 - 'bool isPublic' sagt aus, ob eine Lobby öffentlich bereitgestellt wurde. Falls ja, können andere Spieler auch ohne Zugangs-Code über die 'Join Random Lobby' Funktion des Prototyps dieser Lobby beitreten.
 
@@ -460,6 +462,8 @@ private class PublicLobbys
 
 Sollte ein Spieler im Hauptmenü auf den Button 'Create Lobby' drücken, so wird eine POST Anfrage an die Matchmaking API geschickt, diese liefert ein neu erzeugtes Lobby-Objekt zurück, mit welchem sich der Spieler auf den neu erzeugten Mirror-Serverprozess verbindet. Folgender Code zeigt die Implementierung:
 
+\newpage
+
 \begin{lstlisting}[caption= ConnectionScript.cs createLobby()]
 private void createLobby()
 {
@@ -476,7 +480,7 @@ private void createLobby()
 }	
 \end{lstlisting}
 
-Im Fall, dass ein Spieler auf den Button 'Join Lobby' drückt, wird die Zeichenkette, welche der Nutzer in das entsprechende Code-Input Feld eingegeben hat, der Methode joinWithCode() übergeben. Diese überprüft zunächst, ob der Spieler keinen Code eingegeben hat. Falls die übergebene Zeichenkette nicht leer ist, führt das ConnectionScript eine GET Anfrage an die Matchmaking API aus, welche intern überprüft, ob eine Lobby mit diesem Zugangsschlüssel existiert. Falls dies der Fall ist, verbindet sich der Spieler automatisch mit der entsprechenden Lobby. 
+Im Fall, dass ein Spieler auf den Button 'Join Lobby' drückt, wird die Zeichenkette, welche der Nutzer in das entsprechende 'Code-Input-Feld' eingegeben hat, der Methode 'joinWithCode' übergeben. Diese überprüft zunächst, ob der Spieler keinen Code eingegeben hat. Falls die übergebene Zeichenkette nicht leer ist, führt das 'ConnectionScript' eine GET Anfrage an die Matchmaking API aus, welche intern überprüft, ob eine Lobby mit diesem Zugangsschlüssel existiert. Falls dies der Fall ist, verbindet sich der Spieler automatisch mit der entsprechenden Lobby. 
 
 \begin{lstlisting}[caption= ConnectionScript.cs joinWithCode()]
 private void joinWithCode(string code)
@@ -500,7 +504,7 @@ private void joinWithCode(string code)
 }
 \end{lstlisting}
 
-In den beiden obigen Beispielen wird beim Auslösen des Catch-Falls die Methode onFailure() aufgerufen. Dieser Fall tritt bei verschiedenen Szenarien ein. Beispielsweise wenn die Komminikation mit der REST API nicht möglich ist, oder diese einen 4XX oder 5XX HTTP-Status-Code liefert. Die Methode sorgt dafür, dass der Nutzer zurück ins Main-Menü geschickt wird, und ihm eine Nachricht angezeigt wird, dass die Verbindungsversuche gescheitert ist.
+In den beiden obigen Beispielen wird beim Auslösen des Catch-Falls die Methode 'onFailure' aufgerufen. Dieser Fall tritt bei verschiedenen Szenarien ein. Beispielsweise wenn die Komminikation mit der REST API nicht möglich ist, oder diese einen 4XX oder 5XX HTTP-Status-Code liefert. Die Methode sorgt dafür, dass der Nutzer zurück ins Main-Menü geschickt wird, und ihm eine Nachricht angezeigt wird, dass die Verbindungsversuche gescheitert ist.
 
 \begin{lstlisting}[caption= ConnectionScript.cs onFailure()]
 private void onFailure()
@@ -512,11 +516,11 @@ private void onFailure()
 
 \end{lstlisting}
 
-Die Implementierung einer onSuccess Funktion (das Gegenstück zu onFaliure) innerhalb des Connection-Managers ist nicht nötig, da bei erfolgreicher Verbindungsherstellung Mirror-spezifische Events und Handler-Funktionen für die weitere Logik sorgen. Diese sind nicht mehr Teil des ConnectionScript.
+Die Implementierung einer 'onSuccess' Funktion (das Gegenstück zu 'onFaliure') innerhalb des Connection-Managers ist nicht nötig, da bei erfolgreicher Verbindungsherstellung Mirror-spezifische Events und Handler-Funktionen für die weitere Logik sorgen. Diese sind nicht mehr Teil des 'ConnectionScript'.
 
 \section{Implementierung: Serverside Client Manager}
 
-Das Konzept des Serverside Client Managers wird nahezu vollständig durch mirrorinterne Prozesse gelöst. Die Verwaltung aller Clients geschieht durch die 'GameNetworkManager' Klasse, welche von der Mirror Klasse 'NetworkManager' erbt. Die Superklasse NetworkManager wiederum nutzt eine andere Mirror-Klasse 'NetworkServer', diese beinhaltet ein Dictionary, welches die Verbindungen zu allen Clients verwaltet. Im folgenden Code ist das Dictionary, sowieso die dazu gehörenden Methoden AddConnection() und RemoveConnection() zu sehen.
+Das Konzept des Serverside Client Managers wird nahezu vollständig durch mirrorinterne Prozesse gelöst. Die Verwaltung aller Clients geschieht durch die 'GameNetworkManager' Klasse, welche von der Mirror Klasse 'NetworkManager' erbt. Die Superklasse 'NetworkManager' wiederum nutzt eine andere Mirror-Klasse 'NetworkServer', diese beinhaltet ein Dictionary, welches die Verbindungen zu allen Clients verwaltet. Im folgenden Code ist das Dictionary, sowieso die dazu gehörenden Methoden 'AddConnection' und 'RemoveConnection' zu sehen.
 
 \begin{lstlisting}[caption= Mirror Class NetworkServer.cs Connection Handling]
 /// <summary>
@@ -556,28 +560,28 @@ public static bool RemoveConnection(int connectionId)
 }
 \end{lstlisting}
 
-In der aktuellen Version des Prototyps werden spielerbezogene 'Sonderinformationen' wie Spielername und Rolle im GameNetworkManager  mitverwaltet. Die Aufgabe des Serverside Client Managers wird in der Komponente, welche in die der Sektion \hyperref[Lobby Manager Implementierung]{Implementierung: Lobby / Multi Scene Manager} beschrieben wird, mitverwaltet. 
+In der aktuellen Version des Prototyps werden spielerbezogene 'Sonderinformationen' wie Spielername und Rolle im 'GameNetworkManager'  mitverwaltet. Die Aufgabe des Serverside Client Managers wird in der Komponente, welche in die der Sektion \hyperref[Lobby Manager Implementierung]{Implementierung: Lobby / Multi Scene Manager} beschrieben wird, mitverwaltet. 
 
-Diese Tatsache ist allerdings an die Randbedingungen geknüpft, dass für das den Prototypen das Mirror Framework genutzt wurde, welches viele Funktionen auf die (überschriebene) NetworkManager Klasse abwälzt, sowie dass der Prototyp keine große Anzahl an 'Sonderinformationen' (wie Charakterindividualisierung, Account-Informationen / In-Game-Shop Daten etc.) speichern muss. Da der Komplexitätsaufwand für eine gesonderte Handhabung dieser Informationen bei steigender Anforderungen enorm zunimmt, ist es ratsam, die Komponente 'Serverside Client Manager' gesondert zu implementieren.
+Diese Tatsache ist allerdings an die Randbedingungen geknüpft, dass für das den Prototypen das Mirror Framework genutzt wurde, welches viele Funktionen auf die überschriebene 'NetworkManager' Klasse abwälzt, sowie dass der Prototyp keine große Anzahl an 'Sonderinformationen' (wie Charakterindividualisierung, Account-Informationen / In-Game-Shop Daten etc.) speichern muss. Da der Komplexitätsaufwand für eine gesonderte Handhabung dieser Informationen bei steigender Anforderungen enorm zunimmt, ist es ratsam, die Komponente 'Serverside Client Manager' gesondert zu implementieren.
 
 \section{Implementierung: Prepare-Game-Manager}
 \label{Implementierung:prepare_game_manager}
 
-Der PrepareGameManager sorgt innerhalb des Prototyps dafür, dass anhand der vom Lobby-Leiter konfigurierten Anzahl an Objekten eine entsprechende Menge an zufällig ausgewählten 'Collectable'-Objekten im Spielfeld platziert werden. Anschließend wählt der PrepareGameManager zufällig ein von drei, für dieses spezifische 'Collectable'-Objekt mögliches 'Destination'-Objekt aus, welches als Zielpunkt dient. Die folgende Methode spawnObjects() führt diese Logik aus. Zunächst eine kurze Erläuterung der Variablen und aufgerufenen Methoden innerhalb von spawnObjects().
+Die Klasse 'PrepareGameManager' sorgt innerhalb des Prototyps dafür, dass anhand der vom Lobby-Leiter konfigurierten Anzahl an Objekten eine entsprechende Menge an zufällig ausgewählten 'Collectable'-Objekten im Spielfeld platziert werden. Anschließend wählt der 'PrepareGameManager' zufällig ein von drei, für dieses spezifische 'Collectable'-Objekt mögliches 'Destination'-Objekt aus, welches als Zielpunkt dient. Die folgende Methode 'spawnObjects' führt diese Logik aus. Zunächst eine kurze Erläuterung der Variablen und aufgerufenen Methoden innerhalb von 'spawnObjects':
 
-Das Feld 'spawnableCollectableObjects' enthält alle 'Collectable'-Objekte, 'spawnableDestinationObjects' alle 'Destination' Objekte, welche gespawnt werden können.
+1. Das Feld 'spawnableCollectableObjects' enthält alle 'Collectable'-Objekte, 'spawnableDestinationObjects' alle 'Destination' Objekte, welche gespawnt werden können.
 
-'possibleCollectableSpawnPoints' und 'possibleDestinationSpawnPoints' beinhalten alle möglichen Spawnpunkte für 'Collectable' und 'Destination' Objekte.
+2. 'possibleCollectableSpawnPoints' und 'possibleDestinationSpawnPoints' beinhalten alle möglichen Spawnpunkte für 'Collectable' und 'Destination' Objekte.
 
-'amountOfCollectablesSetting' ist die vom Lobby-Leiter konfigurierte Anzahl an 'Collectable' Objekten, die in der Spielwelt platziert werden sollen.
+3. 'amountOfCollectablesSetting' ist die vom Lobby-Leiter konfigurierte Anzahl an 'Collectable' Objekten, die in der Spielwelt platziert werden sollen.
 
-'popCollectableSpawnpointAt()' gibt einen Spawnpunkt für ein 'Collectable'-Objekt zurück für einen gegebenen Index.
+4. 'popCollectableSpawnpointAt' gibt einen Spawnpunkt für ein 'Collectable'-Objekt zurück für einen gegebenen Index.
 
-'popCollectableObjectAt()' gibt ein 'Collectable' Objekt zurück für einen gegebenen Index.
+5. 'popCollectableObjectAt' gibt ein 'Collectable' Objekt zurück für einen gegebenen Index.
 
-'popRelatedDestinationSpawnPoints' gibt drei Spawnpunkte zurück für einen gegebenen Index.
+6. 'popRelatedDestinationSpawnPoints' gibt drei Spawnpunkte zurück für einen gegebenen Index.
 
-'popRelatedDestinationObjects' gibt drei 'Destination' Objekte zurück für einen gegebenen Index.
+7. 'popRelatedDestinationObjects' gibt drei 'Destination' Objekte zurück für einen gegebenen Index.
 
 
 \begin{lstlisting}[caption= PrepareGameManager.cs Variablen und spawnObjects()]
@@ -625,7 +629,7 @@ private void spawnObjects()
 }
 \end{lstlisting}
 
-Der PrepareGameManager sorgt außerdem für die Verwaltung der Spawn-Punkte aller Spieler. Innerhalb der Variable 'possiblePlayerSpawnPoints' werden diese gespeichert. Die Methode fillPossiblePlayerSpawnPoints() sorgt dafür, dass die Variable mit Werten gefüllt wird.
+Der 'PrepareGameManager' sorgt außerdem für die Verwaltung der Spawn-Punkte aller Spieler. Innerhalb der Variable 'possiblePlayerSpawnPoints' werden diese gespeichert. Die Methode 'fillPossiblePlayerSpawnPoints' sorgt dafür, dass die Variable mit Werten gefüllt wird.
 
 \begin{lstlisting}[caption= PrepareGameManager.cs fillPossiblePlayerSpawnPoints()]
 private List<Transform> possiblePlayerSpawnPoints;
@@ -641,7 +645,7 @@ public void fillPossiblePlayerSpawnPoints()
 }
 \end{lstlisting}
 
-Mit der Methode 'popRandomPlayerSpawnPoint()' gibt einen zufälligen Spieler-Spawnpunkt zurück, und entfernt ihn von der Liste der noch möglichen Spieler-Spawnpunkte.
+Mit der Methode 'popRandomPlayerSpawnPoint' gibt einen zufälligen Spieler-Spawnpunkt zurück, und entfernt ihn von der Liste der noch möglichen Spieler-Spawnpunkte.
 
 \begin{lstlisting}[caption= PrepareGameManager.cs popRandomPlayerSpawnPoint()]
 public Transform popRandomPlayerSpawnPoint()
@@ -653,7 +657,7 @@ public Transform popRandomPlayerSpawnPoint()
 }
 \end{lstlisting}
 
-Aufgerufen wird die Methode popRandomPlayerSpawnPoint() innerhalb der \hyperref[Lobby Manager Implementierung]{Lobby Manager Implementierung} in der Methode 'replaceLobbyPlayersWithGamePlayers()'. In dieser Methode werden alle Lobby-Spielerobjekte mit InGame-Spielerobjekten (Charakteren) ersetzt. Unter anderem wird in diesem Ersetzungsprozess der neue, zufällige Spawn-Punkt benötigt, welcher popRandomPlayerSpawnPoint() liefert.
+Aufgerufen wird die Methode 'popRandomPlayerSpawnPoint' innerhalb der \hyperref[Lobby Manager Implementierung]{Lobby Manager Implementierung} in der Methode 'replaceLobbyPlayersWithGamePlayers'. In dieser Methode werden alle Lobby-Spielerobjekte mit InGame-Spielerobjekten (Charakteren) ersetzt. Unter anderem wird in diesem Ersetzungsprozess der neue, zufällige Spawn-Punkt benötigt, welcher 'popRandomPlayerSpawnPoint' liefert.
 
 \begin{lstlisting}[caption= GameNetworkManager.cs replaceLobbyPlayersWithGamePlayers()]
 private void replaceLobbyPlayersWithGamePlayers()
@@ -703,7 +707,7 @@ private void replaceLobbyPlayersWithGamePlayers()
 
 Das Konzept des Progress / Game State Managers wurde innerhalb des Prototyps als Klasse 'InGameProgressManager' realisiert. Dieser verwaltet ein globaler Timer (Stoppuhr), welche bei dem Erreichen des Wertes '0' das Spiel automatisch für die Gruppe der Spieler mit der Rolle 'Seeker' beendet.
 
-Der folgende Code zeigt, wie der globale Timer gestartet wird. Die Methode startGameTimer() wird serverseitig ausgeführt, sobald ein Szenenwechsel in die Spiel-Szene erfolgt. Außerdem wird beim Starten des Timers eine Netzwerk-Nachricht initialisiert, die bei jedem 'Tick' des Timers an alle Clients gesendet wird. Diese Nachricht enthält die Information, wie viel Sekunden noch übrig sind. Ein 'Tick' entspricht dem Ablauf einer Sekunde.
+Der folgende Code zeigt, wie der globale Timer gestartet wird. Die Methode 'startGameTimer' wird serverseitig ausgeführt, sobald ein Szenenwechsel in die Spiel-Szene erfolgt. Außerdem wird beim Starten des Timers eine Netzwerk-Nachricht initialisiert, die bei jedem 'Tick' des Timers an alle Clients gesendet wird. Diese Nachricht enthält die Information, wie viel Sekunden noch übrig sind. Ein 'Tick' entspricht dem Ablauf einer Sekunde.
 
 \begin{lstlisting}[caption= InGameProgressManager.cs global Game Time Handling]
 private Timer gameTimer;
@@ -765,7 +769,7 @@ public void incrementTotalDeliveredItems()
 
 Ist das Spiel für eine Partei gewonnen, so gibt der 'InGameProgressManager' die Information an alle Clients per Netzwerk-Nachricht weiter, und leitet die serverseitigen Konsequenzen ein. Der folgende Code zeigt den Code eines Sieges für die Spielergruppe 'Hider'. 
 
-Der Aufruf von 'StartCoroutine(endGameCoroutine())' ermöglicht innerhalb der 'IEnumerator endGameCoroutine()' Funktion ein aktives Warten beim Ausführen von 'yield return new WaitForSeconds(2f);'. Die Übergabe des Parameters '2f' sorgt für eine Wartezeit von exakt 2 Sekunden. Der Grund für das aktive Warten ist die clientseitige Verarbeitung der Netzwerk-Nachricht, welche in notifyHidersWinEvent() geschickt wird. Alle Clients bekommen einen visuellen Indikator im User-Interface angezeigt, der die Information beinhaltet, welcher Spielergruppe die aktuelle Runde gewonnen hat. Ohne das aktive Warte auf dem Server würden alle Spieler unmittelbar nach Spielende sofort in die Menü-Szene zurückgeworfen werden.
+Der Aufruf von 'StartCoroutine(endGameCoroutine())' ermöglicht innerhalb der 'IEnumerator endGameCoroutine' Funktion ein aktives Warten beim Ausführen von 'yield return new WaitForSeconds(2f);'. Die Übergabe des Parameters '2f' sorgt für eine Wartezeit von exakt 2 Sekunden. Der Grund für das aktive Warten ist die clientseitige Verarbeitung der Netzwerk-Nachricht, welche in der Funktion 'notifyHidersWinEvent' geschickt wird. Alle Clients bekommen einen visuellen Indikator im User-Interface angezeigt, der die Information beinhaltet, welcher Spielergruppe die aktuelle Runde gewonnen hat. Ohne das aktive Warten auf dem Server würden alle Spieler unmittelbar nach Spielende sofort in die Menü-Szene zurückgeworfen werden.
 
 \begin{lstlisting}[caption= InGameProgressManager.cs Win Event]
 	
@@ -799,19 +803,19 @@ IEnumerator endGameCoroutine()
 \section{Nicht implementierte Konzepte}
 \textbf{Runtime Spawn Manager:}
 
-Das Spielkonzept hat nicht vorausgesetzt, dass nach Initialisierung der Spiel-Szene weitere Objekte gespawnt werden müssen. Jegliche Objekte, die für eine Spiel-Session benötigt werden, spawnt der \hyperref[Implementierung:prepare_game_manager]{Prepare-Game-Manager} bereits zum Szenenwechsel zwischen Menü-Szene und Spiel-Szene. Aus diesem Grund wurde für den Prototypen auf den Runtime Spawn Manager verzichtet.
+Das Spielkonzept hat nicht vorausgesetzt, dass nach Initialisierung der Spiel-Szene weitere Objekte gespawnt werden müssen. Jegliche Objekte, die für eine Spiel-Session benötigt werden, spawnt der \hyperref[Implementierung:prepare_game_manager]{'Prepare-Game-Manager'} bereits zum Szenenwechsel zwischen Menü-Szene und Spiel-Szene. Aus diesem Grund wurde für den Prototypen auf den Runtime Spawn Manager verzichtet.
 
 \textbf{Interest Manager:}
 
-Mirror bietet eine Reihe an Komponenten an \cite{Wikipedia.17.02.2022}, welche eine eigene Implementierung eines Interest Managers überflüssig machen. Für den Prototypen wurde die Komponente 'Team Interest Management' benutzt \cite{Wikipedia.17.02.2022b}. Diese sorgt dafür, dass (Spieler)-Objekte nur für die Mitglieder einer Gruppe sichtbar sind. 
+Mirror bietet eine Reihe an Komponenten an \cite{MirrorDocIM}, welche eine eigene Implementierung eines Interest Managers überflüssig machen. Für den Prototypen wurde die Komponente 'Team Interest Management' benutzt \cite{MirrorDocTIM}. Diese sorgt dafür, dass (Spieler)-Objekte nur für die Mitglieder einer Gruppe sichtbar sind. 
 
 Im Falle des Prototyps sollen Spieler mit der Rolle 'Ghost' lediglich für Spieler mit der Rolle 'Hider' und 'Ghost' sichtbar sein. Spieler mit der Rolle 'Seeker' sollen Spieler mit der Rolle 'Ghost' nicht sehen können.
 
-Sollte ein Spielkonzept jedoch Voraussetzungen besitzen, über die Möglichkeiten der vordefinierten Interest Manager Komponenten von Mirror hinausgeht, so bietet Mirror ebenfalls die Möglichkeit eigene Interest Manager Implementierungen zu erstellen, indem Mirror eine abstrakte Klasse 'InterestManagement' bereitstellt. Falls eine eigene Interest Manager Klasse von dieser erbt, so kann sie die Methoden OnCheckObserver() und OnRebuildObservers() überschreiben. \cite{Wikipedia.17.02.2022c}
+Sollte ein Spielkonzept jedoch Voraussetzungen besitzen, über die Möglichkeiten der vordefinierten Interest Manager Komponenten von Mirror hinausgeht, so bietet Mirror ebenfalls die Möglichkeit eigene Interest Manager Implementierungen zu erstellen, indem Mirror eine abstrakte Klasse 'InterestManagement' bereitstellt. Falls eine eigene Interest Manager Klasse von dieser erbt, so kann sie die Methoden 'OnCheckObserver' und 'OnRebuildObservers' überschreiben. \cite{MirrorDocCIM}
 
-OnCheckObserver() wird aufgerufen, wenn ein neuer Spieler spawnt. Gibt 'true' zurück, wenn ein (Spieler)-Objekt von dem neu gespawnten Spieler gesehen werden kann.
+'OnCheckObserver' wird aufgerufen, wenn ein neuer Spieler spawnt. Gibt 'true' zurück, wenn ein (Spieler)-Objekt von dem neu gespawnten Spieler gesehen werden kann.
 
-OnRebuildObservers() wird innerhalb einer Update() Methode (wurde bereits in der Sektion \hyperref[implementierung:client_UI_Controller]{Implementierung: Client UI \& Visual Controller} erklärt) aufgerufen. Diese sorgt dafür, dass die Sichtbarkeit aller gespawnten Objekte neu berechnet wird.
+'OnRebuildObservers' wird innerhalb einer Update-Methode (diese wurde bereits in der Sektion \hyperref[implementierung:client_UI_Controller]{'Implementierung: Client UI \& Visual Controller'} erklärt) aufgerufen. Diese sorgt dafür, dass die Sichtbarkeit aller gespawnten Objekte neu berechnet wird.
 
 
 

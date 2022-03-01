@@ -1,7 +1,7 @@
 \chapter{Einführung}
 \label{sec:einfuehrung}
 
-Die Spieleindustrie ist im Wandel. Reine Singleplayer-Spiele, die ohne andere menschliche Mitspieler auskommen, werden immer seltener entwickelt. Die Erfolgsaussichten erscheinen um ein Vielfaches schlechter. Die drei bestplatzierten Titel der meistverkauften PC- und Konsolenspiele 2019 (FIFA 2020, Call of Duty: Modern Warfare und Mario Kart 8 Deluxe) in Deutschland enthalten einen großen Multiplayer-Anteil \cite{gameVerbandderdeutschenGamesBranchee.V..2020}. Deutlicher wird der Trend, wenn die Statistik der meistgespielten Titel auf der Internet Vertirebsplattform für Computerspiele Steam betrachtet wird. Das mit Abstand meistgespielte Spiel 2020 ist das Multiplayer-First-Person-Shooter Spiel 'Counter-Strike: Global Offensive' gefolgt von 'DOTA 2' auf Platz 2. Beide Spiele sind primär Multiplayer-Titel \cite{GitHyp.February2021}.
+Die Spieleindustrie ist im Wandel. Reine Singleplayer-Spiele, die ohne andere menschliche Mitspieler auskommen, werden immer seltener entwickelt. Die Erfolgsaussichten erscheinen um ein Vielfaches schlechter. Die drei bestplatzierten Titel der meistverkauften PC- und Konsolenspiele 2019 (FIFA 2020, Call of Duty: Modern Warfare und Mario Kart 8 Deluxe) in Deutschland enthalten einen großen Multiplayer-Anteil \cite{gameVerbandderdeutschenGamesBranchee.V..2020}. Deutlicher wird der Trend, wenn die Statistik der meistgespielten Titel auf der Internet Vertiebsplattform für Computerspiele Steam betrachtet wird. Das mit Abstand meistgespielte Spiel 2020 ist das Multiplayer-First-Person-Shooter Spiel 'Counter-Strike: Global Offensive' gefolgt von 'DOTA 2' auf Platz 2. Beide Spiele sind primär Multiplayer-Titel \cite{GitHyp.February2021}.
 
 Einer internationalen Umfrage zufolge geben 60 \% der Befragten an, seit Beginn der Corona-Pandemie mehr Multiplayer-Videospiele zu spielen \cite{SimonKucher&Partners.2020}. 
 
@@ -9,7 +9,7 @@ Wegen der Marktentwicklung ist es für angehende Entwickler, welche in der Spiel
 
 \section{Problembeschreibung und Motivation}
 
-Konzeption und Entwicklung von Online-Multiplayer-Spielen stellt angehende Entwickler vor große Herausforderungen. Einer der Hauptunterschiede zwischen einem Multiplayer- und einem Singleplayer-Spiel ist, dass eine Spielumgebung unabhängig von einem Spieler existiert. Das bedeutet, dass sich in der Regel bei Singleplayer-Spielen alle Software-Prozesse bei Beendigung des Spiels auch schließen, bei Multiplayer-Spielen jedoch laufen Client und Serverprozess unabhängig voneinander. So ist es möglich, dass Serverprozesse, und somit auch Spiellogik unabhängig von anwesenden Clients (Spieler) weiterläuft und sich Zustände einer Spiel-Session verändern. 
+Konzeption und Entwicklung von Online-Multiplayer-Spielen stellt angehende Entwickler vor große Herausforderungen. Einer der Hauptunterschiede zwischen einem Multiplayer- und einem Singleplayer-Spiel ist, dass eine Spielumgebung unabhängig von einem Spieler existiert. Das bedeutet, dass sich in der Regel bei Singleplayer-Spielen alle Software-Prozesse bei Beendigung des Spiels auch schließen, bei Multiplayer-Spielen jedoch laufen Client- und Serverprozess unabhängig voneinander. So ist es möglich, dass Serverprozesse, und somit auch Spiellogik unabhängig von anwesenden Clients (Spieler) weiterläuft und sich Zustände einer Spiel-Session verändern. 
 
 Außerdem benötigt das Versenden von Nachrichten über das Internet eine gewisse Zeit. Der Entwickler muss also herausfinden, wie man mit asynchroner Kommunikation, Clients und Servern umgeht. Ebenso stoßen Entwickler vor Probleme wie Hosting, Matchmaking und Datenverwaltung.
 \cite{Payne.18.09.2019}
@@ -24,11 +24,11 @@ Das primäre Ziel dieser Arbeit ist es, Anfängern den Einstieg in die Entwicklu
 
 Ein Entwickler soll außerdem nach dem Lesen dieser Arbeit eine konkrete Vorstellung davon besitzen, welche Voraussetzungen ein Framework oder eine Game-Engine erfüllen muss, damit die Konzepte möglichst leicht umzusetzen sind.
 
-Die Arbeit soll eine Blaupause liefern, welche andere Entwickler nutzen können, um einen leichteren Einstieg in ein Multiplayer-Projekt zu gewährleisten. Diese Blaupause soll generisch sein, sodass sie unabhängig von einem konkreten Implementierungskontext funktioniert. Die beschriebenen Konzepte sollen auf möglichst viele Szenarien anwendbar sein.
+Die Arbeit soll als eine 'Blaupause' dienen, welche andere Entwickler nutzen können, um einen leichteren Einstieg in ein Multiplayer-Projekt zu gewährleisten. Diese Blaupause soll generisch sein, sodass sie unabhängig von einem konkreten Implementierungskontext funktioniert. Die beschriebenen Konzepte sollen auf möglichst viele Szenarien anwendbar sein.
 
 Durch die Konzepte sollen verschiedene Use cases in der Multiplayer-Spieleprogrammierung abgedeckt werden. Beispiele sind das Aufbauen und Trennen von Client/Server Verbindungen, Matchmaking \cite{Wikipedia.2021b} und Spielerverwaltung.
 
-Als 'Proof-of-Concept' soll ein Prototyp eines Hide-and-Seek Multiplayer-Spiels dienen, welches sich an den abstrahierten Konzepten orientiert, bzw. diese implementiert.
+Als 'Proof of Concept' soll ein Prototyp eines Hide-and-Seek Multiplayer-Spiels dienen, welches sich an den abstrahierten Konzepten orientiert, bzw. diese implementiert.
 
 Folgende Forschungsfragen soll die Arbeit beantworten:
 
@@ -49,24 +49,24 @@ Jedes dieser Konzepte wurde in einem Prototyp umgesetzt, welche im Kapitel \hype
 
 \hyperref[f2]{F2} soll wie folgt beantwortet werden:
 
-Es wird ein Studienkonzept erarbeitet, welches beschreibt, wie durch wissenschaftliche Methoden und Forschung untersucht werden kann, ob die Konzepte einen tatsächlichen Mehrwert für angehende Entwickler bietet. Das Studienkonzept findet sich im Kapitel \hyperref[sec:konzepte]{Konzepte} in der Sektion \hyperref[studienkonzept]{Studienkonzept}.
+Es wird ein Studienkonzept erarbeitet, welches beschreibt, wie durch wissenschaftliche Methoden und Forschung untersucht werden kann, ob die Konzepte einen tatsächlichen Mehrwert für angehende Entwickler bietet. Das Studienkonzept findet sich im Kapitel \hyperref[sec:konzepte]{'Konzepte'} in der Sektion \hyperref[studienkonzept]{'Studienkonzept'}.
 
 \section{Abgrenzung}
 
-Die Arbeit ist keine Schritt-für-Schritt-Anleitung für Multiplayer-Spielprojekte. Implementierungsdetails müssen von einem Entwickler, welcher diese Arbeit als Hilfsmittel nutzt, selbstständig konzipiert und umgesetzt werden. Es wird außerdem lediglich auf Spielkonzepte Rücksicht genommen(insbesondere Matchmaking), welche in der heutigen Industrie gängig sind \cite{Wikipedia.2021b}. Es ist durchaus denkbar, dass zukünftige Multiplayer/Matchmaking Architekturen nicht mehr mit den hier beschriebenen Konzepten umsetzbar sind.
+Die Arbeit ist keine Schritt-für-Schritt-Anleitung für Multiplayer-Spielprojekte. Implementierungsdetails müssen von einem Entwickler, welcher diese Arbeit als Hilfsmittel nutzt, selbstständig konzipiert und umgesetzt werden. Lediglich wird auf Spielkonzepte Rücksicht genommen, welche in der heutigen Industrie gängig sind \cite{Wikipedia.2021b}. Es ist durchaus denkbar, dass zukünftige Multiplayer Architekturen nicht mehr mit den hier beschriebenen Konzepten umsetzbar sind.
 
 Es ist zudem nicht final bewiesen, dass die beschriebenen Methoden tatsächlich einen Mehrwert bei unterschiedlichen Projekten bieten. Die Konzepte wurden lediglich an einem Prototyp getestet und validiert. Um zu testen, ob die Konzepte auch praxistauglich für verschiedene Arten von Projekten sind, muss eine weitergehende Untersuchung erfolgen. Diese kann anhand des in dieser Arbeit beschriebenen \hyperref[studienkonzept]{Studienkonzept} stattfinden. 
 
-Die erarbeiteten Konzepte sind außerdem unabhängig von einer Game-Engine oder einem Framework. Durchaus ist es aber möglich, dass ein bestehendes Framework oder eine Game-Engine Hilfestellung bei der Implementierung der Konzepte bietet, oder diese bereits als Feature bereitstellt.
+Die erarbeiteten Konzepte sind unabhängig von einer Game-Engine oder einem Framework. Es aber möglich, dass ein bestehendes Framework oder eine Game-Engine Hilfestellung bei der Implementierung der Konzepte bietet, oder diese bereits als Feature bereitstellt.
 
 \section{Struktur der Arbeit}
 
 Diese Arbeit besteht aus der \hyperref[sec:einfuehrung]{Einführung}, in welcher die generelle Problemstellung erläutert, und die Forschungsfragen gestellt wurden. Ebenfalls wurde die Relevanz des Themengebiets verdeutlicht und eingeordnet.
 
-Im Anschluss wird der  \hyperref[sec:hintergrund]{Hintergrund} erklärt, dort sind alle Informationen zu finden, um die späteren Konzepte zu verstehen. Hier werden ebenfalls Begrifflichkeiten und Grundlagen erläutert.
+Im Anschluss wird der \hyperref[sec:hintergrund]{Hintergrund} erklärt, dort sind alle Informationen zu finden, um die späteren Konzepte zu verstehen. Hier werden ebenfalls Begrifflichkeiten und Grundlagen erläutert.
 
-Das Kapitel \hyperref[sec:konzepte]{Konzepte} behandelt nun die erarbeiteten Konzepte, welche in Summe die oben beschriebene Blaupause abbilden. Es wird auf jedes einzelne Konzept im Detail eingegangen und genauer erklärt. 
+Das Kapitel \hyperref[sec:konzepte]{'Konzepte'} behandelt nun die erarbeiteten Konzepte, welche in Summe die oben beschriebene Blaupause abbilden. Es wird auf jedes einzelne Konzept im Detail eingegangen und genauer erklärt. 
  
-Anschließend werden die beschriebenen Konzepte in einem Prototyp umgesetzt, dieser wird im Kapitel \hyperref[sec:realisierung]{Realisierung} näher erklärt. In diesem Kapitel befindet sich kommentierter Beispielcode aus dem umgesetzten Prototyp, um einen besseren Eindruck der gelösten Probleme zu bekommen.
+Anschließend werden die beschriebenen Konzepte in einem Prototyp umgesetzt, dieser wird im Kapitel \hyperref[sec:realisierung]'{Realisierung'} näher erklärt. In diesem Kapitel befindet sich kommentierter Beispielcode aus dem umgesetzten Prototyp, um einen besseren Eindruck der gelösten Probleme zu bekommen.
 
-Im Kapitel \hyperref[sec:zusammenfassung]{Abschluss} werden die Ergebnisse der Arbeit beleuchtet, und ein Studienkonzept aufgeführt, welches weiterführende Forschung ermöglicht.
+Im Kapitel \hyperref[sec:zusammenfassung]{'Abschluss'} werden die Ergebnisse der Arbeit beleuchtet, und ein Studienkonzept aufgeführt, welches weiterführende Forschung ermöglicht.
