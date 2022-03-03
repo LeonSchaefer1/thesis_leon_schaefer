@@ -55,4 +55,10 @@ Diese Arbeit besteht aus der \hyperref[sec:einfuehrung]{Einführung}, in welcher
 
 \section{Related Work}
 
-// TODO Add Content
+Ähnliche Ansätze, welche versuchen die komplexen Anforderungen an ein Multiplayer-Spiel zu reduzieren finden sich beispielsweise in einem Zeitungsartikel "Making Multiplayer Games Doesn’t Have to Be Difficult" von von John Payne aus 2019  \cite{Payne.18.09.2019}. In diesem beschreibt Payne, wo die Schwierigkeiten in der Entwicklung von Multiplayer-Spielen liegen und wie er, und sein Entwicklerteam mithilfe eines eigenen Frameworks diese Probleme reduzieren.
+
+Der Artikel von Payne war die Motivation ein modernes Framework für den Prototypen zu wählen welcher im Rahmen dieser Arbeit entwickelt wurde. Außerdem wurde der Artikel als Orientierung genutzt, um bei der Wahl des Frameworks eine fundierte Entscheidung treffen zu können.
+
+Im Forschungsartikel "High-Level Development of Multiserver Online Games" von Frank Glinka aus dem Jahr 2008 \cite{Glinka.2008} wird ebenfalls ein Framework beschrieben, welches Entwickler unabhängig von einer konkreten Entwicklungsumgebung benutzen können. Dieses Framework beinhaltet die Implementierung mehrerer 'Manager'. Diese erledigen bestimmte Aufgaben auf Seiten des Servers, beispielsweise die Verwaltung der Spiel-Zonen, in welchen sich Spieler aufhalten, die Verwaltung der Spieler selbst oder die Nachrichten, welche sich Spieler gegenseitig schicken können. Dieses Framework richtet sich hauptsächlich nach sog. 'massively multiplayer online games' (MMOG), also Spielen, in denen eine große Anzahl an Spielern (1000+) auf einer Serverinstanz spielen.
+
+Der Artikel von Glinka war auch die Inspiration dafür, die Konzepte, welche in dieser Arbeit aufgestellt wurden, zu erarbeiten. Da sich die 'Manager' Konzepte, welche in Glinka's Framework aufgeführt sind, lediglich auf Server-interne Aufgaben beschränken wurden die Konzepte dieser Arbeit ebenfalls auf clientseitige Aufgabenfelder ausgeweitet.
