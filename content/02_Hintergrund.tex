@@ -42,7 +42,7 @@ Bei dieser Variante wird der Serverprozess auf demselben Gerät ausgeführt, auf
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=150mm]{images/Client_Server.jpg}
+\includegraphics[width=70mm]{images/Client_Server.jpg}
 \caption[Client-Server Modell]{Das Client-Server-Modell einfach veranschaulicht}
 \label{pic:Client_Server}
 \end{figure}
@@ -66,7 +66,7 @@ Um das bestmögliche Spielerlebnis zu ermöglichen, sollte innerhalb der Entwick
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=150mm]{images/UML_class_Player_NM.png}
+	\includegraphics[width=130mm]{images/UML_class_Player_NM.png}
 	\caption[UML Klassen]{UML Klasse Player und Network Manager}
 	\label{pic:UML_class_Player_NM}
 \end{figure}
@@ -104,19 +104,38 @@ Playlists sind automatisch verwaltete Ströme von Spielsitzungen, denen die Spie
 
 Die Spiele bieten in der Regel eine Auswahl an thematischen Wiedergabelisten (z. B. Teams oder Singleplayer, ausgefallene Regeln usw.), um verschiedenen Geschmäckern oder Stimmungen gerecht zu werden. Da die Wiedergabelisten von Servern verwaltet werden, die vom Entwickler des Spiels kontrolliert werden, können sie im Laufe der Zeit geändert werden. Wenn ein Spieler eine Wiedergabeliste auswählt, schließt er sich einem Pool von anderen Spielern an, die die gleiche Wahl getroffen haben. Der Playlist-Server verbindet sie dann entweder mit einer bestehenden Sitzung oder erstellt eine neue. 
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=120mm]{images/halo_playlist.png}
+	\caption['Halo' Playlist]{Der Spieler muss im Spiel 'Halo' eine Playlist auswählen, um einem Spiel beizutreten.}
+	\label{pic:halo_playlist}
+\end{figure}
+
 \cite{Wikipedia.2021b}
 
 \textbf{Parties:} \\
 Partys sind Gruppen von Spielern, die von Matchmaking-Systemen als eine Einheit behandelt werden. Eine Gruppe kann von Sitzung zu Sitzung wechseln, ohne dass ihre Spieler voneinander getrennt werden. Das Konzept eignet sich besonders gut für Wiedergabelisten, die automatisch die Logistik der Suche oder Erstellung von Spielsitzungen mit genügend Platz für die gesamte Gruppe übernehmen können.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=120mm]{images/Dota2_Party_Invite.png}
+	\caption['Dota 2' Party]{In 'Dota 2' wird ein Spieler von einem anderen Spieler zu einer Party eingeladen}
+	\label{pic:Dota2_Party_Invite}
+\end{figure}
 
 \cite{Wikipedia.2021b} 
 
 \textbf{Lobbys:} \\
 Bei manchen Spielmodellen wird zwischen mehreren Spielszenen hin- und hergewechselt. Eine Spielszene ist eine Sammlung an Spielobjekten, Spielmenüs und Spielcharakteren, die als eine Einheit innerhalb eines Spiels zu verstehen ist. Oft sind Szenenwechsel mit Ladezeiten verbunden. Die Aufgliederung eines Spiels in Spielszenen erleichtert Entwicklern den Umgang mit limitierten Hardwareressourcen. \cite{Wikipedia.2012}
 
-Lobbys sind Spielszenen, in denen die Spieler die bevorstehende Spielsitzung einsehen, die Ergebnisse der letzten Sitzung prüfen, ihre Einstellungen ändern und miteinander sprechen können. In vielen Spielen kehren die Spieler am Ende jeder Sitzung in die Lobby zurück. In einigen Spielen werden Spieler, die einer bereits begonnenen Sitzung beitreten, bis zum Beginn der nächsten Sitzung in der Lobby untergebracht. Da Lobbys nur wenige Ressourcen verbrauchen, werden sie manchmal zusätzlich als 'Warteschleife' für Spieler verwendet, bis ein geeigneter Gastgeber für die nächste Sitzung gefunden ist.
+Lobbys sind Spielszenen, in denen die Spieler die bevorstehende Spielsitzung einsehen, die Ergebnisse der letzten Sitzung prüfen, ihre Einstellungen ändern und miteinander sprechen können. In vielen Spielen kehren die Spieler am Ende jeder Sitzung in die Lobby zurück. In einigen Spielen werden Spieler, die einer bereits begonnenen Sitzung beitreten, bis zum Beginn der nächsten Sitzung in der Lobby untergebracht. Da Lobbys nur wenige Ressourcen verbrauchen, werden sie manchmal zusätzlich als 'Warteschleife' für Spieler verwendet, bis ein geeigneter Gastgeber für die nächste Sitzung gefunden ist. Lobbys, die von Playlists erstellt werden, haben oft einen Countdown-Timer, bevor die Sitzung beginnt, während Lobbys, die von einem Spieler erstellt werden, im Allgemeinen nach dessen Ermessen übergehen.
 
-Lobbys, die von Playlists erstellt werden, haben oft einen Countdown-Timer, bevor die Sitzung beginnt, während Lobbys, die von einem Spieler erstellt werden, im Allgemeinen nach dessen Ermessen übergehen.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=120mm]{images/halo3_lobby.jpg}
+	\caption['Halo 3' Lobby]{Eine Lobby im Spiel 'Halo 3' mit einem aktiven Spieler}
+	\label{pic:Dota2_Party_Invite}
+\end{figure}
 
 \cite{Wikipedia.2021b}
 
@@ -131,6 +150,14 @@ Bei Spielen mit Rangliste werden in der Regel nicht gewertete Sitzungen für Spi
 Einige Spiele zeigen den Spielern eine Liste aktiver Sitzungen an und ermöglichen diesen manuell eine Sitzung auszuwählen, der sie beitreten möchten. Dieses System kann in Verbindung mit Ranglisten und Lobbys verwendet werden, wird aber durch die On-Demand-Sitzungserstellung von Playlists vereitelt.
 
 Die meisten dieser Server-Browser ermöglichen es den Spielern, die Ergebnisse zu filtern, die sie liefern. Zu den üblichen Filterkriterien gehören Servername, Spielerzahl, Spielmodus und Latenzzeit. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=120mm]{images/call_of_Duty_serverbrowser.jpg}
+	\caption['Call of Duty Modern Warfare' Serverbrowser]{Der Serverbrowser aus dem Spiel 'Call of Duty: Modern Warfare'}
+	\label{pic:call_of_Duty_serverbrowser}
+\end{figure}
+
 
 \cite{Wikipedia.2021b}
 

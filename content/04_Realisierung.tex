@@ -33,7 +33,7 @@ Das Spielkonzept wird in folgendem Spielflussdiagramm zusammengefasst:
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=150mm]{images/game_concept.jpg}
+	\includegraphics[width=100mm]{images/game_concept.jpg}
 	\caption[Spielkonzept Diagramm]{Veranschaulichung des Spielkonzepts}
 	\label{pic:game_concept}
 \end{figure}
@@ -44,7 +44,7 @@ Zunächst muss ein Spieler eine Lobby erstellen. Dies tut er, indem er auf den K
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=150mm]{images/matchmaking_concept.jpg}
+	\includegraphics[width=90mm]{images/matchmaking_concept.jpg}
 	\caption[Matchmaking-Konzept Diagramm]{Veranschaulichung des Prototyp-Matchmaking}
 	\label{pic:matchmaking_concept}
 \end{figure}
@@ -61,7 +61,7 @@ Die Matchmaking Architektur basiert auf einem Client Server Modell, sowie dem Ei
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=150mm]{images/prototype_architecture_matchmaking.jpg}
+	\includegraphics[width=100mm]{images/prototype_architecture_matchmaking.jpg}
 	\caption[Architektur Matchmaking Diagramm]{Veranschaulichung der Architektur des Matchmakings im Prototyp}
 	\label{pic:prototype_architecture_matchmaking}
 \end{figure}
@@ -74,7 +74,7 @@ Die Game Scene wird geladen, sobald ein Spiel aus dem 'Lobby Menu' heraus gestar
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=150mm]{images/scene_architecture.jpg}
+	\includegraphics[width=90mm]{images/scene_architecture.jpg}
 	\caption[Architektur Szenen Diagramm]{Veranschaulichung der Szenen-Architektur im Prototyp}
 	\label{pic:scene_architecture}
 \end{figure}
@@ -83,7 +83,7 @@ Auf die Implementierungen der einzelnen Konzepte wird in den kommenden Sektionen
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=150mm]{images/concept_relations.jpg}
+	\includegraphics[width=90mm]{images/concept_relations.jpg}
 	\caption[Architektur Konzept Relationen]{Veranschaulichung der Konzeptrelationen im Prototyp}
 	\label{pic:concept_relations}
 \end{figure}
@@ -162,6 +162,13 @@ private void Update()
 }
 \end{lstlisting}
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=120mm]{images/prototyp_interact_light_button.png}
+	\caption[Interact and Light Button]{Der 'Interact' - und 'Light' Button im Client UI.}
+	\label{pic:prototyp_interact_light_button}
+\end{figure}
+
 Doch was heißt das genau? Im folgenden Code wird ein Event definiert, welches durch andere Klassen 'abonniert' werden kann. Wird dann das Event durch '.Invoke()' ausgelöst, so werden alle Funktionen in externen Skripten ausgeführt, die dieses Event abonniert haben. Hier zunächst die Definition des Events im 'InGameUiControllerScript' und die Funktion 'clickInteractButton', die ausgeführt wird, wenn beispielsweise wie im obrigen Code die Taste 'E' auf der Tastatur gedrückt wird.
 
 \begin{lstlisting}[caption= InGameUiControllerScript.cs OnInteractButtonClick Event]
@@ -186,6 +193,13 @@ private void RpcEnableHideButton()
 	InGameUiControllerScript.singleton.setInteractButtonTextAndHotkeyImage('Hide');
 }
 \end{lstlisting}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=120mm]{images/prototyp_hider_hide_button.png}
+	\caption[Hider Hide Button]{Der 'Interact' Button nimmt die Funktion 'Hide' an.}
+	\label{pic:prototyp_hider_hide_button}
+\end{figure}
 
 Sollte der Hider nun auf seinen 'Interact'-Button drücken, so wird die folgende Methode 'OnHiderHideButtonClick' aufgerufen. Diese ruft eine weitere Methode 'CmdHideHider' auf, welche einen Remote Procedure Call\cite{.05.02.2022} zum Server darstellt.
 
@@ -301,6 +315,13 @@ public override void OnServerConnect(NetworkConnection conn)
 	}
 }
 \end{lstlisting}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=120mm]{images/prototyp_game_has_already_started.png}
+	\caption[Game has already started]{Ein Hinweis für einen Spieler, dass er dem Spiel nicht beitreten darf, da das Spiel bereits begonnen hat.}
+	\label{pic:prototyp_game_has_already_started}
+\end{figure}
 
 Als Gegenstück zu 'OnServerConnect' gibt es ebenfalls die virtuelle Methode 'OnServerDisconnect', welche dann aufgerufen wird, wenn ein Spieler den Server gewollt, oder ungewollt (bspw. durch Netzwerkabbruch) verlässt. Im Prototyp wurde diese Methode ebenfalls überschrieben und im GameNetworkManager selbst implementiert. 
 
@@ -449,6 +470,13 @@ private class PublicLobbys
 }
 \end{lstlisting}
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=120mm]{images/prototyp_main_menu.png}
+	\caption[Prototyp Main Menu]{Das Main Menu dient hauptsächlich zur Verbindungsherstellung zu einem Server}
+	\label{pic:prototyp_main_menu}
+\end{figure}
+
 Sollte ein Spieler im Hauptmenü auf den Button 'Create Lobby' drücken, so wird eine POST Anfrage an die Matchmaking API geschickt, diese liefert ein neu erzeugtes Lobby-Objekt zurück, mit welchem sich der Spieler auf den neu erzeugten Mirror-Serverprozess verbindet. Folgender Code zeigt die Implementierung:
 
 \newpage
@@ -491,7 +519,17 @@ private void joinWithCode(string code)
 		onFailure();
 	}
 }
+
 \end{lstlisting}
+
+Sollte sich ein Spieler über 'Create Lobby' oder 'Join Lobby' erfolgreich zu einer (neuen) Serverinstanz verbundne haben, so findet sich dieser Spieler im 'Lobby Menu' wieder:
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=120mm]{images/prototyp_lobby_menu.png}
+	\caption[Prototyp Lobby Menu]{Eine offene Lobby mit 3 Spielern}
+	\label{pic:prototyp_lobby_menu}
+\end{figure}
 
 In den beiden obigen Beispielen wird beim Auslösen des Catch-Falls die Methode 'onFailure' aufgerufen. Dieser Fall tritt bei verschiedenen Szenarien ein. Beispielsweise wenn die Komminikation mit der REST API nicht möglich ist, oder diese einen 4XX oder 5XX HTTP-Status-Code liefert. Die Methode sorgt dafür, dass der Nutzer zurück ins Main-Menü geschickt wird, und ihm eine Nachricht angezeigt wird, dass die Verbindungsversuche gescheitert ist.
 
@@ -612,6 +650,13 @@ private void spawnObjects()
 	destroyUnusedCollectableSpawnPoints();
 }
 \end{lstlisting}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=60mm]{images/prototyp_task_list.png}
+	\caption[Initial Task List]{Gespawnte 'Collectable' und 'Destination' Objekte werden den Spielern innerhalb einer Liste angezeigt.}
+	\label{pic:prototyp_task_list}
+\end{figure}
 
 Der 'PrepareGameManager' sorgt außerdem für die Verwaltung der Spawn-Punkte aller Spieler. Innerhalb der Variable 'possiblePlayerSpawnPoints' werden diese gespeichert. Die Methode 'fillPossiblePlayerSpawnPoints' sorgt dafür, dass die Variable mit Werten gefüllt wird.
 
@@ -736,6 +781,13 @@ private void countDownGameTime()
 }
 \end{lstlisting}
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=60mm]{images/prototyp_game_timer.png}
+	\caption[Time Left Counter]{Den Spielern wird der Timer im UI angezeigt.}
+	\label{pic:prototyp_game_timer}
+\end{figure}
+
 Darüber hinaus speichert der 'InGameProgressManager' die Information, wie viele 'Collectable' Objekte die Spielergruppe mit der Rolle 'Hider' bereits zu ihrem Ziel gebracht haben. Erreicht die Variable 'totalDeliveredItems' den Wert, welcher der Lobby-Leiter innerhalb der Lobby Szene konfiguriert hat, so hat die Spielergruppe mit der Rolle 'Hider' die Spielrunde gewonnen.
 
 \begin{lstlisting}[caption= InGameProgressManager.cs Item Devlivery Handling]
@@ -750,6 +802,13 @@ public void incrementTotalDeliveredItems()
 	}
 }	
 \end{lstlisting}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=60mm]{images/prototyp_task_list_progress.png}
+	\caption[Updated Task List]{Sobald ein Item abgegeben wurde, so wird der Haken in der entsprechenden Zeile in der Task-Liste grün.}
+	\label{pic:prototyp_task_list_progress}
+\end{figure}
 
 Ist das Spiel für eine Partei gewonnen, so gibt der 'InGameProgressManager' die Information an alle Clients per Netzwerk-Nachricht weiter, und leitet die serverseitigen Konsequenzen ein. Der folgende Code zeigt den Code eines Sieges für die Spielergruppe 'Hider'. 
 
@@ -783,6 +842,13 @@ IEnumerator endGameCoroutine()
 }
 
 \end{lstlisting}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=80mm]{images/prototyp_hiders_won.png}
+	\caption[Hiders won the game]{Visueller Indikator, um allen Spielern zu zeigen, dass das Team 'Hider' gewonnen hat.}
+	\label{pic:prototyp_hiders_won}
+\end{figure}
 
 \section{Nicht implementierte Konzepte}
 \textbf{Runtime Spawn Manager:}

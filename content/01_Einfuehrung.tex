@@ -30,6 +30,16 @@ Folgende Forschungsfragen soll die Arbeit beantworten:
 	\item \label{RQ3} RQ3: Wie könnte ein Studienkonzept aussehen, welches bei Durchführung beweist, dass die in dieser Arbeit beschriebenen Konzepte einen Mehrwert bei der Entwicklung eines Multiplayer-Spiels für angehende Entwickler liefern?
 \end{itemize}
 
+\section{Related Work}
+
+Ähnliche Ansätze, welche versuchen die komplexen Anforderungen an ein Multiplayer-Spiel zu reduzieren finden sich beispielsweise in einem Zeitungsartikel "Making Multiplayer Games Doesn’t Have to Be Difficult" von von John Payne aus 2019  \cite{Payne.18.09.2019}. In diesem beschreibt Payne, wo die Schwierigkeiten in der Entwicklung von Multiplayer-Spielen liegen und wie er, und sein Entwicklerteam mithilfe eines eigenen Frameworks diese Probleme reduzieren.
+
+Der Artikel von Payne war die Motivation ein modernes Framework für den Prototypen zu wählen welcher im Rahmen dieser Arbeit entwickelt wurde. Außerdem wurde der Artikel als Orientierung genutzt, um bei der Wahl des Frameworks eine fundierte Entscheidung treffen zu können.
+
+Im Forschungsartikel "High-Level Development of Multiserver Online Games" von Frank Glinka aus dem Jahr 2008 \cite{Glinka.2008} wird ebenfalls ein Framework beschrieben, welches Entwickler unabhängig von einer konkreten Entwicklungsumgebung benutzen können. Dieses Framework beinhaltet die Implementierung mehrerer 'Manager'. Diese erledigen bestimmte Aufgaben auf Seiten des Servers, beispielsweise die Verwaltung der Spiel-Zonen, in welchen sich Spieler aufhalten, die Verwaltung der Spieler selbst oder die Nachrichten, welche sich Spieler gegenseitig schicken können. Dieses Framework richtet sich hauptsächlich nach sog. 'massively multiplayer online games' (MMOG), also Spielen, in denen eine große Anzahl an Spielern (1000+) auf einer Serverinstanz spielen.
+
+Der Artikel von Glinka war auch die Inspiration dafür, die Konzepte, welche in dieser Arbeit aufgestellt wurden, zu erarbeiten. Da sich die 'Manager' Konzepte, welche in Glinka's Framework aufgeführt sind, lediglich auf Server-interne Aufgaben beschränken wurden die Konzepte dieser Arbeit ebenfalls auf clientseitige Aufgabenfelder ausgeweitet.
+
 \section{Vorgehensweise}
 
 \hyperref[RQ1]{RQ1} soll wie folgt beantwortet werden: \\
@@ -52,13 +62,3 @@ Es ist zudem nicht final bewiesen, dass die beschriebenen Methoden tatsächlich 
 \section{Struktur der Arbeit}
 
 Diese Arbeit besteht aus der \hyperref[sec:einfuehrung]{Einführung}, in welcher die generelle Problemstellung erläutert, und die Forschungsfragen gestellt wurden. Ebenfalls wurde die Relevanz des Themengebiets verdeutlicht und eingeordnet. Im Anschluss wird der \hyperref[sec:hintergrund]{Hintergrund} erklärt, dort sind alle Informationen zu finden, um die späteren Konzepte zu verstehen. Hier werden ebenfalls Begrifflichkeiten und Grundlagen erläutert. Das Kapitel \hyperref[sec:konzepte]{'Konzepte'} behandelt nun die erarbeiteten Konzepte, welche in Summe die oben beschriebene Blaupause abbilden. Es wird auf jedes einzelne Konzept im Detail eingegangen und genauer erklärt. Anschließend werden die beschriebenen Konzepte in einem Prototyp umgesetzt, dieser wird im Kapitel \hyperref[sec:realisierung]'{Realisierung'} näher erklärt. In diesem Kapitel befindet sich kommentierter Beispielcode aus dem umgesetzten Prototyp, um einen besseren Eindruck der gelösten Probleme zu bekommen. Es folgt das Kapitel \hyperref[studienkonzept]{'Studienkonzept'}, in welchem Möglichkeiten zur weiterführenden Forschung aufgestellt werden. Im Kapitel \hyperref[sec:abschluss]{'Abschluss'} wird eine Zusammenfassung und Diskussion der Arbeit, sowie ein Fazit, die nächsten Schritte und ein Ausblick auf mögliche zukünftige Entwicklungen aufgezeigt.
-
-\section{Related Work}
-
-Ähnliche Ansätze, welche versuchen die komplexen Anforderungen an ein Multiplayer-Spiel zu reduzieren finden sich beispielsweise in einem Zeitungsartikel "Making Multiplayer Games Doesn’t Have to Be Difficult" von von John Payne aus 2019  \cite{Payne.18.09.2019}. In diesem beschreibt Payne, wo die Schwierigkeiten in der Entwicklung von Multiplayer-Spielen liegen und wie er, und sein Entwicklerteam mithilfe eines eigenen Frameworks diese Probleme reduzieren.
-
-Der Artikel von Payne war die Motivation ein modernes Framework für den Prototypen zu wählen welcher im Rahmen dieser Arbeit entwickelt wurde. Außerdem wurde der Artikel als Orientierung genutzt, um bei der Wahl des Frameworks eine fundierte Entscheidung treffen zu können.
-
-Im Forschungsartikel "High-Level Development of Multiserver Online Games" von Frank Glinka aus dem Jahr 2008 \cite{Glinka.2008} wird ebenfalls ein Framework beschrieben, welches Entwickler unabhängig von einer konkreten Entwicklungsumgebung benutzen können. Dieses Framework beinhaltet die Implementierung mehrerer 'Manager'. Diese erledigen bestimmte Aufgaben auf Seiten des Servers, beispielsweise die Verwaltung der Spiel-Zonen, in welchen sich Spieler aufhalten, die Verwaltung der Spieler selbst oder die Nachrichten, welche sich Spieler gegenseitig schicken können. Dieses Framework richtet sich hauptsächlich nach sog. 'massively multiplayer online games' (MMOG), also Spielen, in denen eine große Anzahl an Spielern (1000+) auf einer Serverinstanz spielen.
-
-Der Artikel von Glinka war auch die Inspiration dafür, die Konzepte, welche in dieser Arbeit aufgestellt wurden, zu erarbeiten. Da sich die 'Manager' Konzepte, welche in Glinka's Framework aufgeführt sind, lediglich auf Server-interne Aufgaben beschränken wurden die Konzepte dieser Arbeit ebenfalls auf clientseitige Aufgabenfelder ausgeweitet.
