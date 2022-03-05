@@ -1,3 +1,343 @@
 \chapter{Anhang 1}
 
-\chapter{Anhang 2}
+\begin{lstlisting}[caption= OwnKcpTransport.cs ServerStart()]
+	public override void ServerStart()
+	{
+		ushort port = 7777;
+		
+		string lobbyCode = 'No Code specified';
+		
+		int portIndex = Array.FindIndex(System.Environment.GetCommandLineArgs(), elem => elem == '--port') + 1;
+		
+		int codeIndex = Array.FindIndex(System.Environment.GetCommandLineArgs(), elem => elem == '--id') + 1;
+		
+		if (portIndex > 1 && System.Environment.GetCommandLineArgs().Length > portIndex)
+		{
+			try
+			{
+				port = Convert.ToUInt16(System.Environment.GetCommandLineArgs()[portIndex]);
+			} catch
+			{
+				Debug.LogError('Invalid port specified: ' + System.Environment.GetCommandLineArgs()[portIndex]);
+			}
+		}
+		if(codeIndex > 1 && System.Environment.GetCommandLineArgs().Length > codeIndex)
+		{
+			try
+			{
+				lobbyCode = System.Environment.GetCommandLineArgs()[codeIndex];
+				GameNetworkManager.singleton.curLobbyCode = lobbyCode;
+			}
+			catch
+			{
+				Debug.LogError('Invalid code specified: ' + System.Environment.GetCommandLineArgs()[codeIndex]);
+			}
+		}
+		
+		base.server.Start(port);
+		Debug.Log('Server started on Port ' + port + 'and with code ' + lobbyCode);
+	}
+\end{lstlisting}
+
+\begin{lstlisting}[caption= HiderScript.cs Subscribe to InGameUiControllerScript Event]
+	
+	[Command]
+	private void CmdHideHider()
+	{
+		if(vicinityScript.getHideoutObjectScript() != null)
+		{
+			HideableObjectScript curHideoutScript = vicinityScript.getHideoutObjectScript();
+			if (!vicinityScript.getHideoutObjectScript().getIsTaken())
+			{
+				GetComponent<PlayerBaseScript>().setCurHideout(curHideoutScript.gameObject);
+				curHideoutScript.setIsTaken(true);
+				curHideoutScript.setCurrentHider(gameObject);
+				isHiding = true;
+				GetComponent<PlayerBaseScript>().playerLightEnabled = false;
+				GameNetworkManager.FindObject(gameObject, 'FeetTrigger').SetActive(!isHiding);
+				RpcNotifyHideState(true, GameNetworkManager.singleton.getConfiguredPlayerSpeed());
+				RpcEnableLeaveHideoutButton();
+				GetComponent<PlayerBaseScript>().TargetEnableLightButton(false);
+			}
+			else
+			{
+				RpcDisableInteractButton();
+			}
+		}
+	}	
+\end{lstlisting}
+
+\begin{lstlisting}[caption= GameNetworkManager.cs OnServerConnect() und Message struct]
+	public struct Message : NetworkMessage
+	{
+		public string message;
+		public MessageType messageType;
+	}
+	
+	public override void OnServerConnect(NetworkConnection conn)
+	{
+		// If the game server is already in gameScene, forbid access to game
+		if (singleton.getNetworkSceneName() == 'Assets/Scenes/GameScene.unity')
+		{
+			Message msg = new Message()
+			{
+				message = 'Game has already started',
+				messageType = MessageType.gameAlreadyStartedError
+			};
+			conn.Send(msg);
+			conn.Disconnect();
+		}
+		
+		// Forbid access to a lobby, if the lobby is already at maxPlayers (configurable inside GameNetworkManager Component)
+		if(lobbyPlayers.Count == maxPlayers)
+		{
+			Message msg = new Message()
+			{
+				message = 'Maximum Players reached for this lobby',
+				messageType = MessageType.tooManyPlayersError
+			};
+			conn.Send(msg);
+			conn.Disconnect();
+		}
+	}
+\end{lstlisting}
+
+\begin{lstlisting}[caption= GameNetworkManager.cs OnServerDisconnect()]
+	public override void OnServerDisconnect(NetworkConnection conn)
+	{
+		if ((NetworkServer.connections.Count == 0)
+		{
+			Debug.Log('Server shutdown because all Players left');
+			Application.Quit();
+		}
+		
+		if (SceneManager.GetActiveScene().path == gameScene)
+		{
+			// if Seeker disconnected and no seeker left, let hiders win
+			if(inGameProgressManager.getTotalSeekerCount() == 0)
+			{
+				inGameProgressManager.notifyHidersWinEvent();
+			}
+			
+			// If Hider disconnected and no hiders left, let seekers win
+			if(inGameProgressManager.getTotalHidersCount() == 0)
+			{
+				inGameProgressManager.notifySeekerWinEvent();
+			}
+		}
+		else if(conn.identity != null)
+		{
+			lobbyPlayers.Remove(conn);
+			LobbyPlayer curPlayerScript = conn.identity.GetComponent<LobbyPlayer>();
+			
+			if (curPlayerScript.isLeader)
+			{
+				// Pass Leader State to next Player
+				var newLeader = lobbyPlayers.First().Value;
+				newLeader.isLeader = true;
+				leader = newLeader;
+				leader.TargetNotifyLobbyReady(isLobbyReady);
+			}
+			
+			var index = 0;
+			// Pass the index
+			foreach (var lobbyPlayer in lobbyPlayers.Values)
+			{
+				lobbyPlayer.index = index;
+				index++;
+			}
+		}
+		
+		UpdateLobbyReadyState();
+	}
+\end{lstlisting}
+
+\begin{lstlisting}[caption= ConnectionScript.cs joinWithCode()]
+	private void joinWithCode(string code)
+	{
+		registerCallbacks();
+		if (code == '')
+		{
+			noCodeEnteredFailure();
+			return;
+		}
+		
+		RestClient.Get<Lobby>(GameNetworkManager.singleton.frapiBaseUrl + '/v0/lobbies/' + code).Then(lobby =>
+		{
+			string[] splitAddress = lobby.address.Split(new string[] { '://' }, StringSplitOptions.None);
+			GameNetworkManager.singleton.StartClient(new UriBuilder(splitAddress[0], splitAddress[1], lobby.port).Uri);
+		}).Catch(error =>
+		{
+			Debug.LogError('Error when joining lobby: ' + error);
+			onFailure();
+		}
+	}
+\end{lstlisting}
+
+\begin{lstlisting}[caption= Mirror Class NetworkServer.cs Connection Handling]
+	/// <summary>
+	/// A list of local connections on the server.
+	/// </summary>
+	public static Dictionary<int, NetworkConnectionToClient> connections = new Dictionary<int, NetworkConnectionToClient>();
+	
+	/// <summary>
+	/// <para>This accepts a network connection and adds it to the server.</para>
+	/// <para>This connection will use the callbacks registered with the server.</para>
+	/// </summary>
+	/// <param name='conn'>Network connection to add.</param>
+	/// <returns>True if added.</returns>
+	public static bool AddConnection(NetworkConnectionToClient conn)
+	{
+		if (!connections.ContainsKey(conn.connectionId))
+		{
+			// connection cannot be null here or conn.connectionId
+			// would throw NRE
+			connections[conn.connectionId] = conn;
+			conn.SetHandlers(handlers);
+			return true;
+		}
+		// already a connection with this id
+		return false;
+	}
+	
+	
+	/// <summary>
+	/// This removes an external connection added with AddExternalConnection().
+	/// </summary>
+	/// <param name='connectionId'>The id of the connection to remove.</param>
+	/// <returns>True if the removal succeeded</returns>
+	public static bool RemoveConnection(int connectionId)
+	{
+		return connections.Remove(connectionId);
+	}
+\end{lstlisting}
+
+\begin{lstlisting}[caption= PrepareGameManager.cs Variablen und spawnObjects()]
+	
+	private List<GameObject> spawnableCollectableObjects;
+	private List<GameObject> spawnableDestinationObjects;
+	
+	private List<Transform> possibleCollectableSpawnPoints;
+	private List<Transform> possibleDestinationSpawnPoints;
+	
+	private void spawnObjects()
+	{
+		int amountOfCollectablesSetting = GameNetworkManager.singleton.getConfiguredCollectableItemsSetting();
+		for (int i = 0; i < amountOfCollectablesSetting; i++)
+		{
+			// take one random index from collectable object spawnpoint, use this index to instantiate collectable object [index] inside collectable object spawnpoint [index],
+			// remove the index in both lists
+			// find corresponding 3 destination objects, pick a random one of these 3, make relation collectable <--> Destination
+			
+			int randomIndex = new Random().Next(possibleCollectableSpawnPoints.Count - 1);
+			Transform curCollectableSpawnPoint = popCollectableSpawnpointAt(randomIndex);
+			
+			GameObject curCollectableGameObject = popCollectableObjectAt(randomIndex);
+			GameObject collectInstance = Instantiate(curCollectableGameObject, curCollectableSpawnPoint.position, curCollectableSpawnPoint.rotation);
+			NetworkServer.Spawn(collectInstance);
+			
+			// Destroy the the spawnpoint that is used to place current collectable Object
+			NetworkServer.Destroy(curCollectableSpawnPoint.gameObject);
+			
+			List<Transform> relatedDestinationSpawnPoints = popRelatedDestinationSpawnPoints(randomIndex);
+			List<GameObject> relatedDestinationObjects = popRelatedDestinationObjects(randomIndex);
+			
+			
+			// pick a random value between e.g. 0-2 or 3-5 or 6-8 .. etc. (based on random Collectable index)
+			int randomRelatedDestinationObjectPickIndex = new Random().Next(relatedDestinationObjects.Count);
+			Transform curDestinationSpawnpoint = relatedDestinationSpawnPoints[randomRelatedDestinationObjectPickIndex];
+			GameObject curDestinationObject = relatedDestinationObjects[randomRelatedDestinationObjectPickIndex];
+			
+			// Spawn Destination Object, link it with the Collect Object
+			GameObject destinationInstance = Instantiate(curDestinationObject, curDestinationSpawnpoint.position, curDestinationSpawnpoint.rotation);
+			destinationInstance.GetComponent<DestinationObjectScript>().expectedObject = collectInstance;
+			NetworkServer.Spawn(destinationInstance);
+		}
+		destroyUnusedCollectableSpawnPoints();
+	}
+\end{lstlisting}
+
+\begin{lstlisting}[caption= GameNetworkManager.cs replaceLobbyPlayersWithGamePlayers()]
+	private void replaceLobbyPlayersWithGamePlayers()
+	{
+		int firstSeekerIndex = new Random().Next(NetworkServer.connections.Count);
+		int secondSeekerIndex = -1;
+		
+		// Only set secondSeekerIndex if Leader has Configured 2 Seekers & we are at least 3 Players
+		
+		if(getConfiguredSeekerAmount() == 2 && getLobbyPlayerCount() >= 3)
+		{
+			while(secondSeekerIndex == -1 || secondSeekerIndex == firstSeekerIndex)
+			{
+				secondSeekerIndex = new Random().Next(NetworkServer.connections.Count);
+			}
+		}
+		
+		int currentIndex = 0;
+		bool isDayTime = getConfiguredDayTimeSetting());
+		
+		foreach (var pair in lobbyPlayers)
+		{
+			var conn = pair.Key;
+			var lobbyPlayer = pair.Value;
+			
+			Transform spawnPoint = prepareGameManager.popRandomPlayerSpawnPoint();
+			Vector3 spawnPosition = new Vector3(spawnPoint.position.x, 0.88f, spawnPoint.position.z);
+			GameObject gamePlayerInstance = Instantiate(gamePlayerPrefab, spawnPosition, spawnPoint.rotation);
+			
+			Role curRole = (currentIndex == firstSeekerIndex || currentIndex == secondSeekerIndex) ? Role.Seeker : Role.Hider;
+			gamePlayerInstance.GetComponent<PlayerBaseScript>().role = curRole;
+			gamePlayerInstance.GetComponent<PlayerBaseScript>().playerName = lobbyPlayer.playerName;
+			gamePlayerInstance.GetComponent<PlayerBaseScript>().globalLightEnabled = isDayTime;
+			gamePlayerInstance.GetComponent<PlayerBaseScript>().playerLightEnabled = !isDayTime;
+			gamePlayerInstance.GetComponent<PlayerMovementScript>().setPlayerSpeed(getConfiguredPlayerSpeed());
+			
+			NetworkServer.ReplacePlayerForConnection(conn, gamePlayerInstance, true);
+			currentIndex++;
+		}
+		lobbyPlayers.Clear();
+	}
+\end{lstlisting}
+
+\begin{lstlisting}[caption= InGameProgressManager.cs global Game Time Handling]
+	private Timer gameTimer;
+	private Message curGameTimeLeftMsg;
+	
+	public void startGameTimer(uint totalGameTime)
+	{
+		gameStarted = true;
+		
+		gameTimer = new Timer(1f, totalGameTime, handleTick);
+		TimersManager.SetTimer(this, gameTimer);
+		
+		curGameTimeLeftMsg = new Message()
+		{
+			message = 'Game Time Left: ' + Math.Round(gameTimer.RemainingTime()),
+			messageType = MessageType.gameTimeLeftNotification
+		};
+	}
+	
+	private void handleTick()
+	{
+		if (gameTimer.RemainingTime() > 0)
+		{
+			countDownGameTime();
+		}
+		
+		else
+		{
+			notifySeekerWinEvent();
+		}
+	}
+	
+	private void countDownGameTime()
+	{
+		curGameTimeLeftMsg.message = 'Game Time Left: ' + Math.Round(gameTimer.RemainingTime());
+		
+		// Notify each client about the server sided game time left
+		foreach (var conn in NetworkServer.connections)
+		{
+			conn.Value.Send(curGameTimeLeftMsg);
+		}
+	}
+\end{lstlisting}

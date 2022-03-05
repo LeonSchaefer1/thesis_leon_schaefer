@@ -1,16 +1,16 @@
 \chapter{Konzepte}
 \label{sec:konzepte}
 
-In diesem Kapitel werden abstrakte Konzepte beschrieben. Besonders unerfahrene Entwickler eines Online-Multiplayer Spiels sollen anhand von diesen Konzepten Ideen für eine sinnvolle Herangehensweise erhalten, um einen roten Faden in ihrer Entwicklung verfolgen zu können. Insbesondere wenn der Entwickler noch wenig oder keine Erfahrung mit der Entwicklung von Online-Mulitplayerspielen gesammelt hat, sollen diese Konzepte bei der Erstellung einer soliden Grund-Architektur nützlich sein. Bevor eines dieser Konzepte angewandt werden kann, müssen folgende Voraussetzungen erfüllt sein:
+In diesem Kapitel werden abstrakte Konzepte beschrieben. Besonders unerfahrene Entwickler eines Online-Multiplayer Spiels sollen anhand dieser Konzepte Ideen für eine sinnvolle Herangehensweise erhalten, um einen roten Faden in ihrer Entwicklung verfolgen zu können. Insbesondere wenn der Entwickler noch wenig oder keine Erfahrung mit der Entwicklung von Online-Mulitplayerspielen gesammelt hat, sollen diese Konzepte bei der Erstellung einer soliden Grund-Architektur nützlich sein. Bevor eines dieser Konzepte angewandt werden kann, müssen folgende Voraussetzungen erfüllt sein:
 
 \begin{enumerate}
 	\item Das grundsätzliche Spielkonzept steht fest.
-	\item Anhand von dem festgelegten Spielkonzept kann abgeschätzt werden, ob sich für das Spiel eine Client / Server oder eine Client / Host Architektur eignet.
+	\item Anhand des festgelegten Spielkonzeptes kann abgeschätzt werden, ob sich für das Spiel eine Client / Server oder eine Client / Host Architektur eignet.
 \end{enumerate}
 
 Sollte das Team bzw. der Solo-Entwickler zum Entschluss gekommen sein, dass sich ein Client / Server Modell am besten für den spezifischen Use Case eignet, so müssen Vorkehrungen getroffen werden, um die Hardware-Ressourcen für den späteren Server-Runner bzw. die Matchmaking API sicherzustellen. Die Grundvoraussetzung ist jedoch ein aus dem Internet erreichbarer PC mit einer festen IP-Adresse. 
 
-Alternativ kann auch zunächst lokal innerhalb eines LAN \cite{Wikipedia.2022} entwickelt werden. Hierbei ist jedoch wichtig, dass eventuell auftretende Seiteneffekte, die durch Latenz \cite{Wikipedia.2022b} oder Bandbreite \cite{Wikipedia.2019b} verursacht werden, nicht unter Realbedingungen getestet werden können. Es empfiehlt sich deshalb bereits innerhalb der ersten Entwicklungsiterationen auszutesten, wie Prototypen für Serverprozesse auf unterschiedliche Standorte der Serverhardware reagieren. 
+Alternativ kann auch zunächst lokal innerhalb eines LAN entwickelt werden. Hierbei ist jedoch wichtig, dass eventuell auftretende Seiteneffekte, die durch Latenz oder Bandbreite verursacht werden, nicht unter Realbedingungen getestet werden können. Es empfiehlt sich deshalb bereits innerhalb der ersten Entwicklungsiterationen auszutesten, wie Prototypen für Serverprozesse auf unterschiedliche Standorte der Serverhardware reagieren. 
 
 Nun gilt es, passende Technologien zu finden. Hier gibt es keine klare Empfehlung, jedoch können die in diesem Kapitel beschriebenen Konzepte bei der Entscheidung helfen. Es gibt bereits Frameworks \& Game Engines, die manche dieser Konzepte bereits implementiert haben und als Libraries für Entwickler bereitstellen.
 
@@ -20,9 +20,9 @@ Nun gilt es, passende Technologien zu finden. Hier gibt es keine klare Empfehlun
 
 Die folgenden Konzepte sollen im Kontext einer bereits erarbeiteten Spielidee eine Hilfestellung zur Erarbeitung einer individuellen technischen Architektur geben.
 
-Konkret muss beachtet werden, dass einige der Konzepte nicht als einzelne Programm-Klassen verstanden werden müssen, sondern als Hilfestellung für Ableitungen zu konkreten Klassen oder Skripten genutzt werden können. Es ist auch gut denkbar, dass einige Implementierungen deutliche Vorteile genießen, wenn bestimmte Konzepte jeweils für getrennte Spiel-Szenen \cite{Wikipedia.2012} umgesetzt werden.
+Konkret muss beachtet werden, dass einige der Konzepte nicht als einzelne Programm-Klassen verstanden werden müssen, sondern als Hilfestellung für Ableitungen zu konkreten Klassen oder Skripten genutzt werden können. Es ist auch gut denkbar, dass einige Implementierungen deutliche Vorteile haben, wenn bestimmte Konzepte jeweils für getrennte Spiel-Szenen umgesetzt werden. Spielszenen sind eine Beschreibung von Objekten, Lichtquellen, Materialeigenschaften sowie der Position und Blickrichtung eines virtuellen Betrachters \cite{Wikipedia.2012}.
 
-Die Konzepte sind als separat voneinander zu betrachtende Softwarekomponenten zu sehen, die miteinander kommunizieren können. Man könnte die einzelnen implementierten Konzepte auch als Microservices \cite{Thones.2015} bezeichnen, die innerhalb eines Server-Prozesses eigene interne Abläufe besitzen und durchführen. Die Kommunikation zwischen den Komponenten sollte über direkte gegenseitige Funktionsaufrufe oder über ereignisgesteuerte Funktionen \cite{Michelson.2006} geschehen.
+Die Konzepte sind als separat voneinander zu betrachtende Softwarekomponenten zu sehen, die miteinander kommunizieren können. Man könnte die einzelnen implementierten Konzepte auch als Microservices \cite{Thones.2015} bezeichnen, die innerhalb eines Server-Prozesses eigene interne Abläufe besitzen und durchführen. Die Kommunikation zwischen den Komponenten sollte über direkte, gegenseitige Funktionsaufrufe oder über ereignisgesteuerte Funktionen \cite{Michelson.2006} geschehen.
 
 \section{API für Matchmaking \& Server Runner}
 
@@ -30,14 +30,14 @@ Für Spiele, welche ein Matchmaking-System benötigen, muss eine API entworfen w
 
 \textbf{Matchmaking:}
 
-Die API muss einen Algorithmus implementieren, welcher mehrere Spieler zu einer Spiel-Session zusammenführt. Mögliche Matchmaking Konzepte sind bereits im Hintergrund-Kapitel beschrieben. Die Matchmaking API verwaltet als eine Liste an aktiven Serverprozessen sowie die Information, wie man sich zu ihnen verbindet. In der Regel wird pro Serverprozess ein Netzwerk-Port an der Server-Maschine reserviert, auf denen sich dann N Spieler verbinden können.
+Die API muss einen Algorithmus implementieren, welcher mehrere Spieler zu einer Spiel-Session zusammenführt. Mögliche Matchmaking-Konzepte sind bereits im Hintergrund-Kapitel beschrieben. Die Matchmaking API verwaltet als eine Liste an aktiven Serverprozessen sowie die Information, wie man sich zu ihnen verbindet. In der Regel wird pro Serverprozess ein Netzwerk-Port an der Server-Maschine reserviert, auf denen sich dann N Spieler verbinden können.
 
-Je nach Spielkonzept können hunderte, tausende Serverprozesse existieren, welche jeweils nur eine vergleichsweise geringe Anzahl (1-20) an Spieler verwalten. Spielkonzepte, welche viele Spieler (200-1000) innerhalb eines einzigen Serverprozesses voraussetzten, erzeugen dagegen zwar quantitativ weniger Serverprozesse, diese neigen aber in der Regel schnell zu Überlastung. Neben der Umsetzung von Interest Management und einer performanten Architektur für möglichst wenig Network-Traffic kann aber auch die Matchmaking API Abhilfe schaffen, bspw. durch 'Umverlegung' von Spielern auf andere oder neue Cluster.
+Je nach Spielkonzept können hunderte, tausende Serverprozesse existieren, welche jeweils nur eine vergleichsweise geringe Anzahl (1-20) an Spieler verwalten. Spielkonzepte, welche viele Spieler (200-1000) innerhalb eines einzigen Serverprozesses voraussetzten, erzeugen dagegen zwar quantitativ weniger Serverprozesse, diese neigen aber in der Regel schnell zu Überlastung. Neben der Umsetzung von Interest Management und einer performanten Architektur für möglichst wenig Network-Traffic, kann aber auch die Matchmaking API Abhilfe schaffen, bspw. durch 'Umverlegung' von Spielern auf andere oder neue Cluster.
 
 \textbf{Server Runner:}
 
 Neben dem Matchmaking ist die API ebenfalls auch zuständig für das Starten und die Überwachung von Serverprozessen.
-Ebenfalls können technische Statusinformationen über aktuell laufende Spiel innerhalb eines Serverprozesses von der API verwaltet werden, beispielsweise ob es möglich ist einem Server beizutreten, oder wie viele Spieler bereits auf einem Serverprozess spielen. Die folgende Grafik visualisiert beide Aufgaben:
+Ebenfalls können technische Statusinformationen über ein aktuell laufendes Spiel innerhalb eines Serverprozesses von der API verwaltet werden, beispielsweise darüber, ob es möglich ist einem Server beizutreten, oder wie viele Spieler bereits auf einem Serverprozess spielen. Die folgende Grafik visualisiert beide Aufgaben:
 
 \begin{figure}[H]
 	\centering
@@ -46,7 +46,7 @@ Ebenfalls können technische Statusinformationen über aktuell laufende Spiel in
 	\label{pic:API_Konzept_Diagramm}
 \end{figure}
 
-Je nach Spiel kann das Aufgabenfeld der API um weitere Punkte erweitert werden, beispielsweise die Verwaltung einer Datenbank für Authentifizierung bzw. Kommunikation mit externen Authentifizierungs-Service-Providern oder für einen In-Game Shop.
+Je nach Spiel kann das Aufgabenfeld der API um weitere Punkte erweitert werden, beispielsweise die Verwaltung einer Datenbank für Authentifizierung bzw. Kommunikation mit externen Authentifizierungs-Service-Providern, oder für einen In-Game Shop.
 
 \section{Client UI \& Visual Controller}
 
@@ -61,7 +61,7 @@ Konkret sorgt ein Server-Ereignis, der Input eines Spielers (beispielsweise durc
 	\label{pic:Client_UI_und_Visual_Konzept}
 \end{figure}
 
-Wichtig ist, dass Funktionen des Client UI \& Visual Controller erst nach server- oder clientseitigen Überprüfungen ausgeführt werden. Der Controller selbst sollte nur überprüfen, ob fluktuierende Komponenten noch existieren oder sich in einem konsistenten Zustand befinden. Spiel-Relevante Logik, beispielsweise, ob ein Spieler berechtigt ist, bestimmte Aktionen durchzuführen, ist nicht Teil des Client UI \& Visual Controllers.
+Wichtig ist, dass Funktionen des Client UI \& Visual Controller erst nach server- oder clientseitigen Überprüfungen ausgeführt werden. Der Controller selbst sollte nur überprüfen, ob fluktuierende Komponenten noch existieren, oder sich in einem konsistenten Zustand befinden. Spiel-Relevante Logik, beispielsweise, ob ein Spieler berechtigt ist, bestimmte Aktionen durchzuführen, ist nicht Teil des Client UI \& Visual Controllers.
 
 \section{Server Network Manager}
 
@@ -71,7 +71,7 @@ Der Server Network Manager ist für die korrekte Abarbeitung von serverseitigen 
 Die Verbindung eines Clients bricht mitten in der laufenden Spielszene ab. Der Server Network Manager stößt infolgedessen Funktionen anderer serverseitigen Manager-Komponenten an, welche dafür sorgen, dass alle Spieler über den neuen Zustand des Spiels informiert werden. Hierfür müssen zunächst serverinterne Variablen aktualisiert werden.
 
 \textbf{Beispiel:}  \\
-In einem Online-Ableger des Spiels 'Mensch ärger dich nicht' verliert ein Spieler seine Netzwerkverbindung. Als Reaktion kümmert sich der Server Network Manager darum, dass das Spiel trotzdem zu Ende gespielt werden kann. Die Spielfiguren des ausgeschiedenen Spielers müssen entfernt, und der Spiel-Fortschritt aktualisiert werden. Diese Funktionen stellt möglicherweise der \hyperref[spawn_manager]{Runtime Spawn Manager}, \hyperref[progress_manager]{Progress / Game State Manager } zur Verfügung.
+In einem Online-Ableger des Spiels 'Mensch ärgere dich nicht' verliert ein Spieler seine Netzwerkverbindung. Als Reaktion kümmert sich der Server Network Manager darum, dass das Spiel trotzdem zu Ende gespielt werden kann. Die Spielfiguren des ausgeschiedenen Spielers müssen entfernt, und der Spiel-Fortschritt aktualisiert werden. Diese Funktionen stellt möglicherweise der \hyperref[spawn_manager]{Runtime Spawn Manager}, \hyperref[progress_manager]{Progress / Game State Manager } zur Verfügung.
 Außerdem muss dem \hyperref[serverside_client_manager]{Serverside Client Manager} mitgeteilt werden, dass dieser Spieler nun nicht mehr Teil der Spiel-Session ist.
 
 Die folgende Grafik illustriert die Aufgaben des Server Network Managers:

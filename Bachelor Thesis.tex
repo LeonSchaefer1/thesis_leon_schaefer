@@ -73,15 +73,16 @@
 \IfDefined{printindex}{\printindex}
 \IfDefined{printnomenclature}{\printnomenclature}
 % 'Symbolverzeichnis' ins Inhaltsverzeichnis
-\addcontentsline{toc}{chapter}{Abkürzungsverzeichnis}
+
 % Abbildungs- und Tabellenverzeichnis
 \listoffigures
 \lstlistoflistings.
 % Anhang
+\appendix
 % 'Anhang' ins Inhaltsverzeichnis
 %\phantomsection
 %\addcontentsline{toc}{part}{Anhang}
-
+\input{content/Z-Anhang}
 %% Dokument ENDE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}
 
