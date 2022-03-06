@@ -155,7 +155,7 @@ Der Prepare-Game-Manager ist Teil des Serverprozesses und beinhaltet alle Funkti
 	\item Spawning \cite{Wikipedia.2020} von NPCs \cite{Wikipedia.2021f} oder Spielgegenständen, die in Abhängigkeit zur Anzahl der beitretenden Spieler, einer Spielkonfiguration oder sonstigen Parametern stehen.
 	\item Anpassung der Eigenschaften von bereits gespawnten NPCs oder Spielgegenständen, die in Abhängigkeit zur Anzahl der beitretenden Spieler, einer Spielkonfiguration oder sonstigen Parametern stehen.
 	\item Initialisierung der Spawnpunkte für Spieler anhand von Spawnalgorithmen oder festgelegten Punkten in der Spielwelt.
-	\item Abarbeitung sonstiger serverseitigen Abläufe, welche Voraussetzung für den Start des Spiels sind
+	\item Abarbeitung sonstiger serverseitigen Abläufe, welche Voraussetzung für den Start des Spiels sind.
 \end{itemize}
 
 Das folgende Diagramm zeigt, wann der Prepare-Game-Manager bei einem lobby-basierten Spielkonzept zum Einsatz kommt:
@@ -174,8 +174,8 @@ Die Aufgabe eines Progress bzw. Game-State Managers ist es, Gewinn- bzw. Verlust
 
 Beispiele hierfür sind: \\
 \begin{itemize}
-	\item Verwaltung und Synchronisierung von globalen Timern
-	\item Verwaltung und Synchronisierung von Spiel-Kennzahlen bzw. Variablen (z. B. der Spielstand bei einem Fußball-Match)
+	\item Verwaltung und Synchronisierung von globalen Timern.
+	\item Verwaltung und Synchronisierung von Spiel-Kennzahlen bzw. Variablen (z. B. der Spielstand bei einem Fußball-Match).
 \end{itemize}
 
 Außerdem ist der Progress Manager / Game-State Manager dafür verantwortlich, alle Clients über spielentscheidende Ereignisse zu informieren. Die Abfolge dieser Ereignisse werden im folgenden Diagramm aufgezeigt:
@@ -190,7 +190,7 @@ Außerdem ist der Progress Manager / Game-State Manager dafür verantwortlich, a
 \section{Runtime Spawn Manager}
 \label{spawn_manager}
 
-Der Runtime Spawn Manager verwaltet die zur Laufzeit zu erzeugenden Spieler- und Nicht-Spieler-Objekte. Konkret werden Funktionen des Runtime Spawn Managers ausgeführt, wenn ein spezifisches Event innerhalb einer Spiel-Session ausgelöst wird oder ein Spieler- bzw. Nicht-Spieler-Charakter stirbt, und diese erneut an anderer Position spawnen sollen ('Re-Spawning'). Die Logik, wo genau ein Spieler oder Nicht-Spieler Objekt seine neue Einstiegsposition erhält, regelt ebenfalls der Runtime Spawn-Manager.
+Der Runtime Spawn Manager verwaltet die zur Laufzeit zu erzeugenden Spieler- und Nicht-Spieler-Objekte. Konkret werden Funktionen des Runtime Spawn Managers ausgeführt, wenn ein spezifisches Event innerhalb einer Spiel-Session ausgelöst wird oder ein Spieler- bzw. Nicht-Spieler-Charakter stirbt und diese erneut an anderer Position spawnen sollen ('Re-Spawning'). Die Logik, wo genau ein Spieler oder Nicht-Spieler Objekt seine neue Einstiegsposition erhält, regelt ebenfalls der Runtime Spawn-Manager.
 
 \begin{figure}[H]
 	\centering
