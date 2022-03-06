@@ -24,7 +24,7 @@ Konkret muss beachtet werden, dass einige der Konzepte nicht als einzelne Progra
 
 Die Konzepte sind als separat voneinander zu betrachtende Softwarekomponenten zu sehen, die miteinander kommunizieren können. Man könnte die einzelnen implementierten Konzepte auch als Microservices \cite{Thones.2015} bezeichnen, die innerhalb eines Server-Prozesses eigene interne Abläufe besitzen und durchführen. Die Kommunikation zwischen den Komponenten sollte über direkte, gegenseitige Funktionsaufrufe oder über ereignisgesteuerte Funktionen \cite{Michelson.2006} geschehen.
 
-\section{API für Matchmaking \& Server Runner}
+\section{API für Matchmaking \& Server-Runner}
 
 Für Spiele, welche ein Matchmaking-System benötigen, muss eine API entworfen werden, welche unabhängig von einem existierenden Client oder Serverprozess arbeitet. Diese API hat 2 grundsätzliche Aufgaben. 
 
@@ -34,7 +34,7 @@ Die API muss einen Algorithmus implementieren, welcher mehrere Spieler zu einer 
 
 Je nach Spielkonzept können hunderte, tausende Serverprozesse existieren, welche jeweils nur eine vergleichsweise geringe Anzahl (1-20) an Spieler verwalten. Spielkonzepte, welche viele Spieler (200-1000) innerhalb eines einzigen Serverprozesses voraussetzten, erzeugen dagegen zwar quantitativ weniger Serverprozesse, diese neigen aber in der Regel schnell zu Überlastung. Neben der Umsetzung von Interest Management und einer performanten Architektur für möglichst wenig Network-Traffic, kann aber auch die Matchmaking API Abhilfe schaffen, bspw. durch 'Umverlegung' von Spielern auf andere oder neue Cluster.
 
-\textbf{Server Runner:}
+\textbf{Server-Runner:}
 
 Neben dem Matchmaking ist die API ebenfalls auch zuständig für das Starten und die Überwachung von Serverprozessen.
 Ebenfalls können technische Statusinformationen über ein aktuell laufendes Spiel innerhalb eines Serverprozesses von der API verwaltet werden, beispielsweise darüber, ob es möglich ist einem Server beizutreten, oder wie viele Spieler bereits auf einem Serverprozess spielen. Die folgende Grafik visualisiert beide Aufgaben:
