@@ -21,13 +21,13 @@ Das Grundprinzip des Prototyps basiert auf dem Kinderspiel 'Fangen und Verstecke
 Spieler mit der Rolle 'Hider' und 'Ghost' gehören zu einem Team.  Spieler mit der Rolle 'Seeker' bilden das zweite Team. Anfangs wird per Zufall entschieden, welche Spieler zum Team 'Hider/Ghost' und welche zum Team 'Seeker' gehören. Alle Teammitglieder des Teams 'Hider/Ghost' beginnen das Spiel initial als 'Hider'. Der Leiter einer Lobby kann festlegen, ob ein oder zwei Seeker ausgewürfelt werden sollen. Zum Leiter einer Lobby wird derjenige Spieler, der als Erstes einer Lobby beitritt. Sollte der Leiter einer Lobby diese verlassen, wird der Spieler zum Leiter, der am längsten Mitglied derselben Lobby war. Die Aufgaben der Spieler sind je nach Rolle unterschiedlich:
 
 \textbf{Hider:} \\
-Spieler mit der Rolle 'Hider' haben die Aufgabe, bestimmte Objekte in der Spielwelt zu finden, und diese zu einem Zielort zu bringen. Sind alle Objekte zu ihrem Zielort gebracht, so hat das Team 'Hider/Ghost' das Spiel gewonnen. Hider müssen zudem vor den Spielern mit der Rolle 'Seeker' flüchten, bzw. sich vor diesen verstecken. 
+Spieler mit der Rolle 'Hider' haben die Aufgabe, bestimmte Objekte in der Spielwelt zu finden und diese zu einem Zielort zu bringen. Sind alle Objekte zu ihrem Zielort gebracht, so hat das Team 'Hider/Ghost' das Spiel gewonnen. Hider müssen zudem vor den Spielern mit der Rolle 'Seeker' flüchten, bzw. sich vor diesen verstecken. 
 
 \textbf{Seeker:} \\
 Spieler mit der Rolle 'Seeker' haben lediglich eine Aufgabe. Sie müssen alle Spieler mit der Rolle 'Hider' fangen. Dies können sie tun, indem sie in die unmittelbare Reichweite eines Hiders laufen und die Taste 'E', bzw. den in der Benutzeroberfäche festgelegten Knopf 'Catch', drücken. Sind alle Hider gefangen, so gewinnen die Seeker das Spiel.
 
 \textbf{Ghost:} \\
-Spieler, die initial mit der Rolle 'Hider' gespawnt sind, und von einem Seeker gefangen wurden, wechseln ihre Rolle zu 'Ghost'. Ghosts dürfen nicht mehr mit Objekten der Spielwelt interagieren, sie können sich lediglich noch über das Spielfeld bewegen. Außerdem bekommt ein Ghost eine Fähigkeit, die er einsetzen kann, um seinem Team zu helfen. Diese Fähigkeit ermächtigt den Spieler, einen Seeker für 3 Sekunden bewegungsunfähig zu machen, sollte der Spieler in der unmittelbaren Nähe eines Seekers sein und die Taste 'E', bzw. den dafür vorgesehen Knopf in der Benutzeroberfläche drücken. Diese Fähigkeit kann lediglich alle 30 Sekunden eingesetzt werden.
+Spieler, die initial mit der Rolle 'Hider' gespawnt sind und von einem Seeker gefangen wurden, wechseln ihre Rolle zu 'Ghost'. Ghosts dürfen nicht mehr mit Objekten der Spielwelt interagieren, sie können sich lediglich noch über das Spielfeld bewegen. Außerdem bekommt ein Ghost eine Fähigkeit, die er einsetzen kann, um seinem Team zu helfen. Diese Fähigkeit ermächtigt den Spieler, einen Seeker für 3 Sekunden bewegungsunfähig zu machen, sollte der Spieler in der unmittelbaren Nähe eines Seekers sein und die Taste 'E', bzw. den dafür vorgesehen Knopf in der Benutzeroberfläche drücken. Diese Fähigkeit kann lediglich alle 30 Sekunden eingesetzt werden.
 
 Das Spielkonzept wird in folgendem Spielflussdiagramm zusammengefasst:
 
@@ -40,7 +40,7 @@ Das Spielkonzept wird in folgendem Spielflussdiagramm zusammengefasst:
 
 \textbf{Spiel-Ablauf:}
 
-Zunächst muss ein Spieler eine Lobby erstellen. Dies tut er, indem er auf den Knopf 'Create Lobby' im Hauptmenü drückt. Nun erhält dieser Spieler einen 'Code', der eindeutig diese Lobby identifiziert. Diesen 'Code' kann der Spieler jetzt an seine Mitspieler weitergeben. Diese können den Code im Hauptmenü in ein Eingabefeld eingeben, und auf 'Join Lobby' drücken. Der Spieler, der die Lobby erstellt hat, ist inzwischen auch Lobby-Leiter und kann einstellen, ob die Lobby als 'public' markiert werden soll. In diesem Fall können andere Spieler durch den Button 'Join Random Lobby' ebenfalls der Lobby beitreten, ohne den Code zu kennen. Das folgende Aktivitätsdiagramm zeigt die möglichen Abfolgen des Beitritts einer Lobby:
+Zunächst muss ein Spieler eine Lobby erstellen. Dies tut er, indem er auf den Knopf 'Create Lobby' im Hauptmenü drückt. Nun erhält dieser Spieler einen 'Code', der eindeutig diese Lobby identifiziert. Diesen 'Code' kann der Spieler jetzt an seine Mitspieler weitergeben. Diese können den Code im Hauptmenü in ein Eingabefeld eingeben und auf 'Join Lobby' drücken. Der Spieler, der die Lobby erstellt hat, ist inzwischen auch Lobby-Leiter und kann einstellen, ob die Lobby als 'public' markiert werden soll. In diesem Fall können andere Spieler durch den Button 'Join Random Lobby' ebenfalls der Lobby beitreten, ohne den Code zu kennen. Das folgende Aktivitätsdiagramm zeigt die möglichen Abfolgen des Beitritts einer Lobby:
 
 \begin{figure}[H]
 	\centering
@@ -123,7 +123,7 @@ public override void ServerStart()
 
 Der Client UI \& Visual Controller spielt im Prototyp eine wesentliche Rolle. Er kommt in der Game Scene als Singleton \cite{M.Gatrell.2009} zum Einsatz, wo er alle nötigen Methoden implementiert, um das lokale UI des Spielers manipulieren zu können. Hier sind nun 3 Beispiele aufgeführt:
 
-Die folgende 'Update'-Methode ist eine Unity bereitgestellte Schnittstelle. Der Rumpf der Update Methode ist nie vorgegeben und muss vom Entwickler selbst implementiert werden. Unity führt diese Methode jedes 'Frame' (Einzelbild) \cite{Wikipedia.2021j} aus. Dies ermöglicht eine nahezu vollständige Echtzeitabfrage der Inputs (Tastatur / Maus / andere Eingangsgeräte) des Spielers. Es wird dauerhaft abgefragt, ob ein Spieler die Taste 'E' oder 'Q' auf seiner Tastatur drückt. Wenn er das tut, und ebenfalls einige andere Randbedingungen erfüllt sind, wird ein 'Linksklick' auf den im UI des Spielers sichtbaren Button simuliert.
+Die folgende 'Update'-Methode ist eine Unity bereitgestellte Schnittstelle. Der Rumpf der Update Methode ist nie vorgegeben und muss vom Entwickler selbst implementiert werden. Unity führt diese Methode jedes 'Frame' (Einzelbild) \cite{Wikipedia.2021j} aus. Dies ermöglicht eine nahezu vollständige Echtzeitabfrage der Inputs (Tastatur / Maus / andere Eingangsgeräte) des Spielers. Es wird dauerhaft abgefragt, ob ein Spieler die Taste 'E' oder 'Q' auf seiner Tastatur drückt. Wenn er das tut und ebenfalls einige andere Randbedingungen erfüllt sind, wird ein 'Linksklick' auf den im UI des Spielers sichtbaren Button simuliert.
 
 \begin{lstlisting}[caption= InGameUiControllerScript.cs Update Method]
 private void Update()
@@ -468,7 +468,7 @@ Die Implementierung einer 'onSuccess' Funktion (das Gegenstück zu 'onFailure') 
 
 \section{Implementierung: Serverside Client Manager}
 
-Das Konzept des Serverside Client Managers wird nahezu vollständig durch mirrorinterne Prozesse gelöst. Die Verwaltung aller Clients geschieht durch die 'GameNetworkManager' Klasse, welche von der Mirror Klasse 'NetworkManager' erbt. Die Superklasse 'NetworkManager' wiederum nutzt eine andere Mirror-Klasse 'NetworkServer', diese beinhaltet ein Dictionary, das die Verbindungen zu allen Clients verwaltet. Im folgenden Code ist das Dictionary, und die dazu gehörenden Methoden 'AddConnection' und 'RemoveConnection' zu sehen. (Vollständiger Code im Anhang)
+Das Konzept des Serverside Client Managers wird nahezu vollständig durch mirrorinterne Prozesse gelöst. Die Verwaltung aller Clients geschieht durch die 'GameNetworkManager' Klasse, welche von der Mirror Klasse 'NetworkManager' erbt. Die Superklasse 'NetworkManager' wiederum nutzt eine andere Mirror-Klasse 'NetworkServer', diese beinhaltet ein Dictionary, das die Verbindungen zu allen Clients verwaltet. Im folgenden Code ist das Dictionary und die dazu gehörenden Methoden 'AddConnection' und 'RemoveConnection' zu sehen. (Vollständiger Code im Anhang)
 
 \begin{lstlisting}[caption= Mirror Class NetworkServer.cs Connection Handling]
 ...
@@ -675,7 +675,7 @@ Das Spielkonzept hat nicht vorausgesetzt, dass nach Initialisierung der Spiel-Sz
 
 Mirror bietet eine Reihe an Komponenten an, die eine eigene Implementierung eines Interest Managers überflüssig machen. Für den Prototypen wurde die Komponente 'Team Interest Management' benutzt \cite{.17.02.2022b}. Diese sorgt dafür, dass (Spieler)-Objekte nur für die Mitglieder einer Gruppe sichtbar sind. Im Falle des Prototyps sollen Spieler mit der Rolle 'Ghost' lediglich für Spieler mit der Rolle 'Hider' und 'Ghost' sichtbar sein. Spieler mit der Rolle 'Seeker' sollen Spieler mit der Rolle 'Ghost' nicht sehen können.
 
-Sollte ein Spielkonzept jedoch Voraussetzungen besitzen, die über die Möglichkeiten der vordefinierten Interest Manager Komponenten von Mirror hinausgehen, so bietet Mirror ebenfalls die Möglichkeit, eigene Interest Manager Implementierungen zu erstellen, indem Mirror eine abstrakte Klasse 'InterestManagement' bereitstellt. Falls eine eigene Interest Manager Klasse von dieser erbt, kann sie die Methoden 'OnCheckObserver' und 'OnRebuildObservers' überschreiben. \cite{.17.02.2022c}
+Sollte ein Spielkonzept jedoch Voraussetzungen besitzen, die über die Möglichkeiten der vordefinierten Interest Manager Komponenten von Mirror hinausgehen, so bietet Mirror ebenfalls die Möglichkeit, eigene Interest Manager Implementierungen zu erstellen, indem Mirror eine abstrakte Klasse 'InterestManagement' bereitstellt. Falls eine eigene Interest Manager Klasse von dieser erbt, kann sie die Methoden 'OnCheckObserver' und 'OnRebuildObservers' überschreiben\cite{.17.02.2022c}. 
 
 \begin{itemize}
 	\item 'OnCheckObserver' wird aufgerufen, wenn ein neuer Spieler spawnt. Gibt 'true' zurück, wenn ein (Spieler)-Objekt von dem neu gespawnten Spieler gesehen werden kann.
