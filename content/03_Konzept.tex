@@ -18,7 +18,7 @@ Nun gilt es, passende Technologien zu finden. Hier gibt es keine klare Empfehlun
 
 Die folgenden Konzepte sollen im Kontext einer bereits erarbeiteten Spielidee eine Hilfestellung zur Erarbeitung einer individuellen technischen Architektur geben.
 
-Konkret muss beachtet werden, dass einige der Konzepte nicht als einzelne Programm-Klassen verstanden werden müssen, sondern als Hilfestellung für Ableitungen zu konkreten Klassen oder Skripten genutzt werden können. Es ist auch gut denkbar, dass einige Implementierungen deutliche Vorteile haben, wenn bestimmte Konzepte jeweils für getrennte Spiel-Szenen umgesetzt werden. Spielszenen sind eine Beschreibung von Objekten, Lichtquellen, Materialeigenschaften sowie der Position und Blickrichtung eines virtuellen Betrachters \cite{Wikipedia.2012}.
+Konkret muss beachtet werden, dass einige der Konzepte nicht als einzelne Programm-Klassen verstanden werden müssen, sondern als Hilfestellung für Ableitungen zu konkreten Klassen oder Skripten genutzt werden können. Es ist auch gut denkbar, dass einige Implementierungen deutliche Vorteile haben, wenn bestimmte Konzepte jeweils für getrennte Spiel-Szenen umgesetzt werden. Spielszenen sind eine Beschreibung von Objekten, Lichtquellen, Materialeigenschaften sowie der Position und Blickrichtung eines virtuellen Betrachters \cite{D.Polancec.2017}.
 
 Die Konzepte sind als separat voneinander zu betrachtende Softwarekomponenten zu sehen, die miteinander kommunizieren können. Man könnte die einzelnen implementierten Konzepte auch als Microservices \cite{Thones.2015} bezeichnen, die innerhalb eines Server-Prozesses eigene interne Abläufe besitzen und durchführen. Die Kommunikation zwischen den Komponenten sollte über direkte, gegenseitige Funktionsaufrufe oder über ereignisgesteuerte Funktionen \cite{Michelson.2006} geschehen.
 
@@ -105,7 +105,7 @@ Der Client Connection Manager beschreibt eine Softwarekomponente, welche folgend
  \begin{itemize}
 	\item Implementierung von clientseitigen Methoden zum Informationsaustausch mit Matchmaking API.
 	\begin{itemize}
-		\item Z. B. stellt die Matchmaking API dem Client über HTTP-Kommunikation Informationen bereit, mit denen sich der Client auf einen speziellen Server verbinden kann (IP + Port) \cite{Wikipedia.2021d} \cite{Wikipedia.2021e}. 
+		\item Z. B. stellt die Matchmaking API dem Client über HTTP-Kommunikation Informationen bereit, mit denen sich der Client auf einen speziellen Server verbinden kann. Diese Informationen müssen mindestens die IP Adresse, sowie den Port des laufenden Serverprozesses beinhalten \cite{Hauser.2015}.
 	\end{itemize}
 	\item Verarbeitung der von Matchmaking API bereitgestellten Informationen. 
 	\begin{itemize}
@@ -150,7 +150,7 @@ Einerseits werden netzwerkbezogene Informationen über einen Client gespeichert,
 Der Prepare-Game-Manager ist Teil des Serverprozesses und beinhaltet alle Funktionen, welche nötig sind, um eine Spielszene aufzubauen, bevor die Spieler ihr beitreten dürfen. Die Funktionen sollten konkret umsetzen:
 
 \begin{itemize}
-	\item Spawning \cite{Wikipedia.2020} von NPCs \cite{Wikipedia.2021f} oder Spielgegenständen, die in Abhängigkeit zur Anzahl der beitretenden Spieler, einer Spielkonfiguration oder sonstigen Parametern stehen.
+	\item Spawning (Initialisierung von Spielobjekten zur Laufzeit \cite{Wikipedia.2020}) von NPCs ('Nicht-Spieler-Character' \cite{.09.03.2022})  oder Spielgegenständen, die in Abhängigkeit zur Anzahl der beitretenden Spieler, einer Spielkonfiguration oder sonstigen Parametern stehen.
 	\item Anpassung der Eigenschaften von bereits gespawnten NPCs oder Spielgegenständen, die in Abhängigkeit zur Anzahl der beitretenden Spieler, einer Spielkonfiguration oder sonstigen Parametern stehen.
 	\item Initialisierung der Spawnpunkte für Spieler anhand von Spawnalgorithmen oder festgelegten Punkten in der Spielwelt.
 	\item Abarbeitung sonstiger serverseitigen Abläufe, welche Voraussetzung für den Start des Spiels sind.
@@ -198,7 +198,7 @@ Der Runtime Spawn Manager verwaltet die zur Laufzeit zu erzeugenden Spieler- und
 \end{figure}
 
 \textbf{Beispiel:} \\
-In einem Online Multiplayer Ego-Shooter \cite{Wikipedia.2021g} stirbt ein Spieler durch Schüsse anderer Spieler. Der Runtime Spawn Manager sorgt dafür, dass anhand von bestimmten, zur Laufzeit ausgerechneten Bedingungen eine neue Spawn-Position für den gestorbenen Spieler gefunden wird. 
+In einem Online Multiplayer Ego-Shooter \cite{Y.Kim.2007} stirbt ein Spieler durch Schüsse anderer Spieler. Der Runtime Spawn Manager sorgt dafür, dass anhand von bestimmten, zur Laufzeit ausgerechneten Bedingungen eine neue Spawn-Position für den gestorbenen Spieler gefunden wird. 
 
 
 \section{Interest Manager}

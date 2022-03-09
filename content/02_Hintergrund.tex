@@ -34,7 +34,7 @@ Bei dieser Variante wird der Serverprozess auf demselben Gerät ausgeführt, auf
 
 \textbf{Nachteile:} 
 \begin{itemize}
-	\item Da der Serverprozess nun ebenfalls auf einem Gerät läuft, auf welches Spieler Zugriff haben, gibt es ebenfalls mehr Möglichkeiten des Hackings (Spielmanipulation) \cite{Wikipedia.2021h}. Die Entwickler haben keinerlei Einfluss auf die Serverprozesse, welche ein Spieler startet\cite{Smed.2002}. 
+	\item Da der Serverprozess nun ebenfalls auf einem Gerät läuft, auf welches Spieler Zugriff haben, gibt es ebenfalls mehr Möglichkeiten des Hackings (Spielmanipulation \cite{Grondahl.2000}). Die Entwickler haben keinerlei Einfluss auf die Serverprozesse, welche ein Spieler startet\cite{Smed.2002}. 
 \end{itemize}
 
 \newpage
@@ -62,7 +62,7 @@ Diese Variante trennt Client und Server physikalisch voneinander. Serverprozesse
 
 \section{Datenspeicherung und Transfer}
 
-Um das bestmögliche Spielerlebnis zu erzielen, sollte innerhalb der Entwicklung von Multiplayer-Spielen darauf geachtet werden, dass spielentscheidende Daten schnellstmöglich zwischen den Clients synchronisiert werden. Wie auch bei anderen Echtzeitsystemen kommt es also auch bei der Entwicklung von dieser Art von Software darauf an, Daten zu serialisieren. Daten zu serialisieren bedeutet sie für die Übertragung über das Netzwerk zu konvertieren \cite{Wikipedia.2019}. Daten unterscheiden sich im Kontext der Online Spielentwicklung grundsätzlich nicht wesentlich von anderer Software. Typischerweise werden Programmiersprachen wie C\# oder C++ genutzt, um Klassen und Datenstrukturen zu erstellen, welche die eigene Spiellogik abbilden \cite{Glinka.2008}.  Das folgende Klassendiagramm zeigt zwei simple Klassen. Eine Klasse, welche den Spieler abbildet, sowie eine Klasse, welche alle Spieler verwaltet.
+Um das bestmögliche Spielerlebnis zu erzielen, sollte innerhalb der Entwicklung von Multiplayer-Spielen darauf geachtet werden, dass spielentscheidende Daten schnellstmöglich zwischen den Clients synchronisiert werden. Wie auch bei anderen Echtzeitsystemen kommt es also auch bei der Entwicklung von dieser Art von Software darauf an, Daten zu serialisieren. Daten zu serialisieren bedeutet sie für die Übertragung über das Netzwerk zu konvertieren \cite{Billwagner.09.03.2022}. Daten unterscheiden sich im Kontext der Online Spielentwicklung grundsätzlich nicht wesentlich von anderer Software. Typischerweise werden Programmiersprachen wie C\# oder C++ genutzt, um Klassen und Datenstrukturen zu erstellen, welche die eigene Spiellogik abbilden \cite{Glinka.2008}.  Das folgende Klassendiagramm zeigt zwei simple Klassen. Eine Klasse, welche den Spieler abbildet, sowie eine Klasse, welche alle Spieler verwaltet.
 
 \begin{figure}[H]
 	\centering
@@ -91,7 +91,7 @@ Beispiel: In Mario Kart sammelt ein Spieler ein Item ein. Der Server würfelt f�
 
 Interest Management beschreibt ein Konzept, welches delegiert, welche Informationen in welchem Kontext zu welcher Zeit für welche Personen verfügbar sind. Befindet sich der Spieler in einem bestimmten Bereich einer Spielwelt, kann das Interest Management dafür sorgen, dass dieser Spieler für manche Spieler sichtbar und für manche Spieler unsichtbar ist. Die Sichtbarkeit verändert sich, je nachdem wie nahe sich die Spieler zueinander befinden, oder in welchem Areal der Spielwelt sie sich befinden.
 
-Dieses Konzept wird besonders oft in MMO-Spielen benutzt, damit ein Server mehrere Tausend Spieler ohne Abstürze verwalten kann. Ebenso wird es benutzt, um Spiellogik umzusetzen, welche es nur ausgewählten Spielern erlaubt, andere Spieler oder Objekte innerhalb der Spielwelt zu sehen und/oder mit ihnen interagieren zu dürfen \cite{Smed.2002c}. MMO-Spiele sind Spiele, bei denen viele Tausend Spieler gleichzeitig auf einem Server spielen \cite{Wikipedia.2021i}. 
+Dieses Konzept wird besonders oft in MMO-Spielen benutzt, damit ein Server mehrere Tausend Spieler ohne Abstürze verwalten kann. Ebenso wird es benutzt, um Spiellogik umzusetzen, welche es nur ausgewählten Spielern erlaubt, andere Spieler oder Objekte innerhalb der Spielwelt zu sehen und/oder mit ihnen interagieren zu dürfen \cite{Smed.2002c}. MMO-Spiele sind Spiele, bei denen viele Tausend Spieler gleichzeitig auf einem Server spielen \cite{S.A.Abdulazeez.2016}. 
 
 \newpage
 

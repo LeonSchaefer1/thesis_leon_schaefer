@@ -8,9 +8,9 @@ In diesem Kapitel werden die im vorherigen Kapitel beschriebenen Konzepte anhand
 Für die Entwicklung des Prototyps kamen folgende Technologien zum Einsatz:
 
 \begin{itemize}
-	\item Als Game-Engine wurde Unity \cite{Technologies.03.02.2022} benutzt. Die Entscheidung hierfür begründet sich durch die gute Dokumentation und den Long-Time-Support der verschiedenen Unity-Versionen. Außerdem gibt es eine große Anzahl von Benutzern. Unity existiert bereits seit 2005 und hat sich seitdem in Entwickler-Kreisen einen nachhaltigen Ruf erarbeitet \cite{Wikipedia.2022c}.
+	\item Als Game-Engine wurde Unity benutzt. Die Entscheidung hierfür begründet sich durch die gute Dokumentation und den Long-Time-Support der verschiedenen Unity-Versionen \cite{Technologies.03.02.2022}. Außerdem gibt es eine große Anzahl von Benutzern. Unity existiert bereits seit 2005 und hat sich seitdem in Entwickler-Kreisen einen nachhaltigen Ruf erarbeitet \cite{W.LinLin.2017}.
 	\item C\# kommt als Programmiersprache zum Einsatz. Unity bietet eine sehr gute Unterstützung hierfür.
-	\item Zusätzlich zu Unity wurde Mirror\cite{.03.02.2022} als weiteres Framework benutzt. Mirror ist eine kostenlose Open Source Networking Bibliothek, welche die Entwicklung von Netzwerk-Code deutlich erleichtert.
+	\item Zusätzlich zu Unity wurde Mirror als weiteres Framework benutzt. Mirror ist eine kostenlose Open Source Networking Bibliothek, welche die Entwicklung von Netzwerk-Code deutlich erleichtert \cite{.03.02.2022}.
 \end{itemize}
 
 \section{Spielidee des Prototyps}
@@ -123,7 +123,7 @@ public override void ServerStart()
 
 Der Client UI \& Visual Controller spielt im Prototyp eine wesentliche Rolle. Er kommt in der Game Scene als Singleton \cite{M.Gatrell.2009} zum Einsatz, wo er alle nötigen Methoden implementiert, um das lokale UI des Spielers manipulieren zu können. Hier sind nun 3 Beispiele aufgeführt:
 
-Die folgende 'Update'-Methode ist eine Unity bereitgestellte Schnittstelle. Der Rumpf der Update Methode ist nie vorgegeben und muss vom Entwickler selbst implementiert werden. Unity führt diese Methode jedes 'Frame' (Einzelbild) \cite{Wikipedia.2021j} aus. Dies ermöglicht eine nahezu vollständige Echtzeitabfrage der Inputs (Tastatur / Maus / andere Eingangsgeräte) des Spielers. Es wird dauerhaft abgefragt, ob ein Spieler die Taste 'E' oder 'Q' auf seiner Tastatur drückt. Wenn er das tut und ebenfalls einige andere Randbedingungen erfüllt sind, wird ein 'Linksklick' auf den im UI des Spielers sichtbaren Button simuliert.
+Die folgende 'Update'-Methode ist eine Unity bereitgestellte Schnittstelle. Der Rumpf der Update Methode ist nie vorgegeben und muss vom Entwickler selbst implementiert werden. Unity führt diese Methode jedes 'Frame' (Einzelbild \cite{Whaley.21.11.2018}) aus. Dies ermöglicht eine nahezu vollständige Echtzeitabfrage der Inputs (Tastatur / Maus / andere Eingangsgeräte) des Spielers. Es wird dauerhaft abgefragt, ob ein Spieler die Taste 'E' oder 'Q' auf seiner Tastatur drückt. Wenn er das tut und ebenfalls einige andere Randbedingungen erfüllt sind, wird ein 'Linksklick' auf den im UI des Spielers sichtbaren Button simuliert.
 
 \begin{lstlisting}[caption= InGameUiControllerScript.cs Update Method]
 private void Update()
@@ -178,7 +178,7 @@ private void RpcEnableHideButton()
 	\label{pic:prototyp_hider_hide_button}
 \end{figure}
 
-Sollte der Hider nun auf seinen 'Interact'-Button drücken, wird die folgende Methode 'OnHiderHideButtonClick' aufgerufen. Diese ruft eine weitere Methode 'CmdHideHider' auf, welche einen Remote Procedure Call\cite{.05.02.2022} zum Server darstellt.
+Sollte der Hider nun auf seinen 'Interact'-Button drücken, wird die folgende Methode 'OnHiderHideButtonClick' aufgerufen. Diese ruft eine weitere Methode 'CmdHideHider' auf, welche einen Mirro Remote Procedure Call\cite{.05.02.2022} zum Server darstellt.
 
 \begin{lstlisting}[caption= HiderScript.csOnHiderHideButtonClick() Method]
 
