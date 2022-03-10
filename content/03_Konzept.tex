@@ -5,10 +5,10 @@ In diesem Kapitel werden abstrakte Konzepte beschrieben. Besonders unerfahrene E
 
 \begin{enumerate}
 	\item Das grundsätzliche Spielkonzept steht fest.
-	\item Anhand des festgelegten Spielkonzeptes kann abgeschätzt werden, ob sich für das Spiel eine Client / Server oder eine Client / Host Architektur eignet.
+	\item Anhand des festgelegten Spielkonzeptes kann abgeschätzt werden, ob sich für das Spiel eine Client-Server oder eine Client-Host Architektur eignet.
 \end{enumerate}
 
-Sollte das Team bzw. der Solo-Entwickler zum Entschluss gekommen sein, dass sich ein Client / Server Modell am besten für den spezifischen Use Case eignet, so müssen Vorkehrungen getroffen werden, um die Hardware-Ressourcen für den späteren Server-Runner bzw. die Matchmaking API sicherzustellen. Die Grundvoraussetzung ist jedoch ein aus dem Internet erreichbarer PC mit einer festen IP-Adresse. 
+Sollte das Team oder der Solo-Entwickler zum Entschluss gekommen sein, dass sich ein Client / Server Modell am besten für den spezifischen Use Case eignet, so müssen Vorkehrungen getroffen werden, um die Hardware-Ressourcen für den späteren Server-Runner und die Matchmaking API sicherzustellen. Die Grundvoraussetzung ist jedoch ein aus dem Internet erreichbarer PC mit einer festen IP-Adresse. 
 
 Alternativ kann auch zunächst lokal innerhalb eines LAN entwickelt werden. Hierbei ist jedoch wichtig, dass eventuell auftretende Seiteneffekte, die durch Latenz oder Bandbreite verursacht werden, nicht unter Realbedingungen getestet werden können. Es empfiehlt sich deshalb bereits innerhalb der ersten Entwicklungsiterationen auszutesten, wie Prototypen für Serverprozesse auf unterschiedliche Standorte der Serverhardware reagieren. 
 
@@ -18,7 +18,7 @@ Nun gilt es, passende Technologien zu finden. Hier gibt es keine klare Empfehlun
 
 Die folgenden Konzepte sollen im Kontext einer bereits erarbeiteten Spielidee eine Hilfestellung zur Erarbeitung einer individuellen technischen Architektur geben.
 
-Konkret muss beachtet werden, dass einige der Konzepte nicht als einzelne Programm-Klassen verstanden werden müssen, sondern als Hilfestellung für Ableitungen zu konkreten Klassen oder Skripten genutzt werden können. Es ist auch gut denkbar, dass einige Implementierungen deutliche Vorteile haben, wenn bestimmte Konzepte jeweils für getrennte Spiel-Szenen umgesetzt werden. Spielszenen sind eine Beschreibung von Objekten, Lichtquellen, Materialeigenschaften sowie der Position und Blickrichtung eines virtuellen Betrachters \cite{D.Polancec.2017}.
+Konkret muss beachtet werden, dass einige der Konzepte nicht als einzelne Programmklassen verstanden werden müssen, sondern als Hilfestellung für Ableitungen zu konkreten Klassen oder Skripten genutzt werden können. Es ist auch gut denkbar, dass einige Implementierungen deutliche Vorteile haben, wenn bestimmte Konzepte jeweils für getrennte Spiel-Szenen umgesetzt werden. Spielszenen sind eine Beschreibung von Objekten, Lichtquellen, Materialeigenschaften sowie der Position und Blickrichtung eines virtuellen Betrachters \cite{D.Polancec.2017}.
 
 Die Konzepte sind als separat voneinander zu betrachtende Softwarekomponenten zu sehen, die miteinander kommunizieren können. Man könnte die einzelnen implementierten Konzepte auch als Microservices \cite{Thones.2015} bezeichnen, die innerhalb eines Server-Prozesses eigene interne Abläufe besitzen und durchführen. Die Kommunikation zwischen den Komponenten sollte über direkte, gegenseitige Funktionsaufrufe oder über ereignisgesteuerte Funktionen \cite{Michelson.2006} geschehen.
 
@@ -28,9 +28,9 @@ Für Spiele, welche ein Matchmaking-System benötigen, muss eine API entworfen w
 
 \textbf{Matchmaking:}
 
-Die API muss einen Algorithmus implementieren, welcher mehrere Spieler zu einer Spiel-Session zusammenführt. Mögliche Matchmaking-Konzepte sind bereits im Hintergrund-Kapitel beschrieben. Die Matchmaking API verwaltet als eine Liste an aktiven Serverprozessen sowie die Information, wie man sich zu ihnen verbindet. In der Regel wird pro Serverprozess ein Netzwerk-Port an der Server-Maschine reserviert, auf denen sich dann N Spieler verbinden können.
+Die API muss einen Algorithmus implementieren, welcher mehrere Spieler zu einer Spielsession zusammenführt. Mögliche Matchmaking-Konzepte sind bereits im Hintergrundkapitel beschrieben. Die Matchmaking API verwaltet als eine Liste an aktiven Serverprozessen sowie die Information, wie man sich zu ihnen verbindet. Es wird pro Serverprozess ein Netzwerk-Port an der Server-Maschine reserviert, auf denen sich dann N Spieler verbinden können.
 
-Je nach Spielkonzept können hunderte, tausende Serverprozesse existieren, welche jeweils nur eine vergleichsweise geringe Anzahl (1-20) an Spieler verwalten. Spielkonzepte, welche viele Spieler (200-1000) innerhalb eines einzigen Serverprozesses voraussetzten, erzeugen dagegen zwar quantitativ weniger Serverprozesse, diese neigen aber in der Regel schnell zu Überlastung. Neben der Umsetzung von Interest Management und einer performanten Architektur für möglichst wenig Network-Traffic, kann aber auch die Matchmaking API Abhilfe schaffen, bspw. durch 'Umverlegung' von Spielern auf andere oder neue Cluster.
+Je nach Spielkonzept können Hunderte, Tausende Serverprozesse existieren, welche jeweils nur eine vergleichsweise geringe Anzahl (1-20) an Spieler verwalten. Spielkonzepte, welche viele Spieler (200-1000) innerhalb eines einzigen Serverprozesses voraussetzten, erzeugen dagegen zwar quantitativ weniger Serverprozesse, diese neigen aber in der Regel schnell zu Überlastung. Neben der Umsetzung von Interest Management und einer performanten Architektur für möglichst wenig Network-Traffic, kann aber auch die Matchmaking API Abhilfe schaffen, bspw. durch 'Umverlegung' von Spielern auf andere oder neue Cluster.
 
 \textbf{Server-Runner:}
 
@@ -44,13 +44,13 @@ Ebenfalls können technische Statusinformationen über ein aktuell laufendes Spi
 	\label{pic:API_Konzept_Diagramm}
 \end{figure}
 
-Je nach Spiel kann das Aufgabenfeld der API um weitere Punkte erweitert werden, beispielsweise die Verwaltung einer Datenbank für Authentifizierung bzw. Kommunikation mit externen Authentifizierungs-Service-Providern, oder für einen In-Game Shop.
+Je nach Spiel kann das Aufgabenfeld der API um weitere Punkte erweitert werden, beispielsweise die Verwaltung einer Datenbank für Authentifizierung bzw. Kommunikation mit externen Authentifizierungs-Serviceprovidern, oder für einen In-Game Shop.
 
 \section{Client UI \& Visual Controller}
 
-Der Client UI \& Visual Controller beschreibt die Art und Weise, wie die Benutzeroberfläche und visuelle Ebene eines Spielers durch Antworten des Servers oder einzelner Spieleraktivitäten manipuliert wird.
+Der Client UI \& Visual Controller beschreibt die Art und Weise, wie die Benutzeroberfläche und visuelle Ebene eines Spielers durch Antworten des Servers oder einzelner Spieler-Aktivitäten manipuliert wird.
 
-Konkret sorgt ein Server-Ereignis, der Input eines Spielers (beispielsweise durch Klicken eines Buttons oder einsammeln eines Gegenstands) oder ein anderes Ereignis dafür, dass Funktionen innerhalb des Client UI \& Visual Controllers aufgerufen werden. Innerhalb dieser Funktionen werden Komponenten der Benutzeroberfläche wie z. B. Anzeigetexte, Bilder etc. oder Objekte innerhalb der Spielwelt selbst manipuliert. In der folgenden Grafik zeigt die beschriebene Folge an Ereignissen:
+Konkret sorgt ein Server-Ereignis, der Input eines Spielers (beispielsweise durch Klicken eines Buttons oder einsammeln eines Gegenstands) oder ein anderes Ereignis dafür, dass Funktionen innerhalb des Client UI \& Visual Controllers aufgerufen werden. Innerhalb dieser Funktionen werden Komponenten der Benutzeroberfläche wie z. B. Anzeige-Texte, Bilder etc. oder Objekte innerhalb der Spielwelt selbst manipuliert. In der folgenden Grafik zeigt die beschriebene Folge an Ereignissen:
 
 \begin{figure}[H]
 	\centering
@@ -66,7 +66,7 @@ Wichtig ist, dass Funktionen des Client UI \& Visual Controller erst nach server
 Der Server Network Manager ist für die korrekte Abarbeitung von serverseitigen Aufgaben zuständig, welche aufkommen, sobald ein Netzwerk-spezifisches Ereignis stattfindet.
 
 \textbf{Beispiel:} \\
-Die Verbindung eines Clients bricht mitten in der laufenden Spielszene ab. Der Server Network Manager stößt infolgedessen Funktionen anderer serverseitigen Manager-Komponenten an, welche dafür sorgen, dass alle Spieler über den neuen Zustand des Spiels informiert werden. Hierfür müssen zunächst serverinterne Variablen aktualisiert werden.
+Die Verbindung eines Clients bricht mitten in der laufenden Spielszene ab. Der Server Network Manager stößt infolgedessen Funktionen anderer serverseitigen Managerkomponenten an, welche dafür sorgen, dass alle Spieler über den neuen Zustand des Spiels informiert werden. Hierfür müssen zunächst serverinterne Variablen aktualisiert werden.
 
 \textbf{Beispiel:}  \\
 In einem Online-Ableger des Spiels 'Mensch ärgere dich nicht' verliert ein Spieler seine Netzwerkverbindung. Als Reaktion kümmert sich der Server Network Manager darum, dass das Spiel trotzdem zu Ende gespielt werden kann. Die Spielfiguren des ausgeschiedenen Spielers müssen entfernt und der Spiel-Fortschritt aktualisiert werden. Diese Funktionen stellt möglicherweise der \hyperref[spawn_manager]{Runtime Spawn Manager}, \hyperref[progress_manager]{Progress / Game State Manager } zur Verfügung.
@@ -83,7 +83,7 @@ Die folgende Grafik illustriert die Aufgaben des Server Network Managers:
 
 \section{Lobby / Multi Scene Manager}
 
-Der Lobby/ Multi Scene Manager ist eine serverseitige Komponente, welche es erlaubt, Spielszenen-übergreifende Informationen zu speichern und zu verwalten. Beispielsweise könnte bei einem Lobby-basierten Matchmaking die Information des Leiters einer Lobby über Spielszenen hinweg gespeichert werden. Ebenso wäre es denkbar, dass der Bereitschafts-Status vor dem tatsächlichen Spiel innerhalb des Lobby / Multi Scene Managers gespeichert wird. Außerdem stellt der Lobby / Multi Scene Manager Funktionen bereit, welche
+Der Lobby/ Multi Scene Manager ist eine serverseitige Komponente, welche es erlaubt, Spielszenen-übergreifende Informationen zu speichern und zu verwalten. Beispielsweise könnte bei einem Lobby-basierten Matchmaking die Information des Leiters einer Lobby über Spielszenen hinweg gespeichert werden. Ebenso wäre es denkbar, dass der Bereitschaftsstatus vor dem tatsächlichen Spiel innerhalb des Lobby / Multi Scene Managers gespeichert wird. Außerdem stellt der Lobby / Multi Scene Manager Funktionen bereit, welche
 
 \begin{itemize}
 	\item alle Clients informiert, sobald ein globaler Szenenwechsel angestoßen werden soll
@@ -105,7 +105,7 @@ Der Client Connection Manager beschreibt eine Softwarekomponente, welche folgend
  \begin{itemize}
 	\item Implementierung von clientseitigen Methoden zum Informationsaustausch mit Matchmaking API.
 	\begin{itemize}
-		\item Z. B. stellt die Matchmaking API dem Client über HTTP-Kommunikation Informationen bereit, mit denen sich der Client auf einen speziellen Server verbinden kann. Diese Informationen müssen mindestens die IP Adresse, sowie den Port des laufenden Serverprozesses beinhalten \cite{Hauser.2015}.
+		\item Z. B. stellt die Matchmaking API dem Client über HTTP-Kommunikation Informationen bereit, mit denen sich der Client auf einen speziellen Server verbinden kann. Diese Informationen müssen mindestens die IP-Adresse, sowie den Port des laufenden Serverprozesses beinhalten \cite{Hauser.2015}.
 	\end{itemize}
 	\item Verarbeitung der von Matchmaking API bereitgestellten Informationen. 
 	\begin{itemize}
@@ -136,7 +136,7 @@ Der Client Connection Manager beschreibt eine Softwarekomponente, welche folgend
 
 Das Konzept des serverseitigen Client Managers beinhaltet die Verwaltung aller verbundener Clients innerhalb eines aktiven Serverprozesses. Insbesondere speichert der serverseitige Client Manager 2 Arten von Information über jeden Client:
 
-Einerseits werden netzwerkbezogene Informationen über einen Client gespeichert, im einfachsten Fall ist dies lediglich die IP-Adresse des Hosts sowie der Port, auf welchem der Server seinen Kommunikationskanal geöffnet hat. Bei Spielkonzepten, welche eine weitergehende Authentifizierung des Spielers voraussetzen, können hier auch Benutzernamen, Benutzertags, E-Mail-Adressen o. ä. gespeichert und weiterverarbeitet werden. Zum Anderen speichert und verwaltet der serverseitige Client Manager auch spielespezifische Informationen wie bspw. den aktuellen Anzeigenamen, konfigurierte Individualisierung des Spielcharakters, Spielerrollen oder andere Eigenschaften, über die der Server während einer Spiel-Session Kenntnis haben sollte. Die folgende Grafik visualisiert diesen Informationsfluss:
+Einerseits werden netzwerkbezogene Informationen über einen Client gespeichert, im einfachsten Fall ist dies lediglich die IP-Adresse des Hosts sowie der Port, auf welchem der Server seinen Kommunikationskanal geöffnet hat. Bei Spielkonzepten, welche eine weitergehende Authentifizierung des Spielers voraussetzen, können hier auch Benutzernamen, Benutzertags, E-Mail-Adressen o. Ä. gespeichert und weiterverarbeitet werden. Zum anderen speichert und verwaltet der serverseitige Client Manager auch spielespezifische Informationen wie bspw. den aktuellen Anzeigenamen, konfigurierte Individualisierung des Spielcharakters, Spielerrollen oder andere Eigenschaften, über die der Server während einer Spiel-Session Kenntnis haben sollte. Die folgende Grafik visualisiert diesen Informationsfluss:
 
 \begin{figure}[H]
 	\centering
@@ -152,7 +152,7 @@ Der Prepare-Game-Manager ist Teil des Serverprozesses und beinhaltet alle Funkti
 \begin{itemize}
 	\item Spawning (Initialisierung von Spielobjekten zur Laufzeit \cite{Wikipedia.2020}) von NPCs ('Nicht-Spieler-Character' \cite{.09.03.2022})  oder Spielgegenständen, die in Abhängigkeit zur Anzahl der beitretenden Spieler, einer Spielkonfiguration oder sonstigen Parametern stehen.
 	\item Anpassung der Eigenschaften von bereits gespawnten NPCs oder Spielgegenständen, die in Abhängigkeit zur Anzahl der beitretenden Spieler, einer Spielkonfiguration oder sonstigen Parametern stehen.
-	\item Initialisierung der Spawnpunkte für Spieler anhand von Spawnalgorithmen oder festgelegten Punkten in der Spielwelt.
+	\item Initialisierung der Spawnpunkte für Spieler anhand von Spawn-Algorithmen oder festgelegten Punkten in der Spielwelt.
 	\item Abarbeitung sonstiger serverseitigen Abläufe, welche Voraussetzung für den Start des Spiels sind.
 \end{itemize}
 

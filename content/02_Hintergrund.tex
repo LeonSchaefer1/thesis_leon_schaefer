@@ -34,7 +34,7 @@ Bei dieser Variante wird der Serverprozess auf demselben Gerät ausgeführt, auf
 
 \textbf{Nachteile:} 
 \begin{itemize}
-	\item Da der Serverprozess nun ebenfalls auf einem Gerät läuft, auf welches Spieler Zugriff haben, gibt es ebenfalls mehr Möglichkeiten des Hackings (Spielmanipulation \cite{Grondahl.2000}). Die Entwickler haben keinerlei Einfluss auf die Serverprozesse, welche ein Spieler startet\cite{Smed.2002}. 
+	\item Da der Serverprozess nun ebenfalls auf einem Gerät läuft, auf welches Spieler Zugriff haben, gibt es mehr Möglichkeiten des Hackings (Spielmanipulation \cite{Grondahl.2000}). Die Entwickler haben keinerlei Einfluss auf die Serverprozesse, welche ein Spieler startet\cite{Smed.2002}. 
 \end{itemize}
 
 \newpage
@@ -51,7 +51,7 @@ Diese Variante trennt Client und Server physikalisch voneinander. Serverprozesse
 
 \textbf{Vorteile:}
 \begin{itemize}
-	\item Mehr Kontrolle auf Seiten der Entwickler, Hacking ist deutlich erschwert. Die Software-Architektur kann verhindern, dass spielentscheidende Daten nicht in der Hand der Spieler liegen und somit ein sicheres und faires Spiel gewährleistet werden kann \cite{Smed.2002}. 
+	\item Mehr Kontrolle aufseiten der Entwickler, Hacking ist deutlich erschwert. Die Software-Architektur kann verhindern, dass spielentscheidende Daten nicht in der Hand der Spieler liegen und somit ein sicheres und faires Spiel gewährleistet werden kann \cite{Smed.2002}. 
 \end{itemize}
 
 \textbf{Nachteile:}
@@ -71,7 +71,7 @@ Um das bestmögliche Spielerlebnis zu erzielen, sollte innerhalb der Entwicklung
 	\label{pic:UML_class_Player_NM}
 \end{figure}
 
-Das Beispiel ist stark vereinfacht, soll jedoch illustrieren, auf welche Art und Weise Daten typischerweise innerhalb eines Multiplayer-Kontextes verwaltet werden. Der Entwickler entscheidet hierbei selbst, welche Informationen in welchem Kontext vorhanden sind. Konkret muss sich ein Entwickler stets die Frage stellen, ob eine Information im Server-Kontext oder im Client-Kontext verwaltet bzw. verarbeitet werden soll. Serialisierte Daten werden über ein Netzwerk transportiert. Je nach Art der Architektur erfolgt ein Umweg über eine Server-Instanz, oder direkt zu einem anderen Client \cite{Smed.2002c}.
+Das Beispiel ist stark vereinfacht, soll jedoch illustrieren, auf welche Art und Weise Daten typischerweise innerhalb eines Multiplayer-Kontextes verwaltet werden. Der Entwickler entscheidet hierbei selbst, welche Informationen in welchem Kontext vorhanden sind. Konkret muss sich ein Entwickler stets die Frage stellen, ob eine Information im Server-Kontext oder im Client-Kontext verwaltet und verarbeitet werden soll. Serialisierte Daten werden über ein Netzwerk transportiert. Je nach Art der Architektur erfolgt ein Umweg über eine Server-Instanz, oder direkt zu einem anderen Client \cite{Smed.2002c}.
 
 \section{Informationskontrolle und Interest Management}
 
@@ -83,7 +83,7 @@ Diese Frage müssen sich Multiplayer-Spieleentwickler aus verschiedenen Gründen
 \textbf{Security:} \\
 Beispiel: Bei einem Online-Poker Spiel wäre es fatal, wenn ein Mitspieler jederzeit über alle Karten seiner Mitspieler Kenntnis hätte. 
 
-\textbf{Network traffic:} \\
+\textbf{Network Traffic:} \\
 Beispiel: In Mario Kart sammelt ein Spieler ein Item ein. Der Server würfelt für diesen Spieler ein zufälliges Item aus, welches der Spieler im Anschluss verwenden soll. Die Information über das Resultat der Zufallsauswahl sollte an den jeweiligen Spieler gesendet werden, welcher dieses Item erhalten soll. Alle anderen Spieler muss diese Information nicht interessieren.
  
 \textsf{\Large Interest Management:}
@@ -102,7 +102,7 @@ Matchmaking bei Multiplayer Online Spielen ist ein Dienst, der es Spielern ermö
 \textbf{Playlists:} \\
 Playlists sind automatisch verwaltete Ströme von Spielsitzungen, denen die Spieler nach Belieben beitreten und diese verlassen können. Anhand einer Reihe vordefinierter Regeln wird die Konfiguration der einzelnen Sitzungen festgelegt, ohne dass ein Mensch eingreifen muss.  
 
-Die Spiele bieten in der Regel eine Auswahl an thematischen Wiedergabelisten (z. B. Teams oder Singleplayer, ausgefallene Regeln usw.), um verschiedenen Vorlieben oder Stimmungen gerecht zu werden. Da die Wiedergabelisten von Servern verwaltet werden, die vom Entwickler des Spiels kontrolliert werden, können sie im Laufe der Zeit geändert werden. Wenn ein Spieler eine Wiedergabeliste auswählt, schließt er sich einem Pool von anderen Spielern an, die die gleiche Wahl getroffen haben. Der Playlist-Server verbindet sie dann entweder mit einer bestehenden Sitzung, oder erstellt eine neue \cite{Wikipedia.2021b}.
+Die Spiele bieten eine Auswahl an thematischen Wiedergabelisten (z. B. Teams oder Singleplayer, ausgefallene Regeln usw.), um verschiedenen Vorlieben oder Stimmungen gerecht zu werden. Da die Wiedergabelisten von Servern verwaltet werden, die vom Entwickler des Spiels kontrolliert werden, können sie im Laufe der Zeit geändert werden. Wenn ein Spieler eine Wiedergabeliste auswählt, schließt er sich einem Pool von anderen Spielern an, die die gleiche Wahl getroffen haben. Der Playlist-Server verbindet sie dann entweder mit einer bestehenden Sitzung, oder erstellt eine neue \cite{Wikipedia.2021b}.
 
 \begin{figure}[H]
 	\centering
@@ -150,7 +150,7 @@ Die meisten dieser Server-Browser ermöglichen es den Spielern, die Ergebnisse z
 	\label{pic:call_of_Duty_serverbrowser}
 \end{figure}
 
-\textbf{Contacts lists:} \\
+\textbf{Contacts Lists:} \\
 Eine der gängigsten Formen des Matchmaking besteht darin, den Spielern eine Liste anderer Spieler zur Verfügung zu stellen, die sie bereits kennengelernt haben und mit denen sie vielleicht wieder spielen möchten. Der Status jedes Spielers (offline, online, spielend) wird angezeigt und es besteht die Möglichkeit, einer laufenden Sitzung beizutreten.
 
 In vielen Fällen werden die Kontaktlisten von der Plattform verwaltet, auf der ein Spiel läuft (z. B. Xbox Live, PlayStation Network, Steam), um den Spielern den Aufwand zu ersparen, viele separate Listen für viele einzelne Spiele zu verwalten \cite{Wikipedia.2021b}. 
