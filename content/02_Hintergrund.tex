@@ -3,7 +3,7 @@
 \chapter{Hintergrund}
 \label{sec:hintergrund}
 
-In diesem Kapitel werden die Grundlagen erläutert, welche nötig sind, um die Konzepte und Realisierung genauer zu verstehen. Unter anderem wird auf die Grundlagen des Networkings, die verschiedenen Arten des Hostings, Datenspeicherung und Transfer, Informationskontrolle sowie Interest Management, Matchmaking und Synchronisation eingegangen.
+In diesem Kapitel werden die Grundlagen erläutert, welche nötig sind, um die Konzepte und Realisierung genauer zu verstehen. Unter anderem wird auf die Grundlagen des Networkings, die verschiedenen Arten des Hostings, Datenspeicherung und Transfer, Informationskontrolle sowie Interest Management und Matchmaking eingegangen.
 
 \section{Grundlagen des Networkings in Online-Videospielen}
 
@@ -62,7 +62,7 @@ Diese Variante trennt Client und Server physikalisch voneinander. Serverprozesse
 
 \section{Datenspeicherung und Transfer}
 
-Um das bestmögliche Spielerlebnis zu erzielen, sollte innerhalb der Entwicklung von Multiplayer-Spielen darauf geachtet werden, dass spielentscheidende Daten schnellstmöglich zwischen den Clients synchronisiert werden. Wie auch bei anderen Echtzeitsystemen kommt es also auch bei der Entwicklung von dieser Art von Software darauf an, Daten zu serialisieren. Daten zu serialisieren bedeutet sie für die Übertragung über das Netzwerk zu konvertieren \cite{Billwagner.09.03.2022}. Daten unterscheiden sich im Kontext der Online Spielentwicklung grundsätzlich nicht wesentlich von anderer Software. Typischerweise werden Programmiersprachen wie C\# oder C++ genutzt, um Klassen und Datenstrukturen zu erstellen, welche die eigene Spiellogik abbilden \cite{Glinka.2008}.  Das folgende Klassendiagramm zeigt zwei simple Klassen. Eine Klasse, welche den Spieler abbildet, sowie eine Klasse, welche alle Spieler verwaltet.
+Um das bestmögliche Spielerlebnis zu erzielen, sollte innerhalb der Entwicklung von Multiplayer-Spielen darauf geachtet werden, dass spielentscheidende Daten schnellstmöglich zwischen den Clients synchronisiert werden. Wie auch bei anderen Echtzeitsystemen kommt es also auch bei der Entwicklung von dieser Art von Software darauf an, Daten zu serialisieren. Daten zu serialisieren bedeutet, sie für die Übertragung über das Netzwerk zu konvertieren \cite{Billwagner.09.03.2022}. Daten unterscheiden sich im Kontext der Online Spielentwicklung grundsätzlich nicht wesentlich von anderer Software. Typischerweise werden Programmiersprachen wie C\# oder C++ genutzt, um Klassen und Datenstrukturen zu erstellen, welche die eigene Spiellogik abbilden \cite{Glinka.2008}.  Das folgende Klassendiagramm zeigt zwei simple Klassen. Eine Klasse, welche den Spieler abbildet, sowie eine Klasse, welche alle Spieler verwaltet.
 
 \begin{figure}[H]
 	\centering
@@ -102,7 +102,7 @@ Matchmaking bei Multiplayer Online Spielen ist ein Dienst, der es Spielern ermö
 \textbf{Playlists:} \\
 Playlists sind automatisch verwaltete Ströme von Spielsitzungen, denen die Spieler nach Belieben beitreten und diese verlassen können. Anhand einer Reihe vordefinierter Regeln wird die Konfiguration der einzelnen Sitzungen festgelegt, ohne dass ein Mensch eingreifen muss.  
 
-Die Spiele bieten eine Auswahl an thematischen Wiedergabelisten (z. B. Teams oder Singleplayer, ausgefallene Regeln usw.), um verschiedenen Vorlieben oder Stimmungen gerecht zu werden. Da die Wiedergabelisten von Servern verwaltet werden, die vom Entwickler des Spiels kontrolliert werden, können sie im Laufe der Zeit geändert werden. Wenn ein Spieler eine Wiedergabeliste auswählt, schließt er sich einem Pool von anderen Spielern an, die die gleiche Wahl getroffen haben. Der Playlist-Server verbindet sie dann entweder mit einer bestehenden Sitzung, oder erstellt eine neue \cite{Wikipedia.2021b}.
+Die Spiele bieten eine Auswahl an thematischen Wiedergabelisten (z. B. Teams oder Solo, ausgefallene Regeln usw.), um verschiedenen Vorlieben oder Stimmungen gerecht zu werden. Da die Wiedergabelisten von Servern verwaltet werden, die vom Entwickler des Spiels kontrolliert werden, können sie im Laufe der Zeit geändert werden. Wenn ein Spieler eine Wiedergabeliste auswählt, schließt er sich einem Pool von anderen Spielern an, die die gleiche Wahl getroffen haben. Der Playlist-Server verbindet sie dann entweder mit einer bestehenden Sitzung, oder erstellt eine neue \cite{Wikipedia.2021b}.
 
 \begin{figure}[H]
 	\centering
@@ -124,7 +124,7 @@ Parties sind Gruppen von Spielern, die von Matchmaking-Systemen als eine Einheit
 \textbf{Lobbys:} \\
 Bei manchen Spielmodellen wird zwischen mehreren Spielszenen hin- und hergewechselt. Eine Spielszene ist eine Sammlung an Spielobjekten, Spielmenüs und Spielcharakteren, die als eine Einheit innerhalb eines Spiels zu verstehen ist. Oft sind Szenenwechsel mit Ladezeiten verbunden. Die Aufgliederung eines Spiels in Spielszenen erleichtert Entwicklern den Umgang mit limitierten Hardwareressourcen \cite{Wikipedia.2012}. 
 
-Lobbys sind Spielszenen, in denen die Spieler die bevorstehende Spielsitzung einsehen, die Ergebnisse der letzten Sitzung prüfen, ihre Einstellungen ändern und miteinander sprechen können. In vielen Spielen kehren die Spieler am Ende jeder Sitzung in die Lobby zurück. In einigen Spielen werden Spieler, die einer bereits begonnenen Sitzung beitreten, bis zum Beginn der nächsten Sitzung in der Lobby untergebracht. Da Lobbys nur wenige Ressourcen verbrauchen, werden sie manchmal zusätzlich als 'Warteschleife' für Spieler verwendet, bis ein geeigneter Gastgeber für die nächste Sitzung gefunden ist. Lobbys, die von Playlists erstellt werden, haben oft einen Countdown-Timer, bevor die Sitzung beginnt, während Lobbys, die von einem Spieler erstellt werden, im Allgemeinen nach dessen Ermessen übergehen \cite{Wikipedia.2021b}. 
+Lobbys sind Spielszenen, in denen die Spieler die bevorstehende Spielsitzung einsehen, die Ergebnisse der letzten Sitzung prüfen, ihre Einstellungen ändern und miteinander sprechen können. In vielen Spielen kehren die Spieler am Ende jeder Sitzung in die Lobby zurück. In einigen Spielen werden Spieler, die einer bereits begonnenen Sitzung beitreten, bis zum Beginn der nächsten Sitzung in der Lobby untergebracht. Da Lobbys nur wenige Ressourcen verbrauchen, werden sie manchmal zusätzlich als 'Warteschleife' für Spieler verwendet, bis ein geeigneter Gastgeber für die nächste Sitzung gefunden ist. Lobbys, die von Playlists erstellt werden, haben oft einen Countdown-Timer, bevor die Sitzung beginnt, während Lobbys, die von einem Spieler erstellt werden, im Allgemeinen nach dessen Ermessen gestartet werden \cite{Wikipedia.2021b}. 
 
 \begin{figure}[H]
 	\centering
